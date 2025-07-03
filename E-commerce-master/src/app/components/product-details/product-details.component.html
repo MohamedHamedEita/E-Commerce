@@ -1,0 +1,49 @@
+<app-loading *ngIf="isLoading"></app-loading>
+
+<div class="row py-4 align-items-center">
+  <div class="col-md-4">
+    <div class="p-5 border rounded-3 border-dark-subtle">
+      <owl-carousel-o [options]="customOptions">
+
+        <ng-container *ngFor="let productImg of productDetail?.images">
+          <ng-template carouselSlide [_id]="productDetail?._id">
+            <img class="w-100" [src]="productImg" [alt]="productDetail?.title">
+          </ng-template>
+        </ng-container>
+
+      </owl-carousel-o>
+
+    </div>
+  </div>
+  <div class="col-md-8">
+    <div class="p-5">
+      <h3 class="fw-bold">{{productDetail?.title}}</h3>
+      <p class="my-3 ">{{productDetail?.description}}</p>
+      <span class="text-main fw-bold font-sm">{{productDetail?.category?.name}}</span>
+      <div class="my-3">
+        <p class="my-0 text-secondary fw-bold font-sm">Available Quantity {{productDetail?.quantity}} </p>
+        <p class="my-0 text-secondary fw-bold font-sm">Brand {{productDetail?.brand?.name}} </p>
+        <!-- <p>Rating : {{productDetail?.ratingsAverage}} </p>
+        <p>Price : {{productDetail?.price | currency:'USD':true}} </p> -->
+      </div>
+      <div class="d-flex justify-content-between">
+        <!-- <span class="fw-bold font-sm">{{productDetail?.price}} EGP</span> -->
+        <span class="fw-bold font-sm">{{productDetail?.price |addEGP}}</span>
+
+        <div class="">
+          <i class="fa-solid fa-star rating-color mx-2"></i>
+          <span class="fw-bold font-sm">{{productDetail?.ratingsAverage}}</span>
+        </div>
+      </div>
+      <div class="d-flex justify-content-center align-items-center">
+        <button (click)="addToCart(productDetail!._id)" class="btn me-3 bg-main w-75 text-white mt-3">Add To Cart
+          <i class="fas fa-shopping-cart ms-2"></i>
+        </button>
+        <button   class="btn bg-danger w-25 text-white mt-3">Add To wishList
+          <i class="fas fa-heart ms-2"></i>
+        </button>
+      </div>
+     </div>
+
+  </div>
+</div>

@@ -1,0 +1,49 @@
+<div class="m-50 mx-auto my-5">
+  <h1 class="text-main my-4 h3 text-center fw-bold">Shipping Address</h1>
+  <form (ngSubmit)="handleShippingAddress(shippingAddressForm)" [formGroup]="shippingAddressForm">
+    <div *ngIf="errorMessage" class="alert alert-danger text-center">{{errorMessage}} ❌</div>
+
+    <label class="fw-bold" for="details">Details :</label>
+    <input
+      [ngClass]="{'is-valid':shippingAddressForm.get('details')?.valid,'is-invalid':shippingAddressForm.get('details')?.invalid && shippingAddressForm.get('details')?.dirty }"
+      formControlName="details" type="text" id="details" class="form-control" placeholder="details" />
+
+    <div *ngIf="shippingAddressForm.get('details')?.invalid&&shippingAddressForm.get('details')?.touched"
+      class="text-danger">
+      <p *ngIf=" shippingAddressForm.get('details')?.getError('required')" class="my-0">details is required</p>
+    </div>
+    <!--^-------------------------------------------------------------------------- -->
+    <label class="pt-3 fw-bold" for="phone">Phone :</label>
+    <input
+      [ngClass]="{'is-valid':shippingAddressForm.get('phone')?.valid, 'is-invalid':shippingAddressForm.get('phone')?.invalid && shippingAddressForm.get('phone')?.dirty }"
+      formControlName="phone" type="tel" id="phone" class="form-control" placeholder="01010700998" />
+
+    <div *ngIf="shippingAddressForm.get('phone')?.invalid&&shippingAddressForm.get('phone')?.touched"
+      class="text-danger">
+      <p *ngIf=" shippingAddressForm.get('phone')?.getError('required')" class="my-0">phone is required</p>
+      <p *ngIf=" shippingAddressForm.get('phone')?.getError('pattern')" class="my-0">You must write an Egyptian number
+      </p>
+    </div>
+    <!--^-------------------------------------------------------------------------- -->
+    <label class="pt-3 fw-bold" for="city">City :</label>
+    <input
+      [ngClass]="{'is-valid':shippingAddressForm.get('city')?.valid,'is-invalid':shippingAddressForm.get('city')?.invalid && shippingAddressForm.get('city')?.dirty }"
+      formControlName="city" type="text" id="city" class="form-control" placeholder="cairo" />
+
+    <div *ngIf="shippingAddressForm.get('city')?.invalid&&shippingAddressForm.get('city')?.touched" class="text-danger">
+      <p *ngIf=" shippingAddressForm.get('city')?.getError('required')" class="my-0">city is required</p>
+    </div>
+    <!--^-------------------------------------------------------------------------- -->
+
+
+    <!-- btn -->
+    <div class="col-12 d-grid">
+      <button [disabled]="shippingAddressForm.invalid || isLoading"
+        class="btn bg-main text-white mt-3 d-block ms-auto fw-bold">
+        <span *ngIf="!isLoading">Pay Now</span>
+        <span *ngIf="isLoading"><i class="fas  fa-spin fa-spinner"></i></span>
+      </button>
+    </div>
+
+  </form>
+</div>

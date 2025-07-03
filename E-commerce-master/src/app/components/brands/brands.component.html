@@ -1,0 +1,11 @@
+<app-loading *ngIf="isLoading"></app-loading>
+<div class="row g-4 py-5">
+   <div *ngFor="let brands of AllBrands" class="col-6 col-sm-4 col-md-3  ">
+    <a [routerLink]="['/brands',brands._id]">
+      <div class="hover-product p-3 ">
+       <img [src]="brands.image" class=" rounded object-fit-cover" [alt]="brands.title">
+       <p class="text-center mt-2 fw-bold text-main">{{brands.name}}</p>
+     </div>
+   </a>
+ </div>
+</div>

@@ -1,0 +1,16 @@
+<app-loading *ngIf="isLoading"></app-loading>
+
+ <div class="row g-4 py-5">
+   <div *ngFor="let category of AllCategories" class="col-6 col-sm-4 col-md-3  ">
+    <a [routerLink]="['/product/category',category._id]">
+      <div class="hover-product p-3 ">
+        <img [src]="category.image" class="w-100 rounded object-fit-cover" height="300px"   alt="">
+        <p class="text-center mt-2 fw-bold text-main">{{category.name}}</p>
+      </div>
+    </a>
+  </div>
+ </div>
+
+
+
+

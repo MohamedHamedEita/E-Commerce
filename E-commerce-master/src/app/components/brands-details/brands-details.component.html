@@ -1,0 +1,13 @@
+<div *ngIf="brandDetails.length;else non" class="row">
+  <div *ngFor="let product of brandDetails" class="col-sm-6 col-md-4  col-xl-3">
+
+  </div>
+</div>
+
+
+<ng-template #non>
+ <p class="alert alert-danger fs-5 text-center fw-bold mt-5">No Available Product For this Brands  </p>
+
+</ng-template>
+<app-loading *ngIf="isLoading"></app-loading>
+

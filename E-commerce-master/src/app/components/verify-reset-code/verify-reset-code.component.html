@@ -1,0 +1,55 @@
+
+<main>
+  <!-- section -->
+  <section class="my-lg-5 my-5 pt-5">
+    <!-- container -->
+    <div class="container">
+      <!-- row -->
+      <div class="row justify-content-center align-items-center">
+        <div class="col-12 col-md-6 col-lg-4 order-lg-1 order-2">
+          <!-- img -->
+          <img src="./assets/images/V.R.C.svg" alt="" class="img-fluid" />
+        </div>
+        <div class="col-12 col-md-6 offset-lg-1 col-lg-4 order-lg-2 order-1 d-flex align-items-center">
+          <div>
+            <div class="mb-lg-5 mb-5">
+              <!-- heading -->
+              <h1 class="mb-2 h2 fw-bold">Verify Reset Code?</h1>
+              <p class="text-secondary font-sm">We have sent a verification code to your email address. Please enter the code below to verify your identity and proceed to reset your password.</p>
+            </div>
+            <!-- form -->
+            <form (ngSubmit)="handelVerifyResetCode(verifyResetCodeForm)" [formGroup]="verifyResetCodeForm">
+              <p *ngIf="errorMessage" class="text-center text-danger">{{errorMessage}}
+                <i class="fa-solid fa-xmark ms-2"></i>
+              </p>
+              <!-- row -->
+              <div class="row g-3">
+                <!-- col -->
+                <div class="col-12">
+                  <label class="form-label visually-hidden" for="resetCode">Reset Code</label>
+                  <input
+                    [ngClass]="{'is-valid': verifyResetCodeForm.get('resetCode')?.valid, 'is-invalid': verifyResetCodeForm.get('resetCode')?.invalid && verifyResetCodeForm.get('resetCode')?.dirty }"
+                    formControlName="resetCode" type="text" id="resetCode" class="form-control" placeholder="Enter your reset code..." required />
+                  <div *ngIf="verifyResetCodeForm.get('resetCode')?.invalid && verifyResetCodeForm.get('resetCode')?.touched" class="text-danger">
+                    <p *ngIf="verifyResetCodeForm.get('resetCode')?.getError('required')" class="my-0">Reset code is required</p>
+                  </div>
+                </div>
+                <!-- btn -->
+                <div class="col-12 d-grid gap-2">
+                  <button [disabled]="verifyResetCodeForm.invalid || isLoading" class="btn bg-main text-white">
+                    <span *ngIf="!isLoading">Send Code</span>
+                    <span *ngIf="isLoading"><i class="fas fa-spin fa-spinner"></i></span>
+                  </button>
+                  <a routerLink="/forget-password" class="btn btn-light">Back</a>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+
+

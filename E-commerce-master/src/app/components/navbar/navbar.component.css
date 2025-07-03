@@ -1,0 +1,8 @@
+.social i{
+  color:var(--main-color);
+ }
+ .logo {
+  width: 320px;
+  height: 62px;
+  object-fit: contain;
+}
