@@ -41,6 +41,9 @@ import { CategoryProductComponent } from './components/category-product/category
 import { LoadingComponent } from './components/loading/loading.component';
 import { BrandsDetailsComponent } from './components/brands-details/brands-details.component';
 import { CookieService } from 'ngx-cookie-service';
+import { UserComponent } from './components/user/user.component';
+import { UserSidebarComponent } from './components/user-sidebar/user-sidebar.component';
+
 @NgModule({
 
   declarations: [
@@ -71,6 +74,7 @@ import { CookieService } from 'ngx-cookie-service';
     CategoryProductComponent,
     LoadingComponent,
     BrandsDetailsComponent,
+    UserComponent,UserSidebarComponent, 
     ],
   imports: [
     BrowserModule,
@@ -107,7 +111,7 @@ import { CookieService } from 'ngx-cookie-service';
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,
       multi: true,
-      
+
     },
   ],
   bootstrap: [AppComponent],

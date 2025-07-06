@@ -2,10 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
+import { HttpClient } from '@angular/common/http';
 import { CartService } from 'src/app/services/cart.service';
 import { WishlistService } from 'src/app/services/wishlist.service';
-
-
 
 @Component({
   selector: 'app-login',
@@ -16,38 +15,26 @@ export class LoginComponent implements OnInit {
   isLoading: boolean = false;
   errorMessage: string = '';
   passwordFieldType: string = 'password';
+
   loginForm: FormGroup = new FormGroup({
     email: new FormControl(null, [Validators.required, Validators.email]),
     password: new FormControl(null, [
       Validators.required,
       Validators.pattern(/^[A-Z].{5,}$/),
     ]),
-    rememberMe: new FormControl(false),
+  rememberMe: new FormControl(false)
   });
 
   constructor(
     private _AuthService: AuthService,
     private _Router: Router,
-    private _CartService: CartService,
-    private _WishlistService: WishlistService ,
+    private _HttpClient: HttpClient ,
+    private _CartService : CartService,
+    private _WishlistService : WishlistService
 
   ) {}
 
-  ngOnInit(): void {
-    this.checkRememberMe();
-  }
-
-  checkRememberMe(): void {
-    const storedEmail = localStorage.getItem('rememberMeEmail');
-    const storedPassword = localStorage.getItem('rememberMePassword');
-    if (storedEmail && storedPassword) {
-      this.loginForm.patchValue({
-        email: storedEmail,
-        password: storedPassword,
-        rememberMe: true,
-      });
-    }
-  }
+  ngOnInit(): void {}
 
   togglePasswordVisibility(): void {
     this.passwordFieldType =
@@ -55,36 +42,54 @@ export class LoginComponent implements OnInit {
   }
 
   handelLogin(loginForm: FormGroup) {
-    if (loginForm.valid) {
-      this.isLoading = true;
-      this._AuthService.login(loginForm.value).subscribe({
-        next: (response) => {
-          this.isLoading = false;
-          if (response.message === 'success') {
-            if (loginForm.value.rememberMe) {
-              localStorage.setItem('rememberMeEmail', loginForm.value.email);
-              localStorage.setItem(
-                'rememberMePassword',
-                loginForm.value.password
-              );
-            } else {
-              localStorage.removeItem('rememberMeEmail');
-              localStorage.removeItem('rememberMePassword');
-            }
-            localStorage.setItem('userToken', response.token);
-            this._CartService.updateCartItemCount();
-            this._WishlistService.updateLoggedUserWishListAndCount();
-            this._Router.navigate(['/home']);
-            this._AuthService.isLogin.next(true);
+  if (loginForm.valid) {
+    this.isLoading = true;
+
+    this._AuthService.login(loginForm.value).subscribe({
+      next: (response) => {
+        this.isLoading = false;
+
+        if (response.status === 'success') {
+          // ✅ Remember Me logic (اختياري)
+          if (loginForm.value.rememberMe) {
+            localStorage.setItem('rememberMeEmail', loginForm.value.email);
+            localStorage.setItem('rememberMePassword', loginForm.value.password);
           } else {
-            this.errorMessage = response.message;
+            localStorage.removeItem('rememberMeEmail');
+            localStorage.removeItem('rememberMePassword');
           }
-        },
-        error: (err) => {
-          this.isLoading = false;
-          this.errorMessage = err.error.message;
-        },
-      });
-    }
+
+          // ✅ تحديث حالة الدخول
+          this._AuthService.isLogin.next(true);
+          this._CartService.updateCartItemCount();
+          this._WishlistService.updateLoggedUserWishListAndCount();
+
+          // ✅ جلب بيانات المستخدم من الكوكي
+          this._AuthService.getCurrentUser().subscribe({
+            next: (res: any) => {
+              const user = res?.user;
+              const userRole = user?.role;
+              this._AuthService.user.next(user);
+
+              if (userRole === 'admin') {
+                this._Router.navigate(['/admin-dashboard']);
+              } else {
+                this._Router.navigate(['/home']);
+              }
+            },
+            error: () => {
+              this.errorMessage = 'Authentication failed.';
+            }
+          });
+        } else {
+          this.errorMessage = response.message;
+        }
+      },
+      error: (err) => {
+        this.isLoading = false;
+        this.errorMessage = err.error?.message || 'Login failed.';
+      }
+    });
   }
+}
 }

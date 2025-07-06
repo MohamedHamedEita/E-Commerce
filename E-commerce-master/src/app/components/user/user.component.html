@@ -1,0 +1,52 @@
+<section class="my-lg-5 my-5">
+  <div class="container mt-4">
+    <div class="row">
+      <!-- Sidebar Column -->
+      <div class="col-md-4 mb-4">
+        <app-user-sidebar></app-user-sidebar>
+      </div>
+
+      <!-- Profile Form Column -->
+      <div class="col-md-8">
+        <h2>User Profile</h2>
+        <form [formGroup]="profileForm" (ngSubmit)="onSubmit()">
+          <div class="mb-3">
+            <label>Full Name</label>
+            <input formControlName="fullName" class="form-control" />
+            <div *ngIf="profileForm.get('fullName')?.invalid && profileForm.get('fullName')?.touched" class="text-danger">
+              Name is required and must be at least 3 characters.
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <label>Phone</label>
+            <input formControlName="phone" class="form-control" />
+            <div *ngIf="profileForm.get('phone')?.invalid && profileForm.get('phone')?.touched" class="text-danger">
+              Enter a valid Egyptian phone number.
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <label>Address</label>
+            <input formControlName="address" class="form-control" />
+          </div>
+
+          <div class="mb-3">
+            <label>Password</label>
+            <input formControlName="password" type="password" class="form-control" />
+            <div *ngIf="profileForm.get('password')?.invalid && profileForm.get('password')?.touched" class="text-danger">
+              Password must be at least 6 characters.
+            </div>
+          </div>
+
+          <div class="col-12 d-grid">
+            <button [disabled]="profileForm.invalid || isLoading" class="btn bg-main text-white">
+              <span *ngIf="!isLoading">Update</span>
+              <span *ngIf="isLoading"><i class="fas fa-spin fa-spinner"></i></span>
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>

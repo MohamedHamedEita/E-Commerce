@@ -19,16 +19,19 @@ import { OrdersComponent } from './components/orders/orders.component';
 import { AllWishListComponent } from './components/all-wish-list/all-wish-list.component';
 import { CategoryProductComponent } from './components/category-product/category-product.component';
 import { BrandsDetailsComponent } from './components/brands-details/brands-details.component';
+import { UserComponent } from './components/user/user.component';
+import { UserSidebarComponent } from './components/user-sidebar/user-sidebar.component';
+
 
 const routes: Routes = [
   {path:'',redirectTo:'home',pathMatch:'full'},
 
-   {path:'home',canActivate:[authGuard],component:HomeComponent},
-   {path:'cart',canActivate:[authGuard],component:CartComponent},
-  {path:'products',canActivate:[authGuard],component:ProductsComponent},
-  {path:'categories',canActivate:[authGuard],component:CategoriesComponent},
+   {path:'home',component:HomeComponent},
+   {path:'cart',component:CartComponent},
+  {path:'products',component:ProductsComponent},
+  {path:'categories',component:CategoriesComponent},
   {path:'product/category/:id',canActivate:[authGuard],component:CategoryProductComponent},
-  {path:'brands',canActivate:[authGuard],component:BrandsComponent},
+  {path:'brands',component:BrandsComponent},
   {path:'brands/:id',canActivate:[authGuard],component:BrandsDetailsComponent},
    {path:'shippingAddress/:id',canActivate:[authGuard],component:ShippingAddressComponent},
   {path:'allorders',canActivate:[authGuard],component:OrdersComponent},
@@ -39,6 +42,9 @@ const routes: Routes = [
   {path:'forget-password',canActivate:[noAuthGuard],component:ForgetPasswordComponent},
   {path:'verify-reset-code',canActivate:[noAuthGuard],component:VerifyResetCodeComponent},
   {path:'reset-password',canActivate:[noAuthGuard],component:ResetPasswordComponent},
+  {path:'user',component:UserComponent},
+  {path:'user-sidebar',component:UserSidebarComponent},
+
 
   {path:'**',component:NotfoundComponent},
 ];

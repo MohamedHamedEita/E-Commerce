@@ -10,7 +10,7 @@ if(localStorage.getItem('userToken'))
     return true;
   }
   else{
-    _Router.navigate(['/login'])
+    _Router.navigate(['/home'])
     return false;
   }
 };

@@ -70,32 +70,22 @@
               <div class="col-12">
                 <!-- input -->
                 <div class="password-field position-relative">
-                  <label class="form-label visually-hidden" for="rePassword">Confirm Password</label>
+                  <label class="form-label visually-hidden" for="passwordconfirm">Confirm Password</label>
                   <input
-                    [ngClass]="{'is-valid':registerForm.get('rePassword')?.valid, 'is-invalid':registerForm.get('rePassword')?.invalid && registerForm.get('rePassword')?.dirty }"
-                    formControlName="rePassword" [type]="repasswordFieldType" id="rePassword" class="form-control" placeholder="Confirm Password" required />
+                    [ngClass]="{'is-valid':registerForm.get('passwordConfirm')?.valid, 'is-invalid':registerForm.get('passwordConfirm')?.invalid && registerForm.get('passwordConfirm')?.dirty }"
+                    formControlName="passwordConfirm" [type]="repasswordFieldType" id="rePassword" class="form-control" placeholder="Confirm Password" required />
                   <div class="position-absolute top-50 eye translate-middle-y me-3">
                     <i class="fa" [ngClass]="{'fa-eye': repasswordFieldType === 'password', 'fa-eye-slash': repasswordFieldType === 'text'}" (click)="toggleRepasswordVisibility()"></i>
                   </div>
-                  <div *ngIf="registerForm.get('rePassword')?.invalid&&registerForm.get('rePassword')?.touched" class="text-danger">
-                    <p *ngIf=" registerForm.get('rePassword')?.getError('required')" class="my-0">rePassword is required</p>
-                    <p *ngIf=" registerForm.get('rePassword')?.getError('pattern')" class="my-0"> rePassword start with a uppercase followed by at least 5 characters</p>
+                  <div *ngIf="registerForm.get('passwordConfirm')?.invalid&&registerForm.get('passwordConfirm')?.touched" class="text-danger">
+                    <p *ngIf=" registerForm.get('passwordConfirm')?.getError('required')" class="my-0">rePassword is required</p>
+                    <p *ngIf=" registerForm.get('passwordConfirm')?.getError('pattern')" class="my-0"> rePassword start with a uppercase followed by at least 5 characters</p>
                   </div>
-                  <p *ngIf="registerForm.getError('passwordMisMatch') && registerForm.get('password')?.dirty && registerForm.get('rePassword')?.dirty" class="text-danger my-0">password doesn't match confirm password</p>
+                  <p *ngIf="registerForm.getError('passwordMisMatch') && registerForm.get('password')?.dirty && registerForm.get('passwordConfirm')?.dirty" class="text-danger my-0">password doesn't match confirm password</p>
                 </div>
               </div>
 
-              <div class="col-12">
-                <!-- input -->
-                <label class="form-label visually-hidden" for="phone">Phone</label>
-                <input
-                  [ngClass]="{'is-valid':registerForm.get('phone')?.valid,'is-invalid':registerForm.get('phone')?.invalid && registerForm.get('phone')?.dirty }"
-                  formControlName="phone" id="phone" class="form-control" type="tel" placeholder="Phone" required />
-                <div *ngIf="registerForm.get('phone')?.invalid&&registerForm.get('phone')?.touched" class="text-danger">
-                  <p *ngIf=" registerForm.get('phone')?.getError('required')" class="my-0">phone is required</p>
-                  <p *ngIf=" registerForm.get('phone')?.getError('pattern')" class="my-0"> please enter a valid egyptian phone number </p>
-                </div>
-              </div>
+      
 
               <!-- btn -->
               <div class="col-12 d-grid">

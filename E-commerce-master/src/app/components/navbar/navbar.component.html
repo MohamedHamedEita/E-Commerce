@@ -58,16 +58,20 @@
             </span>
           </a>
         </li>
-
-
-        <li class=" ms-3 me-0 fw-bold nav-item">
-          <a *ngIf="isUserLogin" (click)="handelLogout()" class="nav-link cursor-pointer">SignOut</a>
-        </li>
-
-
+        <li class="nav-item dropdown" *ngIf="isUserLogin && userName">
+           <a class="nav-link dropdown-toggle d-flex align-items-center gap-2" href="#" role="button" data-bs-toggle="dropdown">
+        <i class="fa-solid fa-user fs-4"></i>
+       <span class="fw-semibold">{{ userName }}</span>
+       </a>
+     <ul class="dropdown-menu">
+    <li><a class="dropdown-item" routerLink="/user">Profile</a></li>
+    <li><a class="dropdown-item text-danger" (click)="handelLogout()">Logout</a></li>
+  </ul>
+</li>
 
       </ul>
 
     </div>
   </div>
 </nav>
+

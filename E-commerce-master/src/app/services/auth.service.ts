@@ -3,52 +3,71 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { BehaviorSubject, Observable } from 'rxjs';
 
-
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  isLogin=new BehaviorSubject<boolean>(localStorage.getItem('userToken')?true:false);
+  isLogin = new BehaviorSubject<boolean>(false);
+  user = new BehaviorSubject<any>(null);
 
-  constructor(private _HttpClient: HttpClient, private _Router: Router) {}
-  register(regForm: object): Observable<any> {
-    return this._HttpClient.post(
-      'https://ecommerce.routemisr.com/api/v1/auth/signup',
-      regForm
-    );
-  }
-  login(loginForm: object): Observable<any> {
-    return this._HttpClient.post(
-      'https://ecommerce.routemisr.com/api/v1/auth/signin',
-      loginForm
-    );
+  private baseURL = 'https://car-parts-seven.vercel.app/api/v1';
+
+  constructor(private http: HttpClient, private router: Router) {
+    this.checkTokenOnStart();
   }
 
-  logOut() {
+ checkTokenOnStart(): void {
+  this.http.get('https://car-parts-seven.vercel.app/api/v1/users/getMe', { withCredentials: true }).subscribe({
+    next: (res: any) => {
+      this.isLogin.next(true);
+      this.user.next(res.user);
+    },
+    error: () => {
+      this.isLogin.next(false);
+    }
+  });
+}
+
+login(formData: any): Observable<any> {
+  return this.http.post('https://car-parts-seven.vercel.app/api/v1/auth/login',
+    formData,
+    { withCredentials: true }
+  );
+}
+saveToken(token: string): void {
+    localStorage.setItem('userToken', token);
+    this.isLogin.next(true);
+  }
+getCurrentUser(): Observable<any> {
+  return this.http.get('https://car-parts-seven.vercel.app/api/v1/users/getMe', {
+    withCredentials: true,
+  });
+}
+
+  logout(): void {
     localStorage.removeItem('userToken');
-    // this.userData.next(null);
-    this._Router.navigate(['/login']);
     this.isLogin.next(false);
-    // console.log(this.userData);
+    this.router.navigate(['/login']);
   }
 
+  getToken(): string | null {
+    return localStorage.getItem('userToken');
+  }
+
+  register(regForm: any): Observable<any> {
+    return this.http.post(`https://car-parts-seven.vercel.app/api/v1/auth/signup`, regForm);
+  }
 
   forGetPassword(forGetPasswordForm: any): Observable<any> {
-    return this._HttpClient.post(
-      'https://ecommerce.routemisr.com/api/v1/auth/forgotPasswords',
-      forGetPasswordForm
-    );
+    return this.http.post(`https://car-parts-seven.vercel.app/api/v1/auth/forgotpassword`, forGetPasswordForm);
   }
+
   verifyResetCode(verifyResetForm: any): Observable<any> {
-    return this._HttpClient.post(
-      'https://ecommerce.routemisr.com/api/v1/auth/verifyResetCode',
-      verifyResetForm
-    );
+    return this.http.post(`https://car-parts-seven.vercel.app/api/v1/auth/verifyResetCode`, verifyResetForm);
   }
+
   resetPassword(resetPassword: any): Observable<any> {
-    return this._HttpClient.put(
-      'https://ecommerce.routemisr.com/api/v1/auth/resetPassword',
-      resetPassword
-    );
+    return this.http.put(`https://car-parts-seven.vercel.app/api/v1/auth/resetPassword`, resetPassword);
   }
 }
+ 

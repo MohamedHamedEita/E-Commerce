@@ -10,30 +10,53 @@ import { WishlistService } from 'src/app/services/wishlist.service';
 })
 export class NavbarComponent implements OnInit {
   isUserLogin: boolean = false;
-  userInfo: any = {};
+  userInfo: any = null;
   numOfCartItems: number = 0;
   wishListCount: number = 0;
+  userName: string = '';
 
   constructor(
     private _AuthService: AuthService,
     private _CartService: CartService,
     private _WishlistService: WishlistService
   ) {}
+
   ngOnInit(): void {
+    // ✅ راقب حالة الدخول
     this._AuthService.isLogin.subscribe((isLogged) => {
       this.isUserLogin = isLogged;
+
+      if (isLogged) {
+        // ✅ جلب بيانات المستخدم بعد تسجيل الدخول
+        this._AuthService.getCurrentUser().subscribe({
+          next: (res) => {
+
+            this.userInfo = res.data;
+            this.userName = res.data?.name || '';
+
+          },
+          error: (err) => {
+            console.error('❌ Error fetching user data from getMe:', err);
+          },
+        });
+      } else {
+        this.userInfo = null;
+        this.userName = '';
+      }
     });
-    this._CartService.cartItemsNum.subscribe({
-      next: (numS) => {
-        this.numOfCartItems = numS;
-      },
+
+    // ✅ تحديث عدد عناصر السلة
+    this._CartService.cartItemsNum.subscribe((num) => {
+      this.numOfCartItems = num;
     });
+
+    // ✅ تحديث عدد عناصر الـ wishlist
     this._WishlistService.wishListItemsCount.subscribe((count) => {
       this.wishListCount = count;
     });
   }
+
   handelLogout() {
-    // localStorage.removeItem('userToken');
-    this._AuthService.logOut();
+    this._AuthService.logout();
   }
 }

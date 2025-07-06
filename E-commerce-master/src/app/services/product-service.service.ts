@@ -21,24 +21,24 @@ export class ProductService {
 
   getAllProducts(): Observable<any> {
     return this._HttpClient.get(
-      `https://ecommerce.routemisr.com/api/v1/products`
+      `https://car-parts-seven.vercel.app/api/v1/products`
     );
   }
   getProductById(id: string): Observable<any> {
     return this._HttpClient.get(
-      `https://ecommerce.routemisr.com/api/v1/products/${id}`
+      `https://car-parts-seven.vercel.app/api/v1/products/${id}`
     );
   }
 
   getAllCategories(): Observable<any> {
     return this._HttpClient.get(
-      'https://ecommerce.routemisr.com/api/v1/categories'
+      'https://car-parts-seven.vercel.app/api/v1/categories'
     );
   }
 
   getProductByCategory(id: string): Observable<any> {
     return this._HttpClient.get(
-      `https://ecommerce.routemisr.com/api/v1/products?category=${id}`
+      `https://car-parts-seven.vercel.app/api/v1/products?category=${id}`
     );
   }
 
@@ -47,14 +47,14 @@ export class ProductService {
 
   getAllBrands(): Observable<any> {
     return this._HttpClient.get(
-      'https://ecommerce.routemisr.com/api/v1/brands'
+      'https://car-parts-seven.vercel.app/api/v1/brands'
     );
   }
 
 
   getBrandsPyId(id: string): Observable<any> {
     return this._HttpClient.get(
-      `https://ecommerce.routemisr.com/api/v1/products?brands=${id}`
+      `https://car-parts-seven.vercel.app/api/v1products?brand=${id}`
     );
   }
 

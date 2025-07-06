@@ -28,14 +28,15 @@ export class RegisterComponent {
         Validators.required,
         Validators.pattern(/^[A-Z].{5,}$/),
       ]),
-      rePassword: new FormControl(null, [
+      passwordConfirm: new FormControl(null, [
         Validators.required,
         Validators.pattern(/^[A-Z].{5,}$/),
       ]),
+      /*
       phone: new FormControl(null, [
         Validators.required,
         Validators.pattern(/^01[0125][0-9]{8}$/),
-      ]),
+      ]),*/
     },
     { validators: passwordMatch }
   );
@@ -64,6 +65,6 @@ export class RegisterComponent {
   }
 
   toggleRepasswordVisibility() {
-    this.repasswordFieldType = this.repasswordFieldType === 'password' ? 'text' : 'password';
+    this.repasswordFieldType = this.repasswordFieldType === 'password' ? 'text' : 'passwordConfirm';
   }
 }

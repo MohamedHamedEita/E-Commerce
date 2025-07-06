@@ -27,8 +27,8 @@ export let passwordMatch = (
   //     }
 
   // *** ------------------
-  let { password, rePassword } = control.value;
-  return password == rePassword && password && rePassword
+  let { password, passwordConfirm } = control.value;
+  return password == passwordConfirm && password && passwordConfirm
     ? null
     : { passwordMisMatch: true };
 };
