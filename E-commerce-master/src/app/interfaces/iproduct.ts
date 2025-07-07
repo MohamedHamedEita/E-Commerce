@@ -1,23 +1,26 @@
 import { IBrand } from "./ibrand";
 import { ICategory } from "./ictegory";
+import { Ispecifications } from "./ispecifications";
 import { ISubCategory } from "./isub-category";
 
 export interface IProduct {
-  sold: number;
-  images: string[];
-  subcategory: ISubCategory;
-  ratingsQuantity: number;
-  _id: string;
-  title: string;
-  description: string;
-  quantity: number;
-  price: number;
-  priceAfterDiscount: number;
+    _id: string;
+    name:string
+    title: string;
+    description: string;
+   quantity: number;
+    sold: number;
+   price: number;
+   priceAfterDiscount: number;
+   images: string[];
   imageCover: string;
   category: ICategory;
-  brand: IBrand;
+  subcategory: ISubCategory;
+   brand: IBrand;
   ratingsAverage: number;
+  ratingsQuantity: number;
   isInWishlist?: boolean;
-  name:string
+  specifications:Ispecifications
+
   image:string
 }

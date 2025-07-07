@@ -30,9 +30,10 @@ const routes: Routes = [
    {path:'cart',component:CartComponent},
   {path:'products',component:ProductsComponent},
   {path:'categories',component:CategoriesComponent},
-  {path:'product/category/:id',canActivate:[authGuard],component:CategoryProductComponent},
+  {path:'product/category/:id',component:CategoryProductComponent},
   {path:'brands',component:BrandsComponent},
-  {path:'brands/:id',canActivate:[authGuard],component:BrandsDetailsComponent},
+  {path:'product/:id',component:ProductDetailsComponent},
+  {path:'brands/:id',component:BrandsDetailsComponent},
    {path:'shippingAddress/:id',canActivate:[authGuard],component:ShippingAddressComponent},
   {path:'allorders',canActivate:[authGuard],component:OrdersComponent},
   {path:'allWishList',canActivate:[authGuard],component:AllWishListComponent},
@@ -42,8 +43,8 @@ const routes: Routes = [
   {path:'forget-password',canActivate:[noAuthGuard],component:ForgetPasswordComponent},
   {path:'verify-reset-code',canActivate:[noAuthGuard],component:VerifyResetCodeComponent},
   {path:'reset-password',canActivate:[noAuthGuard],component:ResetPasswordComponent},
-  {path:'user',component:UserComponent},
-  {path:'user-sidebar',component:UserSidebarComponent},
+  {path:'user',canActivate:[authGuard],component:UserComponent},
+  {path:'user-sidebar',canActivate:[authGuard],component:UserSidebarComponent},
 
 
   {path:'**',component:NotfoundComponent},

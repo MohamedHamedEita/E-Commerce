@@ -11,7 +11,7 @@
         <div class="text-small mb-1">
           <span class="text-decoration-none text-muted"><small>{{product.category.name}}</small></span>
         </div>
-        <h2 class="fs-6"><span class="text-inherit text-decoration-none fw-bold">{{product.title|titleSlice:2}}</span>
+        <h2 class="fs-6"><span class="text-inherit text-decoration-none fw-bold">{{product.name|titleSlice:1}}</span>
         </h2>
         <div>
           <span class="text-dark fw-bold">{{product.price | addEGP}}</span>
@@ -20,7 +20,7 @@
           <small class="text-warning">
             <i class="fa-solid fa-star rating-color  me-2"></i>
           </small>
-          <span class="text-muted small">{{product.ratingsAverage}}</span>
+          <span class="text-muted small">{{product.ratingsAverage |  number:'1.1-1'}}</span>
         </div>
       </a>
 

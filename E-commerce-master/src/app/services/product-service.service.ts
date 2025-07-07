@@ -20,26 +20,18 @@ export class ProductService {
 
 
   getAllProducts(): Observable<any> {
-    return this._HttpClient.get(
-      `https://car-parts-seven.vercel.app/api/v1/products`
-    );
+    return this._HttpClient.get('https://car-parts-seven.vercel.app/api/v1/products');
   }
-  getProductById(id: string): Observable<any> {
-    return this._HttpClient.get(
-      `https://car-parts-seven.vercel.app/api/v1/products/${id}`
-    );
+  getProductById(_id: string): Observable<any> {
+    return this._HttpClient.get(`https://car-parts-seven.vercel.app/api/v1/products/${_id}`);
   }
 
   getAllCategories(): Observable<any> {
-    return this._HttpClient.get(
-      'https://car-parts-seven.vercel.app/api/v1/categories'
-    );
+    return this._HttpClient.get('https://car-parts-seven.vercel.app/api/v1/categories');
   }
 
   getProductByCategory(id: string): Observable<any> {
-    return this._HttpClient.get(
-      `https://car-parts-seven.vercel.app/api/v1/products?category=${id}`
-    );
+    return this._HttpClient.get( `https://car-parts-seven.vercel.app/api/v1/products?category=${id}` );
   }
 
 

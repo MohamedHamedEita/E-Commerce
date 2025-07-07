@@ -43,6 +43,8 @@ import { BrandsDetailsComponent } from './components/brands-details/brands-detai
 import { CookieService } from 'ngx-cookie-service';
 import { UserComponent } from './components/user/user.component';
 import { UserSidebarComponent } from './components/user-sidebar/user-sidebar.component';
+import { AdminComponent } from './components/admin/admin.component';
+import { AdminSidebarComponent } from './components/admin-sidebar/admin-sidebar.component';
 
 @NgModule({
 
@@ -74,7 +76,7 @@ import { UserSidebarComponent } from './components/user-sidebar/user-sidebar.com
     CategoryProductComponent,
     LoadingComponent,
     BrandsDetailsComponent,
-    UserComponent,UserSidebarComponent, 
+    UserComponent,UserSidebarComponent, AdminComponent, AdminSidebarComponent, 
     ],
   imports: [
     BrowserModule,
