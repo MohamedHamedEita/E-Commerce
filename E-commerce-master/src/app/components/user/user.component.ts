@@ -107,9 +107,13 @@ export class UserComponent implements OnInit {
     }
 
     this.http
-      .patch(`http://localhost:3000/api/v1/users/updateMe`, formData, {
-        withCredentials: true,
-      })
+      .patch(
+        `https://car-parts-seven.vercel.app/api/v1/users/updateMe`,
+        formData,
+        {
+          withCredentials: true,
+        }
+      )
       .subscribe({
         next: () => {
           alert('✅ Profile updated successfully!');
@@ -133,7 +137,7 @@ export class UserComponent implements OnInit {
 
     this.http
       .patch(
-        `http://localhost:3000/api/v1/users/changeMyPassword`,
+        `https://car-parts-seven.vercel.app/api/v1/users/changeMyPassword`,
         {
           currentPassword,
           password: newPassword,

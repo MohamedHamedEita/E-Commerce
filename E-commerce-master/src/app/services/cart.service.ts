@@ -31,7 +31,7 @@ export class CartService {
 
   addCartItem(id: string): Observable<any> {
     return this._HttpClient.post(
-      `http://localhost:3000/api/v1/cart`,
+      `https://car-parts-seven.vercel.app/api/v1/cart`,
       {
         productId: id,
       }
@@ -42,21 +42,24 @@ export class CartService {
   }
 
   getUserCart(): Observable<any> {
-    return this._HttpClient.get(`http://localhost:3000/api/v1/cart`, {
-      // headers: this.headers,
-    });
+    return this._HttpClient.get(
+      `https://car-parts-seven.vercel.app/api/v1/cart`,
+      {
+        // headers: this.headers,
+      }
+    );
   }
 
   removeCartItem(id: string): Observable<any> {
     return this._HttpClient.delete(
-      `http://localhost:3000/api/v1/cart/${id}`
+      `https://car-parts-seven.vercel.app/api/v1/cart/${id}`
       // { headers: this.headers }
     );
   }
 
   updateCartItem(id: string, count: number): Observable<any> {
     return this._HttpClient.put(
-      `http://localhost:3000/api/v1/cart/${id}`,
+      `https://car-parts-seven.vercel.app/api/v1/cart/${id}`,
       { count: count }
       // { headers: this.headers }
     );
@@ -70,8 +73,11 @@ export class CartService {
   }
 
   ClearUserCart(): Observable<any> {
-    return this._HttpClient.delete(`http://localhost:3000/api/v1/cart`, {
-      // headers: this.headers,
-    });
+    return this._HttpClient.delete(
+      `https://car-parts-seven.vercel.app/api/v1/cart`,
+      {
+        // headers: this.headers,
+      }
+    );
   }
 }

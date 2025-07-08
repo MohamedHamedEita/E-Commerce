@@ -29,17 +29,22 @@ export class WishlistService {
   }
 
   addToWishlist(productId: string): Observable<any> {
-    return this._HttpClient.post(`http://localhost:3000/api/v1/wishlist`, {
-      productId: productId,
-    });
+    return this._HttpClient.post(
+      `https://car-parts-seven.vercel.app/api/v1/wishlist`,
+      {
+        productId: productId,
+      }
+    );
   }
 
   getAllWishList(): Observable<any> {
-    return this._HttpClient.get(`http://localhost:3000/api/v1/wishlist`);
+    return this._HttpClient.get(
+      `https://car-parts-seven.vercel.app/api/v1/wishlist`
+    );
   }
   removeProductFromWishList(productId: string): Observable<any> {
     return this._HttpClient.delete(
-      `http://localhost:3000/api/v1/wishlist/${productId}`
+      `https://car-parts-seven.vercel.app/api/v1/wishlist/${productId}`
     );
   }
 }
