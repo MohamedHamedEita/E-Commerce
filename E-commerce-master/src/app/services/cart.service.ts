@@ -34,10 +34,10 @@ export class CartService {
       `https://car-parts-seven.vercel.app/api/v1/cart`,
       {
         productId: id,
+      },
+      {
+        withCredentials: true,
       }
-      // {
-      //   headers: this.headers,
-      // }
     );
   }
 
@@ -45,30 +45,38 @@ export class CartService {
     return this._HttpClient.get(
       `https://car-parts-seven.vercel.app/api/v1/cart`,
       {
-        // headers: this.headers,
+        withCredentials: true,
       }
     );
   }
 
   removeCartItem(id: string): Observable<any> {
     return this._HttpClient.delete(
-      `https://car-parts-seven.vercel.app/api/v1/cart/${id}`
-      // { headers: this.headers }
+      `https://car-parts-seven.vercel.app/api/v1/cart/${id}`,
+
+      {
+        withCredentials: true,
+      }
     );
   }
 
   updateCartItem(id: string, count: number): Observable<any> {
-    return this._HttpClient.put(
+    return this._HttpClient.patch(
       `https://car-parts-seven.vercel.app/api/v1/cart/${id}`,
-      { count: count }
-      // { headers: this.headers }
+      { quantity: count },
+      {
+        withCredentials: true,
+      }
     );
   }
 
   onLinePayMent(cartId: string, shippingAddress: any): Observable<any> {
     return this._HttpClient.post(
-      `https://ecommerce.routemisr.com/api/v1/orders/checkout-session/${cartId}?url=https://fresh-cart-fc1.vercel.app/`,
-      { shippingAddress: shippingAddress }
+      `https://car-parts-seven.vercel.app/api/v1/orders/checkout-session/${cartId}`,
+      { shippingAddress: shippingAddress },
+      {
+        withCredentials: true,
+      }
     );
   }
 
@@ -76,7 +84,7 @@ export class CartService {
     return this._HttpClient.delete(
       `https://car-parts-seven.vercel.app/api/v1/cart`,
       {
-        // headers: this.headers,
+        withCredentials: true,
       }
     );
   }
