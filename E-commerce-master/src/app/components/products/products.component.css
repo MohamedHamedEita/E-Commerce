@@ -89,3 +89,9 @@ h3.fw-bold {
     flex-wrap: wrap;
   }
 }
+
+.sticky-sidebar {
+  position: sticky;
+  top: 100px; /* Adjust this if you have a fixed navbar */
+  z-index: 10;
+}

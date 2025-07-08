@@ -3,13 +3,15 @@
 <div class="row">
   <!-- Filter Sidebar -->
   <div class="col-md-3">
-    <app-product-filters
-      [categories]="categories"
-      [brands]="brands"
-      [selectedCategory]="selectedCategory"
-      [selectedBrand]="selectedBrand"
-      (filtersChanged)="onFiltersChanged($event)"
-    ></app-product-filters>
+    <div class="sticky-sidebar">
+      <app-product-filters
+        [categories]="categories"
+        [brands]="brands"
+        [selectedCategory]="selectedCategory"
+        [selectedBrand]="selectedBrand"
+        (filtersChanged)="onFiltersChanged($event)"
+      ></app-product-filters>
+    </div>
   </div>
 
   <!-- Product List -->
