@@ -44,7 +44,7 @@ export class ShippingAddressComponent implements OnInit {
 
     this._CartService.onLinePayMent(finalCartId, form.value).subscribe({
       next: (res) => {
-        console.log(res);
+        // console.log(res);
         this.redirectToPaymentPage(res.session.url);
         this.isLoading = false;
       },

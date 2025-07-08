@@ -21,7 +21,7 @@ export class VerifyResetCodeComponent {
 
     this._AuthService.verifyResetCode(resetCode.value).subscribe({
       next: (res) => {
-        console.log(res);
+        // console.log(res);
         this._Router.navigate(['/reset-password']);
         this.isLoading = false;
       },

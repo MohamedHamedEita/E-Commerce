@@ -8,30 +8,30 @@ import { BehaviorSubject, Observable } from 'rxjs';
 export class CartService {
   //singleton instance
   // headers: any = { token: localStorage.getItem('userToken') };
-  cartItemsNum=new BehaviorSubject<number>(0)
+  cartItemsNum = new BehaviorSubject<number>(0);
 
   constructor(private _HttpClient: HttpClient) {
-    this.updateCartItemCount()
+    this.updateCartItemCount();
   }
 
-updateCartItemCount(){
-  this.getUserCart().subscribe({
-    next: (res) => {
-      // console.log(res.numOfCartItems);
-      this.cartItemsNum.next(res.numOfCartItems) ;
-    },
-    error:(err)=>{
-      console.error(err);
-      if(err.status==404){
-        this.cartItemsNum.next(0);
-      }
-    }
-  });
- }
+  updateCartItemCount() {
+    this.getUserCart().subscribe({
+      next: (res) => {
+        // console.log(res.numOfCartItems);
+        this.cartItemsNum.next(res.numOfCartItems);
+      },
+      error: (err) => {
+        console.error(err);
+        if (err.status == 404) {
+          this.cartItemsNum.next(0);
+        }
+      },
+    });
+  }
 
   addCartItem(id: string): Observable<any> {
     return this._HttpClient.post(
-      `https://car-parts-seven.vercel.app/api/v1/cart`,
+      `http://localhost:3000/api/v1/cart`,
       {
         productId: id,
       }
@@ -42,21 +42,21 @@ updateCartItemCount(){
   }
 
   getUserCart(): Observable<any> {
-    return this._HttpClient.get(`https://car-parts-seven.vercel.app/api/v1/cart`, {
+    return this._HttpClient.get(`http://localhost:3000/api/v1/cart`, {
       // headers: this.headers,
     });
   }
 
   removeCartItem(id: string): Observable<any> {
     return this._HttpClient.delete(
-      `https://car-parts-seven.vercel.app/api/v1/cart/${id}`
+      `http://localhost:3000/api/v1/cart/${id}`
       // { headers: this.headers }
     );
   }
 
   updateCartItem(id: string, count: number): Observable<any> {
     return this._HttpClient.put(
-      `https://car-parts-seven.vercel.app/api/v1/cart/${id}`,
+      `http://localhost:3000/api/v1/cart/${id}`,
       { count: count }
       // { headers: this.headers }
     );
@@ -69,10 +69,8 @@ updateCartItemCount(){
     );
   }
 
-
-
-  ClearUserCart(): Observable<any>{
-    return this._HttpClient.delete(`https://car-parts-seven.vercel.app/api/v1/cart`, {
+  ClearUserCart(): Observable<any> {
+    return this._HttpClient.delete(`http://localhost:3000/api/v1/cart`, {
       // headers: this.headers,
     });
   }

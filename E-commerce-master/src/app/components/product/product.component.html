@@ -1,46 +1,69 @@
 <app-loading *ngIf="isLoading"></app-loading>
 
-
 <section class="my-lg-5">
   <div class="card card-product">
     <div class="card-body">
-      <a [routerLink]="['/product',product._id]">
+      <a [routerLink]="['/product', product._id]">
         <div class="text-center product-img-container mb-3">
-          <img [src]="product.imageCover" [alt]="product.title" class="product-img" />
+          <img
+            [src]="product.imageCover"
+            [alt]="product.name"
+            class="product-img"
+          />
         </div>
         <div class="text-small mb-1">
-          <span class="text-decoration-none text-muted"><small>{{product.category.name}}</small></span>
+          <span class="text-decoration-none text-muted"
+            ><small>{{ product.category.name }}</small></span
+          >
         </div>
-        <h2 class="fs-6"><span class="text-inherit text-decoration-none fw-bold">{{product.name|titleSlice:1}}</span>
+        <h2 class="fs-6">
+          <span class="text-inherit text-decoration-none fw-bold">{{
+            product.name
+          }}</span>
         </h2>
         <div>
-          <span class="text-dark fw-bold">{{product.price | addEGP}}</span>
+          <span class="text-dark fw-bold">{{ product.price | addEGP }}</span>
         </div>
         <div>
           <small class="text-warning">
-            <i class="fa-solid fa-star rating-color  me-2"></i>
+            <i class="fa-solid fa-star rating-color me-2"></i>
           </small>
-          <span class="text-muted small">{{product.ratingsAverage |  number:'1.1-1'}}</span>
+          <span class="text-muted small">{{
+            product.ratingsAverage | number : "1.1-1"
+          }}</span>
         </div>
       </a>
 
-      <div class="d-flex justify-content-between align-items-center mt-3 position-relative  card-product-action">
-        <div class=" d-flex justify-content-between  align-items-center card-product-action-hover">
-          <button (click)="addToCart(product._id)" class="btn bg-main text-white">
-            <span *ngIf="!isLoading">AddToCart
+      <div
+        class="d-flex justify-content-between align-items-center mt-3 position-relative card-product-action"
+      >
+        <div
+          class="d-flex justify-content-between align-items-center card-product-action-hover"
+        >
+          <button
+            (click)="addToCart(product._id)"
+            class="btn bg-main text-white"
+          >
+            <span *ngIf="!isLoading"
+              >AddToCart
               <i class="fas fa-shopping-cart ms-2"></i>
             </span>
-            <span *ngIf="isLoading"><i class="fas  fa-spin fa-spinner"></i></span>
+            <span *ngIf="isLoading"
+              ><i class="fas fa-spin fa-spinner"></i
+            ></span>
           </button>
         </div>
         <!--
         <i (click)="addToWishlist(product._id)" [class]="isWishListProduct(product._id)?'fas text-danger':'fa-regular'"
           class="fa-heart fs-4 cursor-pointer fs-3 card-product-action-hover me-4"></i> -->
-        <i (click)="addToWishlist(product._id)" [class]="isWishListProduct(product._id)?'fa-heart-crack':'fa-heart'"
-          class="text-main fa-solid fs-4 cursor-pointer fs-3 card-product-action-hover me-4"></i>
+        <i
+          (click)="addToWishlist(product._id)"
+          [class]="
+            isWishListProduct(product._id) ? 'fa-heart-crack' : 'fa-heart'
+          "
+          class="text-main fa-solid fs-4 cursor-pointer fs-3 card-product-action-hover me-4"
+        ></i>
       </div>
-
     </div>
   </div>
-
 </section>

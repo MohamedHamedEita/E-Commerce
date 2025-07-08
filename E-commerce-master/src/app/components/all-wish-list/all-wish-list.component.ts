@@ -24,7 +24,7 @@ export class AllWishListComponent implements OnInit {
   getAllWishListProducts() {
     this._WishlistService.getAllWishList().subscribe({
       next: (res) => {
-        console.log(res);
+        // console.log(res);
         this.allWishListProducts = res.data;
         this.isLoading = false;
       },
@@ -39,7 +39,7 @@ export class AllWishListComponent implements OnInit {
     this.isLoading = true;
     this._CartService.addCartItem(id).subscribe({
       next: (res) => {
-        console.log(res);
+        // console.log(res);
         this.isLoading = false;
         this._CartService.cartItemsNum.next(res.numOfCartItems);
         this._toaster.success(res.message, 'Added', {
@@ -62,13 +62,13 @@ export class AllWishListComponent implements OnInit {
     this.isLoading = true;
     this._WishlistService.removeProductFromWishList(id).subscribe({
       next: (res) => {
-        console.log(res);
+        // console.log(res);
         // this.allWishListProducts = this.allWishListProducts.filter(
         //   (product) => product._id!== id
         // );
         this.isLoading = false;
         this._WishlistService.wishListProductIds.next(res.data);
-        this._WishlistService.wishListItemsCount.next(res.data.length)
+        this._WishlistService.wishListItemsCount.next(res.data.length);
 
         this._toaster.error(res.message, 'Remove', {
           closeButton: true,

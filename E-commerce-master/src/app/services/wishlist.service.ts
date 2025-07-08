@@ -10,12 +10,12 @@ export class WishlistService {
   wishListProductIds = new BehaviorSubject<string[]>([]);
   wishListItemsCount = new BehaviorSubject<number>(0);
   constructor(private _HttpClient: HttpClient) {
-this.updateLoggedUserWishListAndCount()
+    this.updateLoggedUserWishListAndCount();
   }
-  updateLoggedUserWishListAndCount(){
+  updateLoggedUserWishListAndCount() {
     this.getAllWishList().subscribe({
       next: (res) => {
-        console.log(res);
+        // console.log(res);
         console.log((res.data as IProduct[]).map((product) => product._id));
         this.wishListProductIds.next(
           (res.data as IProduct[]).map((product) => product._id)
@@ -29,22 +29,17 @@ this.updateLoggedUserWishListAndCount()
   }
 
   addToWishlist(productId: string): Observable<any> {
-    return this._HttpClient.post(
-      `https://car-parts-seven.vercel.app/api/v1/wishlist`,
-      {
-        productId: productId,
-      }
-    );
+    return this._HttpClient.post(`http://localhost:3000/api/v1/wishlist`, {
+      productId: productId,
+    });
   }
 
   getAllWishList(): Observable<any> {
-    return this._HttpClient.get(
-      `https://car-parts-seven.vercel.app/api/v1/wishlist`
-    );
+    return this._HttpClient.get(`http://localhost:3000/api/v1/wishlist`);
   }
   removeProductFromWishList(productId: string): Observable<any> {
     return this._HttpClient.delete(
-      `https://car-parts-seven.vercel.app/api/v1/wishlist/${productId}`
+      `http://localhost:3000/api/v1/wishlist/${productId}`
     );
   }
 }

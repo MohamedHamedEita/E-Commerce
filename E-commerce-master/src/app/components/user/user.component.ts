@@ -1,5 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, AbstractControl } from '@angular/forms';
+import {
+  FormBuilder,
+  FormGroup,
+  Validators,
+  AbstractControl,
+} from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { AuthService } from 'src/app/services/auth.service';
 import { Router } from '@angular/router';
@@ -7,7 +12,7 @@ import { passwordMatch } from 'src/app/custom-validations/match-password';
 @Component({
   selector: 'app-user',
   templateUrl: './user.component.html',
-  styleUrls: ['./user.component.css']
+  styleUrls: ['./user.component.css'],
 })
 export class UserComponent implements OnInit {
   profileForm!: FormGroup;
@@ -22,22 +27,29 @@ export class UserComponent implements OnInit {
     private http: HttpClient,
     private _AuthService: AuthService,
     private router: Router
-    
   ) {}
 
   ngOnInit(): void {
     this.profileForm = this.fb.group({
       name: ['', [Validators.required, Validators.minLength(3)]],
       email: ['', [Validators.required, Validators.email]],
-      phone: ['', [Validators.required, Validators.pattern(/^01[0125][0-9]{8}$/)]],
+      phone: [
+        '',
+        [Validators.required, Validators.pattern(/^01[0125][0-9]{8}$/)],
+      ],
       address: [''],
+
+      password: [''],
     });
-this.passwordForm = this.fb.group({
-  password: ['', [Validators.required, Validators.minLength(6)]],
-  passwordConfirm: ['', Validators.required],
-}, {
-  validators: passwordMatch
-});
+    this.passwordForm = this.fb.group(
+      {
+        password: ['', [Validators.required, Validators.minLength(6)]],
+        passwordConfirm: ['', Validators.required],
+      },
+      {
+        validators: passwordMatch,
+      }
+    );
 
     this.loadUserData();
   }
@@ -59,7 +71,7 @@ this.passwordForm = this.fb.group({
       },
       error: () => {
         alert('Failed to load user data');
-      }
+      },
     });
   }
 
@@ -69,7 +81,7 @@ this.passwordForm = this.fb.group({
       this.selectedFile = input.files[0];
 
       const reader = new FileReader();
-      reader.onload = () => this.previewImageUrl = reader.result as string;
+      reader.onload = () => (this.previewImageUrl = reader.result as string);
       reader.readAsDataURL(this.selectedFile);
     }
   }
@@ -94,22 +106,23 @@ this.passwordForm = this.fb.group({
       formData.append('profileImg', this.selectedFile);
     }
 
-    this.http.put(`https://car-parts-seven.vercel.app/api/v1/users/updateMe`, formData, {
-      withCredentials: true
-    }).subscribe({
-      next: () => {
-        alert('✅ Profile updated successfully!');
-        this.isLoading = false;
-        this.loadUserData(); // refresh
-      },
-      error: (err) => {
-        console.error(err);
-        alert('❌ Failed to update profile');
-        this.isLoading = false;
-      }
-    });
+    this.http
+      .patch(`http://localhost:3000/api/v1/users/updateMe`, formData, {
+        withCredentials: true,
+      })
+      .subscribe({
+        next: () => {
+          alert('✅ Profile updated successfully!');
+          this.isLoading = false;
+          this.loadUserData(); // refresh
+        },
+        error: (err) => {
+          console.error(err);
+          alert('❌ Failed to update profile');
+          this.isLoading = false;
+        },
+      });
   }
-
   onPasswordSubmit(): void {
     if (this.passwordForm.invalid) {
       this.passwordForm.markAllAsTouched();
@@ -118,21 +131,27 @@ this.passwordForm = this.fb.group({
 
     const { currentPassword, newPassword } = this.passwordForm.value;
 
-    this.http.put(`https://car-parts-seven.vercel.app/api/v1/users/changeMyPassword`, {
-      currentPassword,
-      password: newPassword,
-    }, {
-      withCredentials: true
-    }).subscribe({
-      next: () => {
-        alert('✅ Password updated successfully!');
-        this.passwordForm.reset();
-      },
-      error: (err) => {
-        console.error(err);
-        alert('❌ Failed to update password');
-      }
-    });
+    this.http
+      .patch(
+        `http://localhost:3000/api/v1/users/changeMyPassword`,
+        {
+          currentPassword,
+          password: newPassword,
+        },
+        {
+          withCredentials: true,
+        }
+      )
+      .subscribe({
+        next: () => {
+          alert('✅ Password updated successfully!');
+          this.passwordForm.reset();
+        },
+        error: (err) => {
+          console.error(err);
+          alert('❌ Failed to update password');
+        },
+      });
   }
 
   passwordsMatch(group: AbstractControl) {

@@ -6,7 +6,7 @@ import { AuthService } from 'src/app/services/auth.service';
 @Component({
   selector: 'app-reset-password',
   templateUrl: './reset-password.component.html',
-  styleUrls: ['./reset-password.component.css']
+  styleUrls: ['./reset-password.component.css'],
 })
 export class ResetPasswordComponent {
   errorMessage: string = '';
@@ -15,7 +15,10 @@ export class ResetPasswordComponent {
 
   resetPassword: FormGroup = new FormGroup({
     email: new FormControl(null, [Validators.required, Validators.email]),
-    newPassword: new FormControl(null, [Validators.required, Validators.pattern(/^[A-Z].{5,}$/)])
+    newPassword: new FormControl(null, [
+      Validators.required,
+      Validators.pattern(/^[A-Z].{5,}$/),
+    ]),
   });
 
   constructor(private _AuthService: AuthService, private _Router: Router) {}
@@ -30,7 +33,7 @@ export class ResetPasswordComponent {
 
     this._AuthService.resetPassword(form.value).subscribe({
       next: (res) => {
-        console.log(res);
+        // console.log(res);
         this.isLoading = false;
         this._Router.navigate(['/login']);
       },
@@ -38,11 +41,12 @@ export class ResetPasswordComponent {
         console.log(err);
         this.errorMessage = err.error.message || 'An error occurred';
         this.isLoading = false;
-      }
+      },
     });
   }
 
   togglePasswordVisibility() {
-    this.passwordFieldType = this.passwordFieldType === 'password' ? 'text' : 'password';
+    this.passwordFieldType =
+      this.passwordFieldType === 'password' ? 'text' : 'password';
   }
 }

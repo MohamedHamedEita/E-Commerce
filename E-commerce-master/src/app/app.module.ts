@@ -45,6 +45,7 @@ import { UserComponent } from './components/user/user.component';
 import { UserSidebarComponent } from './components/user-sidebar/user-sidebar.component';
 import { AdminComponent } from './components/admin/admin.component';
 import { AdminSidebarComponent } from './components/admin-sidebar/admin-sidebar.component';
+import { ProductFiltersComponent } from './components/product-filters/product-filters.component';
 
 @NgModule({
 
@@ -76,7 +77,7 @@ import { AdminSidebarComponent } from './components/admin-sidebar/admin-sidebar.
     CategoryProductComponent,
     LoadingComponent,
     BrandsDetailsComponent,
-    UserComponent,UserSidebarComponent, AdminComponent, AdminSidebarComponent, 
+    UserComponent,UserSidebarComponent, AdminComponent, AdminSidebarComponent, ProductFiltersComponent, 
     ],
   imports: [
     BrowserModule,

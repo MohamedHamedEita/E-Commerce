@@ -17,7 +17,7 @@ export class ProductComponent implements OnInit {
   products: IProduct[] = [];
   isLoading: boolean = false;
   @Input() product!: IProduct;
-  wishListProductIdsList:string[]=[]
+  wishListProductIdsList: string[] = [];
   // isAddedToWishlist: boolean = false;
   // wishListProduct:string[]=[]
   constructor(
@@ -27,10 +27,11 @@ export class ProductComponent implements OnInit {
     private _WishlistService: WishlistService
   ) {}
   ngOnInit(): void {
-
     this._WishlistService.wishListProductIds.subscribe({
-      next: (idsList)=>{this.wishListProductIdsList=idsList}
-    })
+      next: (idsList) => {
+        this.wishListProductIdsList = idsList;
+      },
+    });
     // this.product.isInWishlist = this._ProductService.wishlistProducts.includes(this.product._id);
     // this._ProductService.getAllProducts().subscribe({
     //   next: (res) => {
@@ -52,7 +53,7 @@ export class ProductComponent implements OnInit {
     this.isLoading = true;
     this._CartService.addCartItem(id).subscribe({
       next: (res) => {
-        console.log(res);
+        // console.log(res);
         this.isLoading = false;
         this._CartService.cartItemsNum.next(res.numOfCartItems);
         this._toaster.success(res.message, 'Added', {
@@ -75,11 +76,11 @@ export class ProductComponent implements OnInit {
     this.isLoading = true;
     this._WishlistService.addToWishlist(productId).subscribe({
       next: (res) => {
-        console.log(res);
+        // console.log(res);
         this._toaster.success(res.message, 'product Add!');
         this.isLoading = false;
         this._WishlistService.wishListProductIds.next(res.data);
-        this._WishlistService.wishListItemsCount.next(res.data.length)
+        this._WishlistService.wishListItemsCount.next(res.data.length);
       },
       error: (err) => {
         console.log(err);
@@ -121,8 +122,7 @@ export class ProductComponent implements OnInit {
     // }
   }
 
-isWishListProduct(id:string){
-  return this.wishListProductIdsList.includes(id)
-}
-
+  isWishListProduct(id: string) {
+    return this.wishListProductIdsList.includes(id);
+  }
 }

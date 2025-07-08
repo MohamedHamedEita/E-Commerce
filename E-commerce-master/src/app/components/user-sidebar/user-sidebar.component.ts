@@ -6,7 +6,7 @@ import { AuthService } from 'src/app/services/auth.service';
 @Component({
   selector: 'app-user-sidebar',
   templateUrl: './user-sidebar.component.html',
-  styleUrls: ['./user-sidebar.component.css']
+  styleUrls: ['./user-sidebar.component.css'],
 })
 export class UserSidebarComponent implements OnInit {
   user: any = {};
@@ -22,16 +22,18 @@ export class UserSidebarComponent implements OnInit {
   }
 
   loadUserData(): void {
-    this.http.get('https://car-parts-seven.vercel.app/api/v1/users/getMe', {
-      withCredentials: true
-    }).subscribe({
-      next: (res: any) => {
-        this.user = res.data || res.user || res?.data?.user;
-      },
-      error: (err) => {
-        console.error('Failed to load user data', err);
-      }
-    });
+    this.http
+      .get('http://localhost:3000/api/v1/users/getMe', {
+        withCredentials: true,
+      })
+      .subscribe({
+        next: (res: any) => {
+          this.user = res.data;
+        },
+        error: (err) => {
+          console.error('Failed to load user data', err);
+        },
+      });
   }
 
   navigateTo(route: string): void {

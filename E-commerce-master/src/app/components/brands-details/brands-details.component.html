@@ -1,13 +1,19 @@
-<div *ngIf="brandDetails.length;else non" class="row">
-  <div *ngFor="let product of brandDetails" class="col-sm-6 col-md-4  col-xl-3">
+<!-- Show loading spinner if loading -->
+<app-loading *ngIf="isLoading"></app-loading>
 
+<!-- Show products if there are any -->
+<div *ngIf="!isLoading && productsByBrand.length; else noProducts" class="row">
+  <div
+    *ngFor="let product of productsByBrand"
+    class="col-sm-6 col-md-4 col-xl-3"
+  >
+    <app-product [product]="product"></app-product>
   </div>
 </div>
 
-
-<ng-template #non>
- <p class="alert alert-danger fs-5 text-center fw-bold mt-5">No Available Product For this Brands  </p>
-
+<!-- Template shown when there are no products -->
+<ng-template #noProducts>
+  <p class="alert alert-danger fs-5 text-center fw-bold mt-5">
+    No Available Products for this Brand
+  </p>
 </ng-template>
-<app-loading *ngIf="isLoading"></app-loading>
-
