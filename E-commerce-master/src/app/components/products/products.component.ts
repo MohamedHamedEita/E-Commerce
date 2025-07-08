@@ -122,4 +122,18 @@ export class ProductsComponent implements OnInit {
     this.currentPage = 1;
     this.fetchProducts();
   }
+  getVisiblePages(): number[] {
+  const pages: number[] = [];
+
+  const start = Math.max(2, this.currentPage - 1); // نبدأ من الصفحة قبل الحالية
+  const end = Math.min(this.totalPages - 1, this.currentPage + 1); // وننتهي بعدها
+
+  for (let i = start; i <= end; i++) {
+    pages.push(i);
+  }
+
+  return pages;
+}
+
+
 }

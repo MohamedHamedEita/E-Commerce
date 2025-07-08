@@ -68,7 +68,7 @@ h3.fw-bold {
 
 /* 🟪 Pagination focus */
 .page-link:focus {
-  box-shadow: 0 0 0 0.15rem rgba(10, 173, 10, 0.4);
+  box-shadow: 0 0 0 0.15rem rgba(10, 173, 10, 0.2);
 }
 
 /* 🟫 Product card hover (optional, if applicable) */
@@ -87,6 +87,8 @@ h3.fw-bold {
 
   .pagination {
     flex-wrap: wrap;
+    display: flex;
+    gap: 20px ;
   }
 }
 
