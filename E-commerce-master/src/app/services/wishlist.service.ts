@@ -30,7 +30,7 @@ this.updateLoggedUserWishListAndCount()
 
   addToWishlist(productId: string): Observable<any> {
     return this._HttpClient.post(
-      `https://ecommerce.routemisr.com/api/v1/wishlist`,
+      `https://car-parts-seven.vercel.app/api/v1/wishlist`,
       {
         productId: productId,
       }
@@ -39,12 +39,12 @@ this.updateLoggedUserWishListAndCount()
 
   getAllWishList(): Observable<any> {
     return this._HttpClient.get(
-      `https://ecommerce.routemisr.com/api/v1/wishlist`
+      `https://car-parts-seven.vercel.app/api/v1/wishlist`
     );
   }
   removeProductFromWishList(productId: string): Observable<any> {
     return this._HttpClient.delete(
-      `https://ecommerce.routemisr.com/api/v1/wishlist/${productId}`
+      `https://car-parts-seven.vercel.app/api/v1/wishlist/${productId}`
     );
   }
 }

@@ -5,6 +5,7 @@
 .card-header {
   border-top-left-radius: 12px;
   border-top-right-radius: 12px;
+  background-color: #343a40;
 }
 
 .list-group-item {
@@ -16,4 +17,16 @@
 }
 a:hover{
   color: #0f8b0f;
+}
+.cursor-pointer {
+  cursor: pointer;
+}
+
+img.rounded-circle {
+  border: 2px solid #fff;
+}
+
+
+.rounded-circle {
+  border: 3px solid #fff;
 }

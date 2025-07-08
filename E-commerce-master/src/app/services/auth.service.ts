@@ -34,9 +34,23 @@ login(formData: any): Observable<any> {
     { withCredentials: true }
   );
 }
-saveToken(token: string): void {
-    localStorage.setItem('userToken', token);
-    this.isLogin.next(true);
+logout(): void {
+    this.http
+      .get('https://car-parts-seven.vercel.app/api/v1/auth/logout', {
+        withCredentials: true,
+      })
+      .subscribe({
+        next: () => {
+          this.isLogin.next(false);
+          this.user.next(null);
+          this.router.navigate(['/login']);
+        },
+        error: () => {
+          this.isLogin.next(false);
+          this.user.next(null);
+          this.router.navigate(['/login']);
+        },
+      });
   }
 getCurrentUser(): Observable<any> {
   return this.http.get('https://car-parts-seven.vercel.app/api/v1/users/getMe', {
@@ -44,15 +58,6 @@ getCurrentUser(): Observable<any> {
   });
 }
 
-  logout(): void {
-    localStorage.removeItem('userToken');
-    this.isLogin.next(false);
-    this.router.navigate(['/login']);
-  }
-
-  getToken(): string | null {
-    return localStorage.getItem('userToken');
-  }
 
   register(regForm: any): Observable<any> {
     return this.http.post(`https://car-parts-seven.vercel.app/api/v1/auth/signup`, regForm);
@@ -70,4 +75,3 @@ getCurrentUser(): Observable<any> {
     return this.http.put(`https://car-parts-seven.vercel.app/api/v1/auth/resetPassword`, resetPassword);
   }
 }
- 

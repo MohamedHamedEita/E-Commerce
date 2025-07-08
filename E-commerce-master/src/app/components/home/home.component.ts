@@ -14,8 +14,7 @@ export class HomeComponent implements OnInit {
   constructor(private _ProductService: ProductService) {}
   ngOnInit(): void {
     this.isLoading = true;
-    this._ProductService.getAllProducts().subscribe({
-      next: (res) => {
+    this._ProductService.getAllProducts().subscribe({ next: (res) => {
        // console.log(res)
         this.allProducts = res.data;
         this.isLoading = false;

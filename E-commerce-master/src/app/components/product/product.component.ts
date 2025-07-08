@@ -5,6 +5,8 @@ import { CartService } from 'src/app/services/cart.service';
 // import { ToasterService } from 'src/app/services/toaster.service';
 import { ToastrService } from 'ngx-toastr';
 import { WishlistService } from 'src/app/services/wishlist.service';
+import { isPlainObject } from 'jquery';
+import { ProductService } from 'src/app/services/product-service.service';
 
 @Component({
   selector: 'app-product',
@@ -21,7 +23,7 @@ export class ProductComponent implements OnInit {
   constructor(
     private _CartService: CartService,
     private _toaster: ToastrService,
-    // private _ProductService: ProductService
+    private _ProductService: ProductService ,
     private _WishlistService: WishlistService
   ) {}
   ngOnInit(): void {

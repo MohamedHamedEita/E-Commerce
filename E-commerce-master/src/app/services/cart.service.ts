@@ -31,7 +31,7 @@ updateCartItemCount(){
 
   addCartItem(id: string): Observable<any> {
     return this._HttpClient.post(
-      `https://ecommerce.routemisr.com/api/v1/cart`,
+      `https://car-parts-seven.vercel.app/api/v1/cart`,
       {
         productId: id,
       }
@@ -42,21 +42,21 @@ updateCartItemCount(){
   }
 
   getUserCart(): Observable<any> {
-    return this._HttpClient.get(`https://ecommerce.routemisr.com/api/v1/cart`, {
+    return this._HttpClient.get(`https://car-parts-seven.vercel.app/api/v1/cart`, {
       // headers: this.headers,
     });
   }
 
   removeCartItem(id: string): Observable<any> {
     return this._HttpClient.delete(
-      `https://ecommerce.routemisr.com/api/v1/cart/${id}`
+      `https://car-parts-seven.vercel.app/api/v1/cart/${id}`
       // { headers: this.headers }
     );
   }
 
   updateCartItem(id: string, count: number): Observable<any> {
     return this._HttpClient.put(
-      `https://ecommerce.routemisr.com/api/v1/cart/${id}`,
+      `https://car-parts-seven.vercel.app/api/v1/cart/${id}`,
       { count: count }
       // { headers: this.headers }
     );
@@ -72,7 +72,7 @@ updateCartItemCount(){
 
 
   ClearUserCart(): Observable<any>{
-    return this._HttpClient.delete(`https://ecommerce.routemisr.com/api/v1/cart`, {
+    return this._HttpClient.delete(`https://car-parts-seven.vercel.app/api/v1/cart`, {
       // headers: this.headers,
     });
   }

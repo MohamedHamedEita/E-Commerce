@@ -17,7 +17,7 @@
   </div>
   <div class="col-md-8">
     <div class="p-5">
-      <h3 class="fw-bold">{{productDetail?.title}}</h3>
+      <h3 class="fw-bold">{{productDetail?.name }}</h3>
       <p class="my-3 ">{{productDetail?.description}}</p>
       <span class="text-main fw-bold font-sm">{{productDetail?.category?.name}}</span>
       <div class="my-3">
@@ -32,7 +32,7 @@
 
         <div class="">
           <i class="fa-solid fa-star rating-color mx-2"></i>
-          <span class="fw-bold font-sm">{{productDetail?.ratingsAverage}}</span>
+          <span class="fw-bold font-sm">{{productDetail?.ratingsAverage |  number:'1.1-1'}}</span>
         </div>
       </div>
       <div class="d-flex justify-content-center align-items-center">

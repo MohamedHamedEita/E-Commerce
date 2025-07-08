@@ -5,8 +5,8 @@
   <div class="card card-product">
     <div class="card-body">
       <a [routerLink]="['/product',product._id]">
-        <div class="text-center">
-          <img [src]="product.imageCover" [alt]="product.title" class="mb-3 w-75" />
+        <div class="text-center product-img-container mb-3">
+          <img [src]="product.imageCover" [alt]="product.title" class="product-img" />
         </div>
         <div class="text-small mb-1">
           <span class="text-decoration-none text-muted"><small>{{product.category.name}}</small></span>

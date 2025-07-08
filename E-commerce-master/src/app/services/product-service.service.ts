@@ -20,7 +20,7 @@ export class ProductService {
 
 
   getAllProducts(): Observable<any> {
-    return this._HttpClient.get('https://car-parts-seven.vercel.app/api/v1/products');
+    return this._HttpClient.get('https://car-parts-seven.vercel.app/api/v1/products?limit=50&sort=-ratingsAverage');
   }
   getProductById(_id: string): Observable<any> {
     return this._HttpClient.get(`https://car-parts-seven.vercel.app/api/v1/products/${_id}`);
@@ -46,7 +46,7 @@ export class ProductService {
 
   getBrandsPyId(id: string): Observable<any> {
     return this._HttpClient.get(
-      `https://car-parts-seven.vercel.app/api/v1products?brand=${id}`
+      `https://car-parts-seven.vercel.app/api/v1/products?brand=${id}`
     );
   }
 

@@ -26,7 +26,7 @@ export class UserSidebarComponent implements OnInit {
       withCredentials: true
     }).subscribe({
       next: (res: any) => {
-        this.user = res.data;
+        this.user = res.data || res.user || res?.data?.user;
       },
       error: (err) => {
         console.error('Failed to load user data', err);
@@ -39,6 +39,6 @@ export class UserSidebarComponent implements OnInit {
   }
 
   logout(): void {
-    this._AuthService.logout(); // استخدم دالة تسجيل الخروج المركزية
+    this._AuthService.logout(); // Call centralized logout
   }
 }

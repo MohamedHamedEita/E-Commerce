@@ -1,29 +1,28 @@
-<section class="my-lg-5 my-5">
+<section class="my-5">
   <div class="container mt-4">
     <div class="row">
-      <!-- Sidebar Column -->
+      <!-- Sidebar -->
       <div class="col-md-4 mb-4">
         <app-user-sidebar></app-user-sidebar>
       </div>
 
-      <!-- Profile Form Column -->
+      <!-- Account Settings -->
       <div class="col-md-8">
-        <h2>User Profile</h2>
+        <h4 class="text-success">YOUR ACCOUNT SETTINGS</h4>
         <form [formGroup]="profileForm" (ngSubmit)="onSubmit()">
           <div class="mb-3">
-            <label>Full Name</label>
-            <input formControlName="fullName" class="form-control" />
-            <div *ngIf="profileForm.get('fullName')?.invalid && profileForm.get('fullName')?.touched" class="text-danger">
-              Name is required and must be at least 3 characters.
-            </div>
+            <label>Name</label>
+            <input formControlName="name" class="form-control" />
+          </div>
+
+          <div class="mb-3">
+            <label>Email address</label>
+            <input formControlName="email" class="form-control" />
           </div>
 
           <div class="mb-3">
             <label>Phone</label>
             <input formControlName="phone" class="form-control" />
-            <div *ngIf="profileForm.get('phone')?.invalid && profileForm.get('phone')?.touched" class="text-danger">
-              Enter a valid Egyptian phone number.
-            </div>
           </div>
 
           <div class="mb-3">
@@ -32,19 +31,47 @@
           </div>
 
           <div class="mb-3">
-            <label>Password</label>
-            <input formControlName="password" type="password" class="form-control" />
-            <div *ngIf="profileForm.get('password')?.invalid && profileForm.get('password')?.touched" class="text-danger">
-              Password must be at least 6 characters.
-            </div>
+            <label>Choose new photo</label>
+            <input type="file" (change)="onFileSelected($event)" class="form-control" />
+            <img *ngIf="previewImageUrl" [src]="previewImageUrl" alt="Profile" class="img-thumbnail mt-2" width="100" />
           </div>
 
-          <div class="col-12 d-grid">
-            <button [disabled]="profileForm.invalid || isLoading" class="btn bg-main text-white">
-              <span *ngIf="!isLoading">Update</span>
-              <span *ngIf="isLoading"><i class="fas fa-spin fa-spinner"></i></span>
-            </button>
+          <button class="btn btn-success" [disabled]="profileForm.invalid || isLoading">
+            <span *ngIf="!isLoading">Save Settings</span>
+            <span *ngIf="isLoading"><i class="fas fa-spinner fa-spin"></i></span>
+          </button>
+        </form>
+
+        <hr class="my-5">
+
+        <!-- Password Change -->
+        <h4 class="text-success">PASSWORD CHANGE</h4>
+        <form [formGroup]="passwordForm" (ngSubmit)="onPasswordSubmit()">
+          <div class="mb-3">
+            <label>Current Password</label>
+            <input type="password" formControlName="currentPassword" class="form-control" />
           </div>
+
+          <div class="mb-3">
+            <label>New Password</label>
+            <input type="password" formControlName="newPassword" class="form-control" />
+          </div>
+<div class="mb-3">
+  <label>Confirm Password</label>
+  <input type="password" formControlName="passwordConfirm" class="form-control" />
+  <div *ngIf="
+      passwordForm.hasError('passwordMisMatch') &&
+      passwordForm.get('passwordConfirm')?.touched
+    "
+    class="text-danger">
+    Passwords do not match.
+  </div>
+</div>
+
+
+          <button class="btn btn-success" [disabled]="passwordForm.invalid">
+            Save Password
+          </button>
         </form>
       </div>
     </div>
