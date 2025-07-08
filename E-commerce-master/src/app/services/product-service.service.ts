@@ -9,49 +9,70 @@ import { tap } from 'rxjs/operators';
 })
 export class ProductService {
   wishListItemsNum = new BehaviorSubject<number>(0);
-  isAddedToWishlist=new BehaviorSubject<boolean> (false)
+  isAddedToWishlist = new BehaviorSubject<boolean>(false);
 
-  wishListProductId: BehaviorSubject<string[]> = new BehaviorSubject<string[]>([]);
+  wishListProductId: BehaviorSubject<string[]> = new BehaviorSubject<string[]>(
+    []
+  );
 
-
-  constructor(private _HttpClient: HttpClient) {
-   }
-
-
+  constructor(private _HttpClient: HttpClient) {}
 
   getAllProducts(): Observable<any> {
-    return this._HttpClient.get('https://car-parts-seven.vercel.app/api/v1/products');
+    return this._HttpClient.get(
+      'http://localhost:3000/api/v1/products?limit=10'
+    );
   }
+
+  getProductsPaginated(
+    page: number,
+    limit: number,
+    search = '',
+    category = '',
+    brand = '',
+    minRating = 0,
+    maxPrice = 10000,
+    sort = '-price'
+  ): Observable<any> {
+    const params: any = {
+      page,
+      limit,
+      sort,
+    };
+
+    if (search?.trim()) params.search = search;
+    if (category) params.category = category;
+    if (brand) params.brand = brand;
+    if (minRating > 0) params['ratingsAverage[gte]'] = minRating;
+    if (maxPrice < 10000) params['price[lte]'] = maxPrice;
+
+    return this._HttpClient.get('http://localhost:3000/api/v1/products', {
+      params,
+    });
+  }
+
   getProductById(_id: string): Observable<any> {
-    return this._HttpClient.get(`https://car-parts-seven.vercel.app/api/v1/products/${_id}`);
+    return this._HttpClient.get(`http://localhost:3000/api/v1/products/${_id}`);
   }
 
   getAllCategories(): Observable<any> {
-    return this._HttpClient.get('https://car-parts-seven.vercel.app/api/v1/categories');
+    return this._HttpClient.get(
+      'http://localhost:3000/api/v1/categories?limit=10'
+    );
   }
 
   getProductByCategory(id: string): Observable<any> {
-    return this._HttpClient.get( `https://car-parts-seven.vercel.app/api/v1/products?category=${id}` );
-  }
-
-
-
-
-  getAllBrands(): Observable<any> {
     return this._HttpClient.get(
-      'https://car-parts-seven.vercel.app/api/v1/brands'
+      `http://localhost:3000/api/v1/products?limit=100&category=${id}`
     );
   }
 
+  getAllBrands(): Observable<any> {
+    return this._HttpClient.get('http://localhost:3000/api/v1/brands?limit=30');
+  }
 
   getBrandsPyId(id: string): Observable<any> {
     return this._HttpClient.get(
-      `https://car-parts-seven.vercel.app/api/v1products?brand=${id}`
+      `http://localhost:3000/api/v1/products?limit=50&brand=${id}`
     );
   }
-
-
-
-
-
 }

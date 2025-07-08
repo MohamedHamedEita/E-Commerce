@@ -16,9 +16,10 @@ export class HomeComponent implements OnInit {
     this.isLoading = true;
     this._ProductService.getAllProducts().subscribe({
       next: (res) => {
-       // console.log(res)
+        // console.log('All Products', res.data);
         this.allProducts = res.data;
         this.isLoading = false;
+        console.log(this.allProducts);
 
         // console.log(res.data)
         // console.log(res.data[1])

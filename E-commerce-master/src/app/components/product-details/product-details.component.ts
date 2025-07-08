@@ -77,7 +77,7 @@ export class ProductDetailsComponent implements OnInit {
 
     this._CartService.addCartItem(id).subscribe({
       next: (res) => {
-        console.log(res);
+        // console.log(res);
         this._CartService.cartItemsNum.next(res.numOfCartItems);
         this._toaster.success('Successfully added to cart! ', 'Added', {
           closeButton: true,

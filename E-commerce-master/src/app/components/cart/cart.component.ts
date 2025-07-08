@@ -24,7 +24,7 @@ export class CartComponent implements OnInit {
       next: (res) => {
         this.cartDetails = res;
         // this.cartDetails=res.data
-        console.log(res);
+        // console.log(res);
         this.isLoading = false;
       },
       error: (err) => {
@@ -89,9 +89,7 @@ export class CartComponent implements OnInit {
     });
   }
 
-
-
-  ClearUserCart(){
+  ClearUserCart() {
     this._CartService.ClearUserCart().subscribe({
       next: (res) => {
         this.cartDetails = res;
@@ -106,7 +104,7 @@ export class CartComponent implements OnInit {
       },
       error: (err) => {
         console.log(err);
-      }
-    })
+      },
+    });
   }
 }

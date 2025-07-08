@@ -1,18 +1,18 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Brand } from 'src/app/interfaces/brand';
- import { IProduct } from 'src/app/interfaces/iproduct';
+import { IProduct } from 'src/app/interfaces/iproduct';
 import { ProductService } from 'src/app/services/product-service.service';
 
 @Component({
   selector: 'app-brands-details',
   templateUrl: './brands-details.component.html',
-  styleUrls: ['./brands-details.component.css']
+  styleUrls: ['./brands-details.component.css'],
 })
 export class BrandsDetailsComponent implements OnInit {
   brandId: string | null = '';
-   brandDetails: Brand[] = [];
-  isLoading:boolean=false;
+  productsByBrand: IProduct[] = [];
+  isLoading: boolean = false;
 
   constructor(
     private _ProductService: ProductService,
@@ -27,14 +27,14 @@ export class BrandsDetailsComponent implements OnInit {
         this._ProductService.getBrandsPyId(this.brandId).subscribe({
           next: (response) => {
             console.log(response);
-            this.brandDetails = response.data;
+            this.productsByBrand = response.data;
             this.isLoading = false;
           },
           error: (err) => {
             console.log(err);
             this.isLoading = false;
           },
-        })
+        });
       }
     });
   }

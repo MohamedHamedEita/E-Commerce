@@ -1,38 +1,56 @@
-<nav   class="navbar navbar-expand-lg navbar-light border-bottom shadow-sm">
+<nav class="navbar navbar-expand-lg navbar-light border-bottom shadow-sm">
   <div class="container">
     <a class="navbar-brand" routerLink="home">
-      <img src="assets\images\Logo.jpeg" class="logo" alt="FreshCartLogo" routerLink="/home">
+      <img
+        src="assets\images\Logo.jpeg"
+        class="logo"
+        alt="FreshCartLogo"
+        routerLink="/home"
+      />
     </a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
-      aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
-
       <ul *ngIf="isUserLogin" class="navbar-nav me-auto mb-2 mb-lg-0">
-
         <li class="nav-item">
-          <a class="nav-link" routerLinkActive="active" routerLink="home">Home</a>
+          <a class="nav-link" routerLinkActive="active" routerLink="home"
+            >Home</a
+          >
         </li>
         <!-- <li class="nav-item">
           <a class="nav-link" routerLinkActive="active" routerLink="cart">Cart</a>
         </li> -->
         <li class="nav-item">
-          <a class="nav-link" routerLinkActive="active" routerLink="products">Products</a>
+          <a class="nav-link" routerLinkActive="active" routerLink="products"
+            >Products</a
+          >
         </li>
         <li class="nav-item">
-          <a class="nav-link" routerLinkActive="active" routerLink="categories">Categories</a>
+          <a class="nav-link" routerLinkActive="active" routerLink="categories"
+            >Categories</a
+          >
         </li>
         <li class="nav-item">
-          <a class="nav-link" routerLinkActive="active" routerLink="brands">Brands</a>
+          <a class="nav-link" routerLinkActive="active" routerLink="brands"
+            >Brands</a
+          >
         </li>
       </ul>
 
-
       <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-
-
-        <li *ngIf="!isUserLogin" class="nav-item d-flex justify-content-center align-items-center font-sm fw-bold">
+        <li
+          *ngIf="!isUserLogin"
+          class="nav-item d-flex justify-content-center align-items-center font-sm fw-bold"
+        >
           Already have an account?
           <a class="nav-link" routerLink="login">Sign in</a>
         </li>
@@ -40,38 +58,55 @@
           <a *ngIf="!isUserLogin" class="nav-link" routerLink="register">Register</a>
         </li> -->
 
-
         <li class="nav-item">
-          <a *ngIf="isUserLogin" routerLink="/cart" class="nav-link cursor-pointer position-relative">
+          <a
+            *ngIf="isUserLogin"
+            routerLink="/cart"
+            class="nav-link cursor-pointer position-relative"
+          >
             <i class="fa-solid fa-cart-shopping fs-3"></i>
-            <span class="position-absolute top-25 start-75 translate-middle badge rounded bg-main">
-              {{numOfCartItems}} +
+            <span
+              class="position-absolute top-25 start-75 translate-middle badge rounded bg-main"
+            >
+              {{ numOfCartItems }} +
             </span>
           </a>
         </li>
 
         <li class="nav-item mx-lg-3">
-          <a *ngIf="isUserLogin" routerLink="/allWishList" class="nav-link cursor-pointer position-relative">
+          <a
+            *ngIf="isUserLogin"
+            routerLink="/allWishList"
+            class="nav-link cursor-pointer position-relative"
+          >
             <i class="fas fa-heart fs-3 text-danger"></i>
-            <span class="position-absolute top-25 start-75 translate-middle badge rounded bg-main">
-              {{wishListCount}}
+            <span
+              class="position-absolute top-25 start-75 translate-middle badge rounded bg-main"
+            >
+              {{ wishListCount }}
             </span>
           </a>
         </li>
         <li class="nav-item dropdown" *ngIf="isUserLogin && userName">
-           <a class="nav-link dropdown-toggle d-flex align-items-center gap-2" href="#" role="button" data-bs-toggle="dropdown">
-        <i class="fa-solid fa-user fs-4"></i>
-       <span class="fw-semibold">{{ userName }}</span>
-       </a>
-     <ul class="dropdown-menu">
-    <li><a class="dropdown-item" routerLink="/user">Profile</a></li>
-    <li><a class="dropdown-item text-danger" (click)="handelLogout()">Logout</a></li>
-  </ul>
-</li>
-
+          <a
+            class="nav-link dropdown-toggle d-flex align-items-center gap-2"
+            href="#"
+            role="button"
+            data-bs-toggle="dropdown"
+          >
+            <i class="fa-solid fa-user fs-4"></i>
+            <span class="fw-semibold">{{ userName }}</span>
+          </a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" routerLink="/user">Profile</a></li>
+            <li>
+              <a class="dropdown-item text-danger" (click)="handelLogout()"
+                >Logout</a
+              >
+            </li>
+          </ul>
+        </li>
       </ul>
-
     </div>
   </div>
 </nav>
-

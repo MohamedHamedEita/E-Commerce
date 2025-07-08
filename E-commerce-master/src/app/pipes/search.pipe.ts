@@ -2,12 +2,12 @@ import { Pipe, PipeTransform } from '@angular/core';
 import { IProduct } from '../interfaces/iproduct';
 
 @Pipe({
-  name: 'search'
+  name: 'search',
 })
 export class SearchPipe implements PipeTransform {
-
-  transform( productList:IProduct[],searchTerm:string):IProduct[]  {
-    return  productList.filter((product)=>product.title.toLowerCase().includes(searchTerm.toLowerCase()));
+  transform(productList: IProduct[], searchTerm: string): IProduct[] {
+    return productList.filter((product) =>
+      product.name.toLowerCase().includes(searchTerm.toLowerCase())
+    );
   }
-
 }

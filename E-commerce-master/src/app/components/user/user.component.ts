@@ -7,7 +7,7 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-user',
   templateUrl: './user.component.html',
-  styleUrls: ['./user.component.css']
+  styleUrls: ['./user.component.css'],
 })
 export class UserComponent implements OnInit {
   profileForm!: FormGroup;
@@ -25,9 +25,12 @@ export class UserComponent implements OnInit {
     this.profileForm = this.fb.group({
       name: ['', [Validators.required, Validators.minLength(3)]],
       email: ['', [Validators.required, Validators.email]],
-      phone: ['', [Validators.required, Validators.pattern(/^01[0125][0-9]{8}$/)]],
+      phone: [
+        '',
+        [Validators.required, Validators.pattern(/^01[0125][0-9]{8}$/)],
+      ],
       address: [''],
-      password: ['']
+      password: [''],
     });
 
     this.loadUserData();
@@ -48,7 +51,7 @@ export class UserComponent implements OnInit {
       },
       error: () => {
         alert('Failed to load user data');
-      }
+      },
     });
   }
 
@@ -62,17 +65,19 @@ export class UserComponent implements OnInit {
     const formData = { ...this.profileForm.value };
     if (!formData.password) delete formData.password;
 
-    this.http.put(`https://car-parts-seven.vercel.app/api/v1/users/updateMe`, formData).subscribe({
-      next: () => {
-        alert('✅ Profile updated successfully!');
-        this.isLoading = false;
-        this.loadUserData(); // reload latest info
-      },
-      error: (err) => {
-        console.error(err);
-        alert('❌ Failed to update profile');
-        this.isLoading = false;
-      }
-    });
+    this.http
+      .put(`http://localhost:3000/api/v1/users/updateMe`, formData)
+      .subscribe({
+        next: () => {
+          alert('✅ Profile updated successfully!');
+          this.isLoading = false;
+          this.loadUserData(); // reload latest info
+        },
+        error: (err) => {
+          console.error(err);
+          alert('❌ Failed to update profile');
+          this.isLoading = false;
+        },
+      });
   }
 }

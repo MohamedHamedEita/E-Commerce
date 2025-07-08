@@ -10,12 +10,12 @@ export class WishlistService {
   wishListProductIds = new BehaviorSubject<string[]>([]);
   wishListItemsCount = new BehaviorSubject<number>(0);
   constructor(private _HttpClient: HttpClient) {
-this.updateLoggedUserWishListAndCount()
+    this.updateLoggedUserWishListAndCount();
   }
-  updateLoggedUserWishListAndCount(){
+  updateLoggedUserWishListAndCount() {
     this.getAllWishList().subscribe({
       next: (res) => {
-        console.log(res);
+        // console.log(res);
         console.log((res.data as IProduct[]).map((product) => product._id));
         this.wishListProductIds.next(
           (res.data as IProduct[]).map((product) => product._id)
