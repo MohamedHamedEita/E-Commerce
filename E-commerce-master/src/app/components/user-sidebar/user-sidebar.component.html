@@ -1,8 +1,13 @@
-<div class="card shadow-sm rounded-4 overflow-hidden" style="width: 100%; max-width: 320px;">
+<div
+  class="card shadow-sm rounded-4 overflow-hidden"
+  style="width: 100%; max-width: 320px"
+>
   <!-- Header with photo background and circular profile -->
-  <div class="card-header text-center text-white p-0 position-relative overflow-hidden" style="height: 180px;">
+  <div
+    class="card-header text-center text-white p-0 position-relative overflow-hidden"
+    style="height: 180px"
+  >
     <ng-container *ngIf="user?.profileImg; else noPhoto">
-
       <!-- Blurred background image -->
       <div
         class="position-absolute top-0 start-0 w-100 h-100"
@@ -13,16 +18,20 @@
           filter: 'blur(10px)',
           transform: 'scale(1.2)',
           opacity: 0.6
-        }">
-      </div>
+        }"
+      ></div>
 
       <!-- Circular profile image in front -->
-      <div class="position-relative d-flex justify-content-center align-items-center" style="height: 180px;">
+      <div
+        class="position-relative d-flex justify-content-center align-items-center"
+        style="height: 180px"
+      >
         <img
           [src]="user.profileImg"
           alt="Profile"
           class="rounded-circle shadow border border-white position-relative"
-          style="width: 90px; height: 90px; object-fit: cover; z-index: 2;" />
+          style="width: 90px; height: 90px; object-fit: cover; z-index: 2"
+        />
       </div>
     </ng-container>
 
@@ -30,53 +39,90 @@
     <ng-template #noPhoto>
       <div
         class="d-flex justify-content-center align-items-center bg-secondary text-white fw-bold rounded-circle mx-auto mt-4"
-        style="width: 90px; height: 90px; font-size: 2.5rem; margin-top: 50px;">
-        {{ user?.name?.charAt(0) || '?' }}
+        style="width: 90px; height: 90px; font-size: 2.5rem; margin-top: 50px"
+      >
+        {{ user?.name?.charAt(0) || "?" }}
       </div>
     </ng-template>
 
     <!-- User name + email -->
     <div class="position-relative z-3 mt-n3 pb-3">
-      <h5 class="mt-2 mb-1 fw-semibold">{{ user?.name || 'Guest' }}</h5>
-      <p class="mb-0 small text-white">{{ user?.email || 'user@example.com' }}</p>
+      <h5 class="mt-2 mb-1 fw-semibold">{{ user?.name || "Guest" }}</h5>
+      <p class="mb-0 small text-white">
+        {{ user?.email || "user@example.com" }}
+      </p>
     </div>
   </div>
 
-  <!-- Sidebar menu -->
   <ul class="list-group list-group-flush">
-    <li class="list-group-item d-flex justify-content-between align-items-center cursor-pointer"
-        (click)="navigateTo('/user')">
-      <span><i class="bi bi-person-fill text-primary me-2"></i> My Account</span>
+    <li
+      class="list-group-item d-flex justify-content-between align-items-center cursor-pointer"
+      (click)="navigateTo('/user')"
+    >
+      <span
+        ><i class="bi bi-person-fill text-primary me-2"></i> My Account</span
+      >
+      <i class="bi bi-chevron-right text-muted"></i>
+    </li>
+    <li
+      class="list-group-item d-flex justify-content-between align-items-center cursor-pointer"
+      (click)="navigateTo('/user/changepassword')"
+    >
+      <span
+        ><i class="bi bi-person-fill text-primary me-2"></i> Change
+        Password</span
+      >
       <i class="bi bi-chevron-right text-muted"></i>
     </li>
 
-    <li class="list-group-item d-flex justify-content-between align-items-center cursor-pointer"
-        (click)="navigateTo('/allorders')">
+    <li
+      class="list-group-item d-flex justify-content-between align-items-center cursor-pointer"
+      (click)="navigateTo('/allorders')"
+    >
       <span><i class="bi bi-bag-fill text-primary me-2"></i> My Orders</span>
       <i class="bi bi-chevron-right text-muted"></i>
     </li>
 
-    <li class="list-group-item d-flex justify-content-between align-items-center cursor-pointer"
-        (click)="navigateTo('/allWishList')">
+    <li
+      class="list-group-item d-flex justify-content-between align-items-center cursor-pointer"
+      (click)="navigateTo('/allWishList')"
+    >
       <span><i class="bi bi-heart-fill text-primary me-2"></i> Wishlist</span>
       <i class="bi bi-chevron-right text-muted"></i>
     </li>
 
-    <li class="list-group-item d-flex justify-content-between align-items-center cursor-pointer"
-        (click)="navigateTo('/notfound')">
+    <li
+      class="list-group-item d-flex justify-content-between align-items-center cursor-pointer"
+      (click)="navigateTo('/notfound')"
+    >
       <span><i class="bi bi-headset text-primary me-2"></i> Help</span>
       <i class="bi bi-chevron-right text-muted"></i>
     </li>
 
-    <li class="list-group-item d-flex justify-content-between align-items-center cursor-pointer"
-        (click)="navigateTo('/user')">
+    <!-- <li
+      class="list-group-item d-flex justify-content-between align-items-center cursor-pointer"
+      (click)="navigateTo('/user')"
+    >
       <span><i class="bi bi-gear-fill text-primary me-2"></i> Settings</span>
+      <i class="bi bi-chevron-right text-muted"></i>
+    </li> -->
+
+    <!-- ✅ New: Addresses Link -->
+    <li
+      class="list-group-item d-flex justify-content-between align-items-center cursor-pointer"
+      (click)="navigateTo('/user/addresses')"
+    >
+      <span
+        ><i class="bi bi-geo-alt-fill text-primary me-2"></i> Addresses</span
+      >
       <i class="bi bi-chevron-right text-muted"></i>
     </li>
 
     <!-- Logout -->
-    <li class="list-group-item d-flex justify-content-between align-items-center text-danger cursor-pointer fw-semibold"
-        (click)="logout()">
+    <li
+      class="list-group-item d-flex justify-content-between align-items-center text-danger cursor-pointer fw-semibold"
+      (click)="logout()"
+    >
       <span><i class="bi bi-box-arrow-right me-2"></i> Logout</span>
     </li>
   </ul>

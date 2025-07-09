@@ -5,6 +5,8 @@ import { ProductService } from 'src/app/services/product-service.service';
 import { OwlOptions } from 'ngx-owl-carousel-o';
 import { CartService } from 'src/app/services/cart.service';
 import { ToastrService } from 'ngx-toastr';
+import { forkJoin } from 'rxjs';
+import { WishlistService } from 'src/app/services/wishlist.service';
 
 @Component({
   selector: 'app-product-details',
@@ -15,10 +17,12 @@ export class ProductDetailsComponent implements OnInit {
   productId?: string | null;
   productDetail?: IProduct | undefined;
   isLoading: boolean = false;
+  reviews: any[] = [];
 
   constructor(
     private _ActivatedRoute: ActivatedRoute,
     private _ProductService: ProductService,
+    private _wishlistService: WishlistService,
     private _CartService: CartService,
     private _toaster: ToastrService
   ) {}
@@ -27,23 +31,25 @@ export class ProductDetailsComponent implements OnInit {
 
     this._ActivatedRoute.paramMap.subscribe((params) => {
       this.productId = params.get('id');
-    });
-    if (this.productId != null) {
-      this._ProductService.getProductById(this.productId).subscribe({
-        next: (response) => {
-          console.log(response);
-          this.productDetail = response.data;
-          console.log(this.productDetail);
-          this.isLoading = false;
-        },
-        error: (error) => {
-          console.log(error);
-          this.isLoading = false;
-        },
-      });
-    }
-  }
 
+      if (this.productId != null) {
+        forkJoin({
+          product: this._ProductService.getProductById(this.productId),
+          reviews: this._ProductService.getReviewsByProductId(this.productId),
+        }).subscribe({
+          next: ({ product, reviews }) => {
+            this.productDetail = product.data;
+            this.reviews = reviews.data; // Adjust if backend wraps in `data`
+            this.isLoading = false;
+          },
+          error: (error) => {
+            console.error(error);
+            this.isLoading = false;
+          },
+        });
+      }
+    });
+  }
   customOptions: OwlOptions = {
     loop: true,
     mouseDrag: true,
@@ -90,6 +96,28 @@ export class ProductDetailsComponent implements OnInit {
       },
       error: (err) => {
         console.log(err);
+        this.isLoading = false;
+      },
+    });
+  }
+
+  addToWishList(productId: string) {
+    this.isLoading = true;
+
+    this._wishlistService.addToWishlist(productId).subscribe({
+      next: (res) => {
+        this._toaster.success('Added to wishlist!', 'Success', {
+          closeButton: true,
+          timeOut: 3000,
+          easing: 'ease-in-out',
+          progressBar: true,
+          progressAnimation: 'increasing',
+        });
+        this.isLoading = false;
+      },
+      error: (err) => {
+        console.error('Error adding to wishlist:', err);
+        this._toaster.error('Failed to add to wishlist', 'Error');
         this.isLoading = false;
       },
     });

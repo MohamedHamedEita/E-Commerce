@@ -1,0 +1,95 @@
+<section class="container my-5">
+  <div class="container mt-4">
+    <div class="row">
+      <!-- Sidebar -->
+      <div class="col-md-4 mb-4">
+        <app-user-sidebar></app-user-sidebar>
+      </div>
+
+      <!-- Main Content -->
+      <div class="col-md-8">
+        <h3 class="text-success mb-4">Manage Your Addresses</h3>
+
+        <!-- Add Address Form -->
+        <form
+          [formGroup]="addressForm"
+          (ngSubmit)="submitAddress()"
+          class="mb-4"
+        >
+          <div class="row g-3">
+            <div class="col-md-6">
+              <input
+                class="form-control"
+                placeholder="Alias"
+                formControlName="alias"
+              />
+            </div>
+            <div class="col-md-6">
+              <input
+                class="form-control"
+                placeholder="Phone"
+                formControlName="phone"
+              />
+            </div>
+            <div class="col-md-12">
+              <input
+                class="form-control"
+                placeholder="Details"
+                formControlName="details"
+              />
+            </div>
+            <div class="col-md-6">
+              <input
+                class="form-control"
+                placeholder="City"
+                formControlName="city"
+              />
+            </div>
+            <div class="col-md-6">
+              <input
+                class="form-control"
+                placeholder="Postal Code"
+                formControlName="postalCode"
+              />
+            </div>
+            <div class="col-12">
+              <button class="btn btn-primary w-100">Add Address</button>
+            </div>
+          </div>
+        </form>
+
+        <!-- Debug output for testing -->
+        <!-- <pre>{{ addresses | json }}</pre> -->
+
+        <!-- List of Addresses -->
+        <div *ngIf="addresses && addresses.length > 0">
+          <h5 class="mb-3">Your Saved Addresses:</h5>
+          <ul class="list-group">
+            <li
+              *ngFor="let addr of addresses"
+              class="list-group-item d-flex justify-content-between align-items-start"
+            >
+              <div>
+                <strong>{{ addr.alias }}</strong
+                ><br />
+                {{ addr.details }}, {{ addr.city }}<br />
+                Phone: {{ addr.phone }} - Postal: {{ addr.postalCode }}
+              </div>
+              <div>
+                <button
+                  class="btn btn-sm btn-outline-danger"
+                  (click)="deleteAddress(addr._id)"
+                >
+                  Delete
+                </button>
+              </div>
+            </li>
+          </ul>
+        </div>
+        <div *ngIf="addresses?.length === 0" class="alert alert-info mt-4">
+          You have no saved addresses.
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,14 +1,11 @@
+// user.component.ts
 import { Component, OnInit } from '@angular/core';
-import {
-  FormBuilder,
-  FormGroup,
-  Validators,
-  AbstractControl,
-} from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { AuthService } from 'src/app/services/auth.service';
 import { Router } from '@angular/router';
 import { passwordMatch } from 'src/app/custom-validations/match-password';
+
 @Component({
   selector: 'app-user',
   templateUrl: './user.component.html',
@@ -17,10 +14,14 @@ import { passwordMatch } from 'src/app/custom-validations/match-password';
 export class UserComponent implements OnInit {
   profileForm!: FormGroup;
   passwordForm!: FormGroup;
+  addressForm!: FormGroup;
   isLoading: boolean = false;
   selectedFile: File | null = null;
   previewImageUrl: string = '';
   userId!: string;
+  originalUser: any = {};
+  addresses: any[] = [];
+  editingAddressId: string | null = null;
 
   constructor(
     private fb: FormBuilder,
@@ -38,20 +39,33 @@ export class UserComponent implements OnInit {
         [Validators.required, Validators.pattern(/^01[0125][0-9]{8}$/)],
       ],
       address: [''],
-
-      password: [''],
     });
+
     this.passwordForm = this.fb.group(
       {
-        password: ['', [Validators.required, Validators.minLength(6)]],
+        currentPassword: ['', [Validators.required]],
+        newPassword: ['', [Validators.required, Validators.minLength(6)]],
         passwordConfirm: ['', Validators.required],
       },
-      {
-        validators: passwordMatch,
-      }
+      { validators: passwordMatch }
     );
 
+    this.initAddressForm();
     this.loadUserData();
+    this.getAddresses();
+  }
+
+  initAddressForm() {
+    this.addressForm = this.fb.group({
+      alias: ['', Validators.required],
+      details: ['', Validators.required],
+      phone: [
+        '',
+        [Validators.required, Validators.pattern(/^01[0125][0-9]{8}$/)],
+      ],
+      city: ['', Validators.required],
+      postalCode: ['', Validators.required],
+    });
   }
 
   loadUserData(): void {
@@ -61,12 +75,16 @@ export class UserComponent implements OnInit {
         if (user) {
           this.userId = user._id;
           this.previewImageUrl = user.profileImg || '';
-          this.profileForm.patchValue({
+
+          const patchData = {
             name: user.name,
             email: user.email,
             phone: user.phone || '',
             address: user.addresses?.[0] || '',
-          });
+          };
+
+          this.originalUser = { ...patchData };
+          this.profileForm.patchValue(patchData);
         }
       },
       error: () => {
@@ -75,7 +93,7 @@ export class UserComponent implements OnInit {
     });
   }
 
-  onFileSelected(event: Event) {
+  onFileSelected(event: Event): void {
     const input = event.target as HTMLInputElement;
     if (input.files && input.files.length > 0) {
       this.selectedFile = input.files[0];
@@ -94,31 +112,39 @@ export class UserComponent implements OnInit {
 
     this.isLoading = true;
 
+    const currentValues = this.profileForm.value;
     const formData = new FormData();
-    const profileValues = this.profileForm.value;
+    let changesDetected = false;
 
-    formData.append('name', profileValues.name);
-    formData.append('email', profileValues.email);
-    formData.append('phone', profileValues.phone);
-    formData.append('address', profileValues.address || '');
+    for (const key of Object.keys(currentValues)) {
+      const currentValue = currentValues[key] ?? '';
+      const originalValue = this.originalUser[key] ?? '';
+      if (currentValue !== originalValue) {
+        formData.append(key, currentValue);
+        changesDetected = true;
+      }
+    }
 
     if (this.selectedFile) {
       formData.append('profileImg', this.selectedFile);
+      changesDetected = true;
+    }
+
+    if (!changesDetected) {
+      alert('No changes detected.');
+      this.isLoading = false;
+      return;
     }
 
     this.http
-      .patch(
-        `https://car-parts-seven.vercel.app/api/v1/users/updateMe`,
-        formData,
-        {
-          withCredentials: true,
-        }
-      )
+      .patch(`http://localhost:3000/api/v1/users/updateMe`, formData, {
+        withCredentials: true,
+      })
       .subscribe({
         next: () => {
           alert('✅ Profile updated successfully!');
           this.isLoading = false;
-          this.loadUserData(); // refresh
+          this.loadUserData();
         },
         error: (err) => {
           console.error(err);
@@ -127,6 +153,7 @@ export class UserComponent implements OnInit {
         },
       });
   }
+
   onPasswordSubmit(): void {
     if (this.passwordForm.invalid) {
       this.passwordForm.markAllAsTouched();
@@ -137,7 +164,7 @@ export class UserComponent implements OnInit {
 
     this.http
       .patch(
-        `https://car-parts-seven.vercel.app/api/v1/users/changeMyPassword`,
+        `http://localhost:3000/api/v1/users/changeMyPassword`,
         {
           currentPassword,
           password: newPassword,
@@ -158,9 +185,52 @@ export class UserComponent implements OnInit {
       });
   }
 
-  passwordsMatch(group: AbstractControl) {
-    const newPass = group.get('newPassword')?.value;
-    const confirmPass = group.get('confirmPassword')?.value;
-    return newPass === confirmPass ? null : { notMatch: true };
+  getAddresses() {
+    this.http
+      .get<{ data: any[] }>('http://localhost:3000/api/v1/addresses', {
+        withCredentials: true,
+      })
+      .subscribe({
+        next: (res) => (this.addresses = res.data),
+        error: () => alert('❌ Failed to load addresses'),
+      });
+  }
+
+  submitAddress() {
+    if (this.addressForm.invalid) return;
+
+    const addressData = this.addressForm.value;
+    const url = this.editingAddressId
+      ? `http://localhost:3000/api/v1/addresses/${this.editingAddressId}`
+      : `http://localhost:3000/api/v1/addresses`;
+
+    const request = this.editingAddressId
+      ? this.http.patch(url, addressData, { withCredentials: true })
+      : this.http.post(url, addressData, { withCredentials: true });
+
+    request.subscribe({
+      next: () => {
+        this.getAddresses();
+        this.addressForm.reset();
+        this.editingAddressId = null;
+      },
+      error: () => alert('❌ Failed to save address'),
+    });
+  }
+
+  editAddress(addr: any) {
+    this.editingAddressId = addr._id;
+    this.addressForm.patchValue(addr);
+  }
+
+  deleteAddress(id: string) {
+    this.http
+      .delete(`http://localhost:3000/api/v1/addresses/${id}`, {
+        withCredentials: true,
+      })
+      .subscribe({
+        next: () => this.getAddresses(),
+        error: () => alert('❌ Failed to delete address'),
+      });
   }
 }

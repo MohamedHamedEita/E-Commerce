@@ -1,1 +1,69 @@
-<p>orders works!</p>
+<section class="container my-5">
+  <div class="container mt-4">
+    <div class="row">
+      <!-- Sidebar -->
+      <div class="col-md-4 mb-4">
+        <app-user-sidebar></app-user-sidebar>
+      </div>
+
+      <!-- Orders Content -->
+      <div class="col-md-8">
+        <h3 class="text-success mb-4">Your Orders</h3>
+
+        <!-- Loading Spinner -->
+        <div *ngIf="isLoading" class="text-center">
+          <div class="spinner-border text-success" role="status">
+            <span class="visually-hidden">Loading...</span>
+          </div>
+        </div>
+
+        <!-- Orders List -->
+        <div *ngIf="!isLoading && orders.length > 0">
+          <div *ngFor="let order of orders" class="card mb-4 shadow-sm">
+            <div class="card-header">
+              <strong>Order ID:</strong> {{ order._id }} <br />
+              <strong>Date:</strong> {{ order.createdAt | date : "medium" }}
+            </div>
+            <div class="card-body">
+              <p>
+                <strong>Total Price:</strong> {{ order.totalOrderPrice }} EGP
+              </p>
+              <p>
+                <strong>Payment Method:</strong> {{ order.paymentMethodType }}
+              </p>
+              <p>
+                <strong>Status:</strong>
+                <span class="badge bg-success">{{
+                  order.status || "Placed"
+                }}</span>
+              </p>
+              <hr />
+              <div
+                *ngFor="let item of order.cartItems"
+                class="d-flex align-items-center mb-3"
+              >
+                <img
+                  [src]="item.product.imageCover"
+                  alt=""
+                  class="me-3 border rounded"
+                  style="width: 60px; height: 60px; object-fit: cover"
+                />
+                <div>
+                  <strong>{{ item.product.title }}</strong
+                  ><br />
+                  Quantity: {{ item.count }}<br />
+                  Price: {{ item.price }} EGP
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- No Orders Message -->
+        <div *ngIf="!isLoading && orders.length === 0" class="alert alert-info">
+          You have not placed any orders yet.
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
