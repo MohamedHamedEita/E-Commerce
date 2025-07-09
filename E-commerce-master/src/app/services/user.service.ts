@@ -54,4 +54,11 @@ export class UserService {
       { withCredentials: true }
     );
   }
+
+  deleteMe(): Observable<any> {
+    return this._httpClient.delete(
+      'http://localhost:3000/api/v1/users/deleteMe',
+      { withCredentials: true }
+    );
+  }
 }

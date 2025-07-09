@@ -5,6 +5,7 @@ import { HttpClient } from '@angular/common/http';
 import { AuthService } from 'src/app/services/auth.service';
 import { Router } from '@angular/router';
 import { passwordMatch } from 'src/app/custom-validations/match-password';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-user',
@@ -27,6 +28,7 @@ export class UserComponent implements OnInit {
     private fb: FormBuilder,
     private http: HttpClient,
     private _AuthService: AuthService,
+    private _UserService: UserService,
     private router: Router
   ) {}
 
@@ -232,5 +234,26 @@ export class UserComponent implements OnInit {
         next: () => this.getAddresses(),
         error: () => alert('❌ Failed to delete address'),
       });
+  }
+
+  deleteAccount(): void {
+    if (
+      confirm(
+        'Are you sure you want to delete your account? This action cannot be undone.'
+      )
+    ) {
+      this._UserService.deleteMe().subscribe({
+        next: () => {
+          alert('Your account has been deleted.');
+
+          // Call backend logout endpoint to clear cookie
+          this._AuthService.logout();
+        },
+        error: (err) => {
+          console.error(err);
+          alert('Failed to delete account.');
+        },
+      });
+    }
   }
 }
