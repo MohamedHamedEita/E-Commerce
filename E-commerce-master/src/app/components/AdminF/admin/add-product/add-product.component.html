@@ -1,0 +1,54 @@
+<div class="card p-4 shadow-sm">
+  <h4 class="mb-3">Add New Product</h4>
+  <form [formGroup]="productForm" (ngSubmit)="onSubmit()">
+
+    <div class="mb-3">
+      <label>Name</label>
+      <input formControlName="name" class="form-control" />
+    </div>
+
+    <div class="mb-3">
+      <label>Description</label>
+      <textarea formControlName="description" class="form-control"></textarea>
+    </div>
+
+    <div class="mb-3">
+      <label>Price</label>
+      <input type="number" formControlName="price" class="form-control" />
+    </div>
+
+    <div class="mb-3">
+      <label>Quantity</label>
+      <input type="number" formControlName="quantity" class="form-control" />
+    </div>
+
+    <div class="mb-3">
+      <label>Category</label>
+      <select formControlName="category" class="form-select">
+        <option *ngFor="let cat of categories" [value]="cat._id">{{ cat.name }}</option>
+      </select>
+    </div>
+
+    <div class="mb-3">
+      <label>Brand</label>
+      <select formControlName="brand" class="form-select">
+        <option *ngFor="let brand of brands" [value]="brand._id">{{ brand.name }}</option>
+      </select>
+    </div>
+
+    <div class="mb-3">
+      <label>Cover Image</label>
+      <input type="file" (change)="onCoverImageChange($event)" class="form-control" />
+    </div>
+
+    <div class="mb-3">
+      <label>Extra Images (optional)</label>
+      <input type="file" (change)="onImagesChange($event)" multiple class="form-control" />
+    </div>
+
+    <button class="btn btn-success" [disabled]="productForm.invalid || isSubmitting">
+      {{ isSubmitting ? 'Submitting...' : 'Add Product' }}
+    </button>
+
+  </form>
+</div>

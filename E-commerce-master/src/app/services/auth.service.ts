@@ -43,7 +43,7 @@ export class AuthService {
   }
   logout(): void {
     this.http
-      .post('https://car-parts-seven.vercel.app/api/v1/auth/logout', {
+      .get('https://car-parts-seven.vercel.app/api/v1/auth/logout', {
         withCredentials: true,
       })
       .subscribe({
@@ -72,7 +72,10 @@ export class AuthService {
   register(regForm: any): Observable<any> {
     return this.http.post(
       `https://car-parts-seven.vercel.app/api/v1/auth/signup`,
-      regForm
+      regForm,
+      {
+        withCredentials: true,
+      }
     );
   }
 

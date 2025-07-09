@@ -43,9 +43,12 @@ import { BrandsDetailsComponent } from './components/brands-details/brands-detai
 import { CookieService } from 'ngx-cookie-service';
 import { UserComponent } from './components/user/user.component';
 import { UserSidebarComponent } from './components/user-sidebar/user-sidebar.component';
-import { AdminComponent } from './components/admin/admin.component';
-import { AdminSidebarComponent } from './components/admin-sidebar/admin-sidebar.component';
+import { AdminComponent } from './components/AdminF/admin/admin.component';
+import { AdminSidebarComponent } from './components/AdminF/admin/admin-sidebar/admin-sidebar.component';
 import { ProductFiltersComponent } from './components/product-filters/product-filters.component';
+import { AddProductComponent } from './components/AdminF/admin/add-product/add-product.component';
+import { UpdateProductComponent } from './components/AdminF/admin/update-product/update-product.component';
+import { DeleteProductComponent } from './components/AdminF/admin/delete-product/delete-product.component';
 
 @NgModule({
 
@@ -77,7 +80,7 @@ import { ProductFiltersComponent } from './components/product-filters/product-fi
     CategoryProductComponent,
     LoadingComponent,
     BrandsDetailsComponent,
-    UserComponent,UserSidebarComponent, AdminComponent, AdminSidebarComponent, ProductFiltersComponent, 
+    UserComponent,UserSidebarComponent, AdminComponent, AdminSidebarComponent, ProductFiltersComponent, AddProductComponent, UpdateProductComponent, DeleteProductComponent,
     ],
   imports: [
     BrowserModule,

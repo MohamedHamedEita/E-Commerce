@@ -22,16 +22,15 @@ export class LoginComponent implements OnInit {
       Validators.required,
       Validators.pattern(/^[A-Z].{5,}$/),
     ]),
-  rememberMe: new FormControl(false)
+    rememberMe: new FormControl(false),
   });
 
   constructor(
     private _AuthService: AuthService,
     private _Router: Router,
-    private _HttpClient: HttpClient ,
-    private _CartService : CartService,
-    private _WishlistService : WishlistService
-
+    private _HttpClient: HttpClient,
+    private _CartService: CartService,
+    private _WishlistService: WishlistService
   ) {}
 
   ngOnInit(): void {}
@@ -42,54 +41,45 @@ export class LoginComponent implements OnInit {
   }
 
   handelLogin(loginForm: FormGroup) {
-  if (loginForm.valid) {
-    this.isLoading = true;
+    if (loginForm.valid) {
+      this.isLoading = true;
 
-    this._AuthService.login(loginForm.value).subscribe({
-      next: (response) => {
-        this.isLoading = false;
+      this._AuthService.login(loginForm.value).subscribe({
+        next: (response) => {
+          this.isLoading = false;
 
-        if (response.status === 'success') {
-          // ✅ Remember Me logic (اختياري)
-          if (loginForm.value.rememberMe) {
-            localStorage.setItem('rememberMeEmail', loginForm.value.email);
-            localStorage.setItem('rememberMePassword', loginForm.value.password);
+          if (response.status === 'success') {
+            // ✅ تحديث حالة الدخول
+            this._AuthService.isLogin.next(true);
+            this._CartService.updateCartItemCount();
+            this._WishlistService.updateLoggedUserWishListAndCount();
+
+            // ✅ جلب بيانات المستخدم من الكوكي
+            this._AuthService.getCurrentUser().subscribe({
+              next: (res: any) => {
+                const user = res?.data;
+                const userRole = user?.role;
+                this._AuthService.user.next(user);
+
+                if (userRole === 'admin') {
+                  this._Router.navigate(['/admin']);
+                } else {
+                  this._Router.navigate(['/home']);
+                }
+              },
+              error: () => {
+                this.errorMessage = 'Authentication failed.';
+              },
+            });
           } else {
-            localStorage.removeItem('rememberMeEmail');
-            localStorage.removeItem('rememberMePassword');
+            this.errorMessage = response.message;
           }
-
-          // ✅ تحديث حالة الدخول
-          this._AuthService.isLogin.next(true);
-          this._CartService.updateCartItemCount();
-          this._WishlistService.updateLoggedUserWishListAndCount();
-
-          // ✅ جلب بيانات المستخدم من الكوكي
-          this._AuthService.getCurrentUser().subscribe({
-            next: (res: any) => {
-              const user = res?.user;
-              const userRole = user?.role;
-              this._AuthService.user.next(user);
-
-              if (userRole === 'admin') {
-                this._Router.navigate(['/admin-dashboard']);
-              } else {
-                this._Router.navigate(['/home']);
-              }
-            },
-            error: () => {
-              this.errorMessage = 'Authentication failed.';
-            }
-          });
-        } else {
-          this.errorMessage = response.message;
-        }
-      },
-      error: (err) => {
-        this.isLoading = false;
-        this.errorMessage = err.error?.message || 'Login failed.';
-      }
-    });
+        },
+        error: (err) => {
+          this.isLoading = false;
+          this.errorMessage = err.error?.message || 'Login failed.';
+        },
+      });
+    }
   }
-}
 }
