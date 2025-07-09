@@ -30,7 +30,6 @@ import { DeleteProductComponent } from './components/AdminF/admin/delete-product
 import { AddressManagementComponent } from './components/address-management/address-management.component';
 import { ChangePasswordComponent } from './components/change-password/change-password.component';
 
-
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
 

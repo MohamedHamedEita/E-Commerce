@@ -3,6 +3,8 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { passwordMatch } from 'src/app/custom-validations/match-password';
 import { AuthService } from 'src/app/services/auth.service';
+import { CartService } from 'src/app/services/cart.service';
+import { WishlistService } from 'src/app/services/wishlist.service';
 
 @Component({
   selector: 'app-register',
@@ -10,7 +12,12 @@ import { AuthService } from 'src/app/services/auth.service';
   styleUrls: ['./register.component.css'],
 })
 export class RegisterComponent {
-  constructor(private _AuthService: AuthService, private _Router: Router) {}
+  constructor(
+    private _AuthService: AuthService,
+    private _WishlistService: WishlistService,
+    private _CartService: CartService,
+    private _Router: Router
+  ) {}
   errorMessage: string = '';
   isLoading: boolean = false;
   passwordFieldType: string = 'password';
@@ -47,9 +54,32 @@ export class RegisterComponent {
       this.isLoading = true;
       this._AuthService.register(this.registerForm.value).subscribe({
         next: (response) => {
-          console.log(response);
-          this._Router.navigate(['/login']);
-          this.isLoading = false;
+          if (response.status === 'success') {
+            // ✅ تحديث حالة الدخول
+            this._AuthService.isLogin.next(true);
+            this._CartService.updateCartItemCount();
+            this._WishlistService.updateLoggedUserWishListAndCount();
+
+            // ✅ جلب بيانات المستخدم من الكوكي
+            this._AuthService.getCurrentUser().subscribe({
+              next: (res: any) => {
+                const user = res?.user;
+                const userRole = user?.role;
+                this._AuthService.user.next(user);
+
+                if (userRole === 'admin') {
+                  this._Router.navigate(['/admin-dashboard']);
+                } else {
+                  this._Router.navigate(['/home']);
+                }
+              },
+              error: () => {
+                this.errorMessage = 'Authentication failed.';
+              },
+            });
+          } else {
+            this.errorMessage = response.message;
+          }
         },
         error: (err) => {
           console.log(err.error.message);
@@ -61,10 +91,12 @@ export class RegisterComponent {
   }
 
   togglePasswordVisibility() {
-    this.passwordFieldType = this.passwordFieldType === 'password' ? 'text' : 'password';
+    this.passwordFieldType =
+      this.passwordFieldType === 'password' ? 'text' : 'password';
   }
 
   toggleRepasswordVisibility() {
-    this.repasswordFieldType = this.repasswordFieldType === 'password' ? 'text' : 'passwordConfirm';
+    this.repasswordFieldType =
+      this.repasswordFieldType === 'password' ? 'text' : 'passwordConfirm';
   }
 }

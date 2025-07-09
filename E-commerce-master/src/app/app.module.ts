@@ -52,6 +52,8 @@ import { AddProductComponent } from './components/AdminF/admin/add-product/add-p
 import { UpdateProductComponent } from './components/AdminF/admin/update-product/update-product.component';
 import { DeleteProductComponent } from './components/AdminF/admin/delete-product/delete-product.component';
 
+
+
 @NgModule({
 
   declarations: [
@@ -82,15 +84,7 @@ import { DeleteProductComponent } from './components/AdminF/admin/delete-product
     CategoryProductComponent,
     LoadingComponent,
     BrandsDetailsComponent,
-    UserComponent,UserSidebarComponent,
-     AdminComponent,
-    AdminSidebarComponent,
-    ProductFiltersComponent,
-    AddProductComponent,
-    UpdateProductComponent,
-     DeleteProductComponent,
-     ChangePasswordComponent,
-     AddressManagementComponent
+    UserComponent,UserSidebarComponent, AdminComponent, AdminSidebarComponent, ProductFiltersComponent, AddressManagementComponent, ChangePasswordComponent,
     ],
   imports: [
     BrowserModule,

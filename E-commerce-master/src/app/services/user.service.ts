@@ -18,9 +18,12 @@ export class UserService {
   }
 
   getUserOrders() {
-    return this._httpClient.get(`https://car-parts-seven.vercel.app/api/v1/orders`, {
-      withCredentials: true,
-    });
+    return this._httpClient.get(
+      `https://car-parts-seven.vercel.app/api/v1/orders`,
+      {
+        withCredentials: true,
+      }
+    );
   }
   // Add new address
   addAddress(data: any): Observable<any> {

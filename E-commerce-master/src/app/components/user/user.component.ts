@@ -189,9 +189,15 @@ export class UserComponent implements OnInit {
 
   getAddresses() {
     this.http
-      .get<{ data: any[] }>('https://car-parts-seven.vercel.app/api/v1/addresses', {
-        withCredentials: true,
-      })
+
+
+      .get<{ data: any[] }>(
+        'https://car-parts-seven.vercel.app/api/v1/addresses',
+        {
+          withCredentials: true,
+        }
+      )
+
       .subscribe({
         next: (res) => (this.addresses = res.data),
         error: () => alert('❌ Failed to load addresses'),
