@@ -27,6 +27,8 @@ import { AdminSidebarComponent } from './components/AdminF/admin/admin-sidebar/a
 import { AddProductComponent } from './components/AdminF/admin/add-product/add-product.component';
 import { UpdateProductComponent } from './components/AdminF/admin/update-product/update-product.component';
 import { DeleteProductComponent } from './components/AdminF/admin/delete-product/delete-product.component';
+import { AddressManagementComponent } from './components/address-management/address-management.component';
+import { ChangePasswordComponent } from './components/change-password/change-password.component';
 
 
 const routes: Routes = [
@@ -86,6 +88,9 @@ const routes: Routes = [
     component: ResetPasswordComponent,
   },
   { path: 'user', canActivate: [authGuard], component: UserComponent },
+  { path: 'user/addresses', component: AddressManagementComponent },
+  { path: 'user/changepassword', component: ChangePasswordComponent },
+
   {
     path: 'user-sidebar',
     canActivate: [authGuard],

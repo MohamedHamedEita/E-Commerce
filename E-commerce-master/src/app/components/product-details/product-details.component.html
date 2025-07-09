@@ -20,15 +20,15 @@
     <div class="p-5">
       <h3 class="fw-bold">{{ productDetail?.name }}</h3>
       <p class="my-3">{{ productDetail?.description }}</p>
-      <span class="text-main fw-bold font-sm">{{
-        productDetail?.category?.name
-      }}</span>
+      <span class="text-main fw-bold font-sm">
+        Category: {{ productDetail?.category?.name }}</span
+      >
       <div class="my-3">
         <p class="my-0 text-secondary fw-bold font-sm">
           Available Quantity {{ productDetail?.quantity }}
         </p>
         <p class="my-0 text-secondary fw-bold font-sm">
-          Brand {{ productDetail?.brand?.name }}
+          Brand: {{ productDetail?.brand?.name }}
         </p>
         <!-- <p>Rating : {{productDetail?.ratingsAverage}} </p>
         <p>Price : {{productDetail?.price | currency:'USD':true}} </p> -->
@@ -52,11 +52,41 @@
           Add To Cart
           <i class="fas fa-shopping-cart ms-2"></i>
         </button>
-        <button class="btn bg-danger w-25 text-white mt-3">
+        <button
+          (click)="addToWishList(productDetail!._id)"
+          class="btn bg-danger w-25 text-white mt-3"
+        >
           Add To wishList
           <i class="fas fa-heart ms-2"></i>
         </button>
       </div>
     </div>
   </div>
+</div>
+<div class="mt-5">
+  <h4 class="fw-bold mb-4">Customer Reviews</h4>
+
+  <div *ngIf="reviews && reviews.length > 0; else noReviews">
+    <div class="border rounded-3 p-3 mb-3" *ngFor="let review of reviews">
+      <div class="d-flex align-items-center mb-2">
+        <img
+          [src]="review.user?.profileImg"
+          alt="{{ review.user?.name }}"
+          width="40"
+          height="40"
+          class="rounded-circle me-2 object-fit-cover"
+        />
+        <strong>{{ review.user?.name }}</strong>
+      </div>
+      <p class="mb-1 text-muted">
+        <i class="fa-solid fa-star rating-color me-1"></i>
+        {{ review.ratings }}/5
+      </p>
+      <p class="mb-0">{{ review.title }}</p>
+    </div>
+  </div>
+
+  <ng-template #noReviews>
+    <p class="text-muted">No reviews yet.</p>
+  </ng-template>
 </div>

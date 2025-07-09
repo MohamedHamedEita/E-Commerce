@@ -14,6 +14,8 @@ import { RegisterComponent } from './components/register/register.component';
 import { ProductsComponent } from './components/products/products.component';
 import { BrandsComponent } from './components/brands/brands.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { AddressManagementComponent } from './components/address-management/address-management.component';
+import { ChangePasswordComponent } from './components/change-password/change-password.component';
 //^ Template-driven forms **//
 // import { FormsModule } from '@angular/forms';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
@@ -80,7 +82,15 @@ import { DeleteProductComponent } from './components/AdminF/admin/delete-product
     CategoryProductComponent,
     LoadingComponent,
     BrandsDetailsComponent,
-    UserComponent,UserSidebarComponent, AdminComponent, AdminSidebarComponent, ProductFiltersComponent, AddProductComponent, UpdateProductComponent, DeleteProductComponent,
+    UserComponent,UserSidebarComponent,
+     AdminComponent,
+    AdminSidebarComponent,
+    ProductFiltersComponent,
+    AddProductComponent,
+    UpdateProductComponent,
+     DeleteProductComponent,
+     ChangePasswordComponent,
+     AddressManagementComponent
     ],
   imports: [
     BrowserModule,

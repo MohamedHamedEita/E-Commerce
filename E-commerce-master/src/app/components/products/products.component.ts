@@ -15,7 +15,7 @@ export class ProductsComponent implements OnInit {
 
   // Pagination
   currentPage: number = 1;
-  pageSize: number = 8;
+  pageSize: number = 15;
   totalPages: number = 1;
 
   // Filters

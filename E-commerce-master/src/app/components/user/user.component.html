@@ -1,4 +1,4 @@
-<section class="my-5">
+<section class="container my-5">
   <div class="container mt-4">
     <div class="row">
       <!-- Sidebar -->
@@ -26,53 +26,40 @@
           </div>
 
           <div class="mb-3">
-            <label>Address</label>
-            <input formControlName="address" class="form-control" />
-          </div>
-
-          <div class="mb-3">
             <label>Choose new photo</label>
-            <input type="file" (change)="onFileSelected($event)" class="form-control" />
-            <img *ngIf="previewImageUrl" [src]="previewImageUrl" alt="Profile" class="img-thumbnail mt-2" width="100" />
+            <input
+              type="file"
+              (change)="onFileSelected($event)"
+              class="form-control"
+            />
+            <img
+              *ngIf="previewImageUrl"
+              [src]="previewImageUrl"
+              alt="Profile"
+              class="img-thumbnail mt-2"
+              width="100"
+            />
           </div>
 
-          <button class="btn btn-success" [disabled]="profileForm.invalid || isLoading">
+          <button
+            class="btn btn-success"
+            [disabled]="profileForm.invalid || isLoading"
+          >
             <span *ngIf="!isLoading">Save Settings</span>
-            <span *ngIf="isLoading"><i class="fas fa-spinner fa-spin"></i></span>
+            <span *ngIf="isLoading"
+              ><i class="fas fa-spinner fa-spin"></i
+            ></span>
           </button>
         </form>
-
-        <hr class="my-5">
-
-        <!-- Password Change -->
-        <h4 class="text-success">PASSWORD CHANGE</h4>
-        <form [formGroup]="passwordForm" (ngSubmit)="onPasswordSubmit()">
-          <div class="mb-3">
-            <label>Current Password</label>
-            <input type="password" formControlName="currentPassword" class="form-control" />
-          </div>
-
-          <div class="mb-3">
-            <label>New Password</label>
-            <input type="password" formControlName="newPassword" class="form-control" />
-          </div>
-<div class="mb-3">
-  <label>Confirm Password</label>
-  <input type="password" formControlName="passwordConfirm" class="form-control" />
-  <div *ngIf="
-      passwordForm.hasError('passwordMisMatch') &&
-      passwordForm.get('passwordConfirm')?.touched
-    "
-    class="text-danger">
-    Passwords do not match.
-  </div>
-</div>
-
-
-          <button class="btn btn-success" [disabled]="passwordForm.invalid">
-            Save Password
+        <div class="mt-4">
+          <button
+            class="btn btn-outline-danger w-100"
+            (click)="deleteAccount()"
+          >
+            <i class="fas fa-trash-alt me-2"></i>
+            Delete My Account
           </button>
-        </form>
+        </div>
       </div>
     </div>
   </div>

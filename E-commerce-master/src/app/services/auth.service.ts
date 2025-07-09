@@ -10,7 +10,7 @@ export class AuthService {
   isLogin = new BehaviorSubject<boolean>(false);
   user = new BehaviorSubject<any>(null);
 
-  private baseURL = 'https://car-parts-seven.vercel.app/api/v1';
+  private baseURL = 'http://localhost:3000/api/v1';
 
   constructor(private http: HttpClient, private router: Router) {
     this.checkTokenOnStart();
@@ -18,7 +18,7 @@ export class AuthService {
 
   checkTokenOnStart(): void {
     this.http
-      .get('https://car-parts-seven.vercel.app/api/v1/users/getMe', {
+      .get('http://localhost:3000/api/v1/users/getMe', {
         withCredentials: true,
       })
       .subscribe({
@@ -33,17 +33,13 @@ export class AuthService {
   }
 
   login(formData: any): Observable<any> {
-    return this.http.post(
-      'https://car-parts-seven.vercel.app/api/v1/auth/login',
-      formData,
-      {
-        withCredentials: true,
-      }
-    );
+    return this.http.post('http://localhost:3000/api/v1/auth/login', formData, {
+      withCredentials: true,
+    });
   }
   logout(): void {
     this.http
-      .get('https://car-parts-seven.vercel.app/api/v1/auth/logout', {
+      .get('http://localhost:3000/api/v1/auth/logout', {
         withCredentials: true,
       })
       .subscribe({
@@ -61,41 +57,34 @@ export class AuthService {
   }
 
   getCurrentUser(): Observable<any> {
-    return this.http.get(
-      'https://car-parts-seven.vercel.app/api/v1/users/getMe',
-      {
-        withCredentials: true,
-      }
-    );
+    return this.http.get('http://localhost:3000/api/v1/users/getMe', {
+      withCredentials: true,
+    });
   }
 
   register(regForm: any): Observable<any> {
-    return this.http.post(
-      `https://car-parts-seven.vercel.app/api/v1/auth/signup`,
-      regForm,
-      {
-        withCredentials: true,
-      }
-    );
+    return this.http.post(`http://localhost:3000/api/v1/auth/signup`, regForm, {
+      withCredentials: true,
+    });
   }
 
   forGetPassword(forGetPasswordForm: any): Observable<any> {
     return this.http.post(
-      `https://car-parts-seven.vercel.app/api/v1/auth/forgotpassword`,
+      `http://localhost:3000/api/v1/auth/forgotpassword`,
       forGetPasswordForm
     );
   }
 
   verifyResetCode(verifyResetForm: any): Observable<any> {
     return this.http.post(
-      `https://car-parts-seven.vercel.app/api/v1/auth/verifyResetCode`,
+      `http://localhost:3000/api/v1/auth/verifyResetCode`,
       verifyResetForm
     );
   }
 
   resetPassword(resetPassword: any): Observable<any> {
     return this.http.patch(
-      `https://car-parts-seven.vercel.app/api/v1/auth/resetPassword`,
+      `http://localhost:3000/api/v1/auth/resetPassword`,
       resetPassword
     );
   }
