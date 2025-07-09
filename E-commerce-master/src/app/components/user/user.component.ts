@@ -139,7 +139,7 @@ export class UserComponent implements OnInit {
     }
 
     this.http
-      .patch(`http://localhost:3000/api/v1/users/updateMe`, formData, {
+      .patch(`https://car-parts-seven.vercel.app/api/v1/users/updateMe`, formData, {
         withCredentials: true,
       })
       .subscribe({
@@ -166,7 +166,7 @@ export class UserComponent implements OnInit {
 
     this.http
       .patch(
-        `http://localhost:3000/api/v1/users/changeMyPassword`,
+        `https://car-parts-seven.vercel.app/api/v1/users/changeMyPassword`,
         {
           currentPassword,
           password: newPassword,
@@ -189,7 +189,7 @@ export class UserComponent implements OnInit {
 
   getAddresses() {
     this.http
-      .get<{ data: any[] }>('http://localhost:3000/api/v1/addresses', {
+      .get<{ data: any[] }>('https://car-parts-seven.vercel.app/api/v1/addresses', {
         withCredentials: true,
       })
       .subscribe({
@@ -203,8 +203,8 @@ export class UserComponent implements OnInit {
 
     const addressData = this.addressForm.value;
     const url = this.editingAddressId
-      ? `http://localhost:3000/api/v1/addresses/${this.editingAddressId}`
-      : `http://localhost:3000/api/v1/addresses`;
+      ? `https://car-parts-seven.vercel.app/api/v1/addresses/${this.editingAddressId}`
+      : `https://car-parts-seven.vercel.app/api/v1/addresses`;
 
     const request = this.editingAddressId
       ? this.http.patch(url, addressData, { withCredentials: true })
@@ -227,7 +227,7 @@ export class UserComponent implements OnInit {
 
   deleteAddress(id: string) {
     this.http
-      .delete(`http://localhost:3000/api/v1/addresses/${id}`, {
+      .delete(`https://car-parts-seven.vercel.app/api/v1/addresses/${id}`, {
         withCredentials: true,
       })
       .subscribe({
