@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { ApiResponse } from 'src/app/interfaces/api-response';
 import { CartService } from 'src/app/services/cart.service';
 import { ToastrService } from 'ngx-toastr';
 
@@ -9,102 +8,69 @@ import { ToastrService } from 'ngx-toastr';
   styleUrls: ['./cart.component.css'],
 })
 export class CartComponent implements OnInit {
-  cartDetails?: ApiResponse;
-  // cartDetails?:any;
+  cartItems: any[] = [];
+  totalCartPrice: number = 0;
+  cartId: string = '';
   isLoading: boolean = false;
 
   constructor(
-    private _CartService: CartService,
-    private _toaster: ToastrService
+    private cartService: CartService,
+    private toastr: ToastrService
   ) {}
 
   ngOnInit(): void {
+    this.loadCart();
+  }
+
+  loadCart(): void {
     this.isLoading = true;
-    this._CartService.getUserCart().subscribe({
+    this.cartService.getUserCart().subscribe({
       next: (res) => {
-        this.cartDetails = res;
-        // this.cartDetails=res.data
-        // console.log(res);
+        this.cartItems = res.data.cartItems || [];
+        this.totalCartPrice = res.data.totalCartPrice;
+        this.cartId = res.data._id;
         this.isLoading = false;
+        console.log(this.cartItems);
       },
       error: (err) => {
-        console.log(err);
+        console.error('Error loading cart:', err);
         this.isLoading = false;
       },
     });
   }
-  removeCartItem(id: string) {
+
+  removeCartItem(id: string): void {
     this.isLoading = true;
-
-    this._CartService.removeCartItem(id).subscribe({
+    this.cartService.removeCartItem(id).subscribe({
       next: (res) => {
-        this.cartDetails = res;
-        // this.cartItemsNum.next(res.numOfCartItems) ;
-        this._CartService.cartItemsNum.next(res.numOfCartItems);
-        this._toaster.error('Remove to cart! ', 'Remove', {
-          closeButton: true,
-          timeOut: 3000,
-          easing: 'ease-in-out',
-          progressBar: true,
-          progressAnimation: 'increasing',
-        });
-        this.isLoading = false;
+        this.toastr.info('Item removed from cart.', 'Removed');
+        this.loadCart();
+        this.cartService.cartItemsNum.next(res.numOfCartItems);
       },
       error: (err) => {
-        console.log(err);
+        console.error(err);
         this.isLoading = false;
       },
     });
   }
 
-  updateCartItem(id: string, count: number) {
-    // this.isLoading = true;
-    this._CartService.updateCartItem(id, count).subscribe({
-      next: (res) => {
-        this.cartDetails = res;
-        // this.isLoading = false;
-      },
-      error: (err) => {
-        console.log(err);
-        // this.isLoading = false;
-      },
-    });
-  }
-  showSuccess() {
-    this._toaster.success('Successfully Add to cart! ', 'Add', {
-      closeButton: true,
-      timeOut: 3000,
-      easing: 'ease-in-out',
-      progressBar: true,
-      progressAnimation: 'increasing',
-    });
-  }
-  showError() {
-    this._toaster.info('You removed an item from the cart  ! ', 'Remove', {
-      closeButton: true,
-      timeOut: 4000,
-      easing: 'ease-in-out',
-      progressBar: true,
-      progressAnimation: 'increasing',
+  updateCartItem(id: string, count: number): void {
+    if (count < 1) return; // prevent quantity < 1
+    this.cartService.updateCartItem(id, count).subscribe({
+      next: () => this.loadCart(),
+      error: (err) => console.error(err),
     });
   }
 
-  ClearUserCart() {
-    this._CartService.ClearUserCart().subscribe({
-      next: (res) => {
-        this.cartDetails = res;
-        this._CartService.cartItemsNum.next(0);
-        this._toaster.success('Cart cleared successfully!', 'Clear', {
-          closeButton: true,
-          timeOut: 3000,
-          easing: 'ease-in-out',
-          progressBar: true,
-          progressAnimation: 'increasing',
-        });
+  clearCart(): void {
+    this.cartService.ClearUserCart().subscribe({
+      next: () => {
+        this.cartItems = [];
+        this.totalCartPrice = 0;
+        this.toastr.success('Cart cleared successfully!', 'Cleared');
+        this.cartService.cartItemsNum.next(0);
       },
-      error: (err) => {
-        console.log(err);
-      },
+      error: (err) => console.error(err),
     });
   }
 }

@@ -31,20 +31,30 @@ export class WishlistService {
   addToWishlist(productId: string): Observable<any> {
     return this._HttpClient.post(
       `https://car-parts-seven.vercel.app/api/v1/wishlist`,
+
       {
         productId: productId,
+      },
+      {
+        withCredentials: true,
       }
     );
   }
 
   getAllWishList(): Observable<any> {
     return this._HttpClient.get(
-      `https://car-parts-seven.vercel.app/api/v1/wishlist`
+      `https://car-parts-seven.vercel.app/api/v1/wishlist`,
+      {
+        withCredentials: true,
+      }
     );
   }
   removeProductFromWishList(productId: string): Observable<any> {
     return this._HttpClient.delete(
-      `https://car-parts-seven.vercel.app/api/v1/wishlist/${productId}`
+      `https://car-parts-seven.vercel.app/api/v1/wishlist/${productId}`,
+      {
+        withCredentials: true,
+      }
     );
   }
 }

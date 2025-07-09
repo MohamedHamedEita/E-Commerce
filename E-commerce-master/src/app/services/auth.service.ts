@@ -43,7 +43,7 @@ export class AuthService {
   }
   logout(): void {
     this.http
-      .get('https://car-parts-seven.vercel.app/api/v1/auth/logout', {
+      .post('https://car-parts-seven.vercel.app/api/v1/auth/logout', {
         withCredentials: true,
       })
       .subscribe({

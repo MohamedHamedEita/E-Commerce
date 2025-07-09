@@ -4,12 +4,13 @@
   <div class="container">
     <a class="navbar-brand" routerLink="home">
       <img
-        src="assets\images\Logo.jpeg"
+        src="assets/images/Logo.jpeg"
         class="logo"
         alt="FreshCartLogo"
         routerLink="/home"
       />
     </a>
+
     <button
       class="navbar-toggler"
       type="button"
@@ -21,16 +22,15 @@
     >
       <span class="navbar-toggler-icon"></span>
     </button>
+
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul *ngIf="isUserLogin" class="navbar-nav me-auto mb-2 mb-lg-0">
+      <!-- 🌐 Public Navigation -->
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item">
           <a class="nav-link" routerLinkActive="active" routerLink="home"
             >Home</a
           >
         </li>
-        <!-- <li class="nav-item">
-          <a class="nav-link" routerLinkActive="active" routerLink="cart">Cart</a>
-        </li> -->
         <li class="nav-item">
           <a class="nav-link" routerLinkActive="active" routerLink="products"
             >Products</a
@@ -48,7 +48,9 @@
         </li>
       </ul>
 
+      <!-- 🔐 User-Specific Links -->
       <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+        <!-- If not logged in -->
         <li
           *ngIf="!isUserLogin"
           class="nav-item d-flex justify-content-center align-items-center font-sm fw-bold"
@@ -56,13 +58,10 @@
           Already have an account?
           <a class="nav-link" routerLink="login">Sign in</a>
         </li>
-        <!-- <li class="nav-item">
-          <a *ngIf="!isUserLogin" class="nav-link" routerLink="register">Register</a>
-        </li> -->
 
-        <li class="nav-item">
+        <!-- Cart -->
+        <li class="nav-item" *ngIf="isUserLogin">
           <a
-            *ngIf="isUserLogin"
             routerLink="/cart"
             class="nav-link cursor-pointer position-relative"
           >
@@ -75,9 +74,9 @@
           </a>
         </li>
 
-        <li class="nav-item mx-lg-3">
+        <!-- Wishlist -->
+        <li class="nav-item mx-lg-3" *ngIf="isUserLogin">
           <a
-            *ngIf="isUserLogin"
             routerLink="/allWishList"
             class="nav-link cursor-pointer position-relative"
           >
@@ -89,6 +88,8 @@
             </span>
           </a>
         </li>
+
+        <!-- User dropdown -->
         <li class="nav-item dropdown" *ngIf="isUserLogin && userName">
           <a
             class="nav-link dropdown-toggle d-flex align-items-center gap-2"
