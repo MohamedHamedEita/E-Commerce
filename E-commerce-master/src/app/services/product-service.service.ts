@@ -101,4 +101,12 @@ export class ProductService {
       { withCredentials: true }
     );
   }
+
+  submitReview(productId: string, review: { title: string; ratings: number }) {
+    return this._HttpClient.post<any>(
+      `https://car-parts-seven.vercel.app/api/v1/products/${productId}/reviews`,
+      review,
+      { withCredentials: true }
+    );
+  }
 }
