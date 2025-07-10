@@ -38,13 +38,13 @@ export class AddProductComponent implements OnInit {
 
   fetchCategories() {
     this.http
-      .get<any>('http://localhost:3000/api/v1/categories')
+      .get<any>('https://car-parts-seven.vercel.app/api/v1/categories')
       .subscribe((res) => (this.categories = res.data || []));
   }
 
   fetchBrands() {
     this.http
-      .get<any>('http://localhost:3000/api/v1/brands')
+      .get<any>('https://car-parts-seven.vercel.app/api/v1/brands')
       .subscribe((res) => (this.brands = res.data || []));
   }
 
@@ -76,7 +76,7 @@ export class AddProductComponent implements OnInit {
     this.isSubmitting = true;
 
     this.http
-      .post('http://localhost:3000/api/v1/products', formData, {
+      .post('https://car-parts-seven.vercel.app/api/v1/products', formData, {
         withCredentials: true,
       })
       .subscribe({

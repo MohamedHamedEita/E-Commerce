@@ -30,7 +30,7 @@ export class WishlistService {
 
   addToWishlist(productId: string): Observable<any> {
     return this._HttpClient.post(
-      `http://localhost:3000/api/v1/wishlist`,
+      `https://car-parts-seven.vercel.app/api/v1/wishlist`,
 
       {
         productId: productId,
@@ -42,13 +42,16 @@ export class WishlistService {
   }
 
   getAllWishList(): Observable<any> {
-    return this._HttpClient.get(`http://localhost:3000/api/v1/wishlist`, {
-      withCredentials: true,
-    });
+    return this._HttpClient.get(
+      `https://car-parts-seven.vercel.app/api/v1/wishlist`,
+      {
+        withCredentials: true,
+      }
+    );
   }
   removeProductFromWishList(productId: string): Observable<any> {
     return this._HttpClient.delete(
-      `http://localhost:3000/api/v1/wishlist/${productId}`,
+      `https://car-parts-seven.vercel.app/api/v1/wishlist/${productId}`,
       {
         withCredentials: true,
       }

@@ -4,7 +4,7 @@ import { Injectable } from '@angular/core';
 
 @Injectable({ providedIn: 'root' })
 export class AdminService {
-  private baseUrl = 'http://localhost:3000/api/v1/users'; // Adjust as needed
+  private baseUrl = 'https://car-parts-seven.vercel.app/api/v1/users'; // Adjust as needed
 
   constructor(private http: HttpClient) {}
 

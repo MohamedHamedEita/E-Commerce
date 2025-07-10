@@ -57,7 +57,9 @@ export class UpdateProductComponent implements OnInit {
 
   loadProduct() {
     this.http
-      .get(`http://localhost:3000/api/v1/products/${this.productId}`)
+      .get(
+        `https://car-parts-seven.vercel.app/api/v1/products/${this.productId}`
+      )
       .subscribe({
         next: (res: any) => {
           this.originalProduct = res.data;
@@ -71,7 +73,7 @@ export class UpdateProductComponent implements OnInit {
 
   loadCategories() {
     this.http
-      .get('http://localhost:3000/api/v1/categories')
+      .get('https://car-parts-seven.vercel.app/api/v1/categories')
       .subscribe((res: any) => {
         this.categories = res.data;
       });
@@ -79,7 +81,7 @@ export class UpdateProductComponent implements OnInit {
 
   loadBrands() {
     this.http
-      .get('http://localhost:3000/api/v1/brands')
+      .get('https://car-parts-seven.vercel.app/api/v1/brands')
       .subscribe((res: any) => {
         this.brands = res.data;
       });
@@ -104,7 +106,7 @@ export class UpdateProductComponent implements OnInit {
 
     this.http
       .patch(
-        `http://localhost:3000/api/v1/products/${this.productId}`,
+        `https://car-parts-seven.vercel.app/api/v1/products/${this.productId}`,
         changedFields,
         { withCredentials: true }
       )

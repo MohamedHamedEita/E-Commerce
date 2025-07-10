@@ -26,7 +26,9 @@ export class VerifyEmailComponent implements OnInit {
     }
 
     this.http
-      .get(`http://localhost:3000/api/v1/auth/verify-email?token=${token}`)
+      .get(
+        `https://car-parts-seven.vercel.app/api/v1/auth/verify-email?token=${token}`
+      )
       .subscribe({
         next: () => {
           this.message = '✅ Your email has been verified successfully!';
