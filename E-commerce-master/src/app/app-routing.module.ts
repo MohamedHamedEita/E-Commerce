@@ -23,6 +23,8 @@ import { UserComponent } from './components/user/user.component';
 import { UserSidebarComponent } from './components/user-sidebar/user-sidebar.component';
 import { AddressManagementComponent } from './components/address-management/address-management.component';
 import { ChangePasswordComponent } from './components/change-password/change-password.component';
+import { EmailVerificationSentComponent } from './components/email-verification-sent/email-verification-sent.component';
+import { VerifyEmailComponent } from './components/verify-email/verify-email.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -71,7 +73,11 @@ const routes: Routes = [
   { path: 'user', canActivate: [authGuard], component: UserComponent },
   { path: 'user/addresses', component: AddressManagementComponent },
   { path: 'user/changepassword', component: ChangePasswordComponent },
-
+  {
+    path: 'email-verification-sent',
+    component: EmailVerificationSentComponent,
+  },
+  { path: 'verify-email', component: VerifyEmailComponent },
   {
     path: 'user-sidebar',
     canActivate: [authGuard],

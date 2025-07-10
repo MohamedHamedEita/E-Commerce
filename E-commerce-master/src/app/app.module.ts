@@ -48,6 +48,8 @@ import { AdminSidebarComponent } from './components/admin-sidebar/admin-sidebar.
 import { ProductFiltersComponent } from './components/product-filters/product-filters.component';
 import { AddressManagementComponent } from './components/address-management/address-management.component';
 import { ChangePasswordComponent } from './components/change-password/change-password.component';
+import { EmailVerificationSentComponent } from './components/email-verification-sent/email-verification-sent.component';
+import { VerifyEmailComponent } from './components/verify-email/verify-email.component';
 
 @NgModule({
 
@@ -79,7 +81,7 @@ import { ChangePasswordComponent } from './components/change-password/change-pas
     CategoryProductComponent,
     LoadingComponent,
     BrandsDetailsComponent,
-    UserComponent,UserSidebarComponent, AdminComponent, AdminSidebarComponent, ProductFiltersComponent, AddressManagementComponent, ChangePasswordComponent, 
+    UserComponent,UserSidebarComponent, AdminComponent, AdminSidebarComponent, ProductFiltersComponent, AddressManagementComponent, ChangePasswordComponent, EmailVerificationSentComponent, VerifyEmailComponent, 
     ],
   imports: [
     BrowserModule,

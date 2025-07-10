@@ -1,0 +1,9 @@
+<p>verify-email works!</p>
+<div class="verify-container">
+  <h2>{{ message }}</h2>
+
+  <p *ngIf="isSuccess">You’ll be redirected to login shortly...</p>
+  <button *ngIf="!isSuccess" (click)="router.navigate(['/register'])">
+    Back to Register
+  </button>
+</div>

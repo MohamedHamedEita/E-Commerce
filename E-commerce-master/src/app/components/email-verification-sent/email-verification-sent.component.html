@@ -1,0 +1,25 @@
+<div class="container py-5 text-center">
+  <h3>📩 Verify Your Email</h3>
+  <p>A verification email has been sent to your inbox.</p>
+  <p>If you didn’t receive it, you can resend it here:</p>
+
+  <div class="w-100 w-md-50 mx-auto">
+    <div *ngIf="successMessage" class="alert alert-success">
+      {{ successMessage }}
+    </div>
+    <div *ngIf="errorMessage" class="alert alert-danger">
+      {{ errorMessage }}
+    </div>
+
+    <button
+      (click)="resendVerificationEmail()"
+      [disabled]="isLoading"
+      class="btn btn-outline-primary px-4 py-2 rounded-pill fw-semibold"
+    >
+      <span *ngIf="!isLoading">🔁 Resend Email</span>
+      <span *ngIf="isLoading"
+        ><i class="fas fa-spinner fa-spin me-2"></i> Sending...</span
+      >
+    </button>
+  </div>
+</div>

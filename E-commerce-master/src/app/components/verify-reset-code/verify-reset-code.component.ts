@@ -9,25 +9,44 @@ import { Router } from '@angular/router';
   styleUrls: ['./verify-reset-code.component.css'],
 })
 export class VerifyResetCodeComponent {
-  constructor(private _AuthService: AuthService, private _Router: Router) {}
+  email: string = '';
+
+  constructor(private _AuthService: AuthService, private _Router: Router) {
+    const navigation = this._Router.getCurrentNavigation();
+    const state = navigation?.extras?.state as { email: string };
+    if (state?.email) {
+      this.email = state.email;
+    } else {
+      // fallback: redirect or show error
+      this._Router.navigate(['/forgot-password']);
+    }
+  }
   errorMessage: string = '';
   isLoading: boolean = false;
   verifyResetCodeForm: FormGroup = new FormGroup({
     resetCode: new FormControl(null, [Validators.required]),
   });
 
-  handelVerifyResetCode(resetCode: FormGroup) {
+  handleVerifyResetCode() {
+    if (this.verifyResetCodeForm.invalid) return;
+
     this.isLoading = true;
 
-    this._AuthService.verifyResetCode(resetCode.value).subscribe({
+    const payload = {
+      email: this.email,
+      resetCode: this.verifyResetCodeForm.value.resetCode,
+    };
+
+    this._AuthService.verifyResetCode(payload).subscribe({
       next: (res) => {
-        // console.log(res);
-        this._Router.navigate(['/reset-password']);
+        this._Router.navigate(['/reset-password'], {
+          state: { email: this.email }, // pass email to next step
+        });
         this.isLoading = false;
       },
       error: (err) => {
         console.log(err);
-        this.errorMessage = err.error.message;
+        this.errorMessage = err.error.message || 'Something went wrong.';
         this.isLoading = false;
       },
     });

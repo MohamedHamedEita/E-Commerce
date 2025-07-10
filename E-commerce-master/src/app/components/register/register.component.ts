@@ -12,13 +12,15 @@ import { WishlistService } from 'src/app/services/wishlist.service';
   styleUrls: ['./register.component.css'],
 })
 export class RegisterComponent {
+  errorMessage: string = '';
+  successMessage: string = ''; // ✅ add this
+
   constructor(
     private _AuthService: AuthService,
     private _WishlistService: WishlistService,
     private _CartService: CartService,
     private _Router: Router
   ) {}
-  errorMessage: string = '';
   isLoading: boolean = false;
   passwordFieldType: string = 'password';
   repasswordFieldType: string = 'password';
@@ -49,37 +51,25 @@ export class RegisterComponent {
   );
 
   handelRegister(regForm: FormGroup) {
-    console.log(regForm);
     if (this.registerForm.valid) {
       this.isLoading = true;
       this._AuthService.register(this.registerForm.value).subscribe({
         next: (response) => {
+          console.log(response.status);
           if (response.status === 'success') {
-            // ✅ تحديث حالة الدخول
-            this._AuthService.isLogin.next(true);
-            this._CartService.updateCartItemCount();
-            this._WishlistService.updateLoggedUserWishListAndCount();
-
-            // ✅ جلب بيانات المستخدم من الكوكي
-            this._AuthService.getCurrentUser().subscribe({
-              next: (res: any) => {
-                const user = res?.user;
-                const userRole = user?.role;
-                this._AuthService.user.next(user);
-
-                if (userRole === 'admin') {
-                  this._Router.navigate(['/admin-dashboard']);
-                } else {
-                  this._Router.navigate(['/home']);
-                }
-              },
-              error: () => {
-                this.errorMessage = 'Authentication failed.';
-              },
+            this.successMessage =
+              'User created. Please check your email to verify.';
+            this.errorMessage = ''; // clear error
+            this._Router.navigate(['/email-verification-sent']);
+            this._Router.navigate(['/email-verification-sent'], {
+              state: { email: this.registerForm.value.email },
             });
+            console.log('success sate');
           } else {
             this.errorMessage = response.message;
+            console.log('error sate');
           }
+          this.isLoading = false;
         },
         error: (err) => {
           console.log(err.error.message);

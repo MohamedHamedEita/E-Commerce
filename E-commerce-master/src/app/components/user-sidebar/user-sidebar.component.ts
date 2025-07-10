@@ -23,7 +23,7 @@ export class UserSidebarComponent implements OnInit {
 
   loadUserData(): void {
     this.http
-      .get('https://car-parts-seven.vercel.app/api/v1/users/getMe', {
+      .get('http://localhost:3000/api/v1/users/getMe', {
         withCredentials: true,
       })
       .subscribe({
