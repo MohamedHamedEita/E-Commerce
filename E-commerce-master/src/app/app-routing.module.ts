@@ -31,22 +31,26 @@ import { AddressManagementComponent } from './components/address-management/addr
 import { ChangePasswordComponent } from './components/change-password/change-password.component';
 import { EmailVerificationSentComponent } from './components/email-verification-sent/email-verification-sent.component';
 import { VerifyEmailComponent } from './components/verify-email/verify-email.component';
+import { UsersComponent } from './components/AdminF/admin/users/users.component';
+import { AdminProductsComponent } from './components/AdminF/admin/products/products.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
 
   {
-  path: 'admin',
-  component: AdminComponent,
-  canActivate: [authGuard, adminGuard],
-  children: [
-    { path: '', redirectTo: 'add-product', pathMatch: 'full' },
-    { path: 'add-product', component: AddProductComponent },
-    { path: 'update-product', component: UpdateProductComponent },
-    { path: 'delete-product', component: DeleteProductComponent },
-    { path: 'admin-sidebar', component: AdminSidebarComponent }
-  ]
-},
+    path: 'admin',
+    component: AdminComponent,
+    canActivate: [authGuard, adminGuard],
+    children: [
+      { path: '', redirectTo: 'add-product', pathMatch: 'full' },
+      { path: 'add-product', component: AddProductComponent },
+      { path: 'update-product/:id', component: UpdateProductComponent },
+      { path: 'delete-product', component: DeleteProductComponent },
+      { path: 'admin-sidebar', component: AdminSidebarComponent },
+      { path: 'users', component: UsersComponent },
+      { path: 'products', component: AdminProductsComponent },
+    ],
+  },
   { path: 'home', component: HomeComponent },
   { path: 'cart', component: CartComponent },
   { path: 'products', component: ProductsComponent },

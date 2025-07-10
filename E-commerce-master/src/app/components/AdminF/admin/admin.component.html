@@ -1,22 +1,33 @@
-<!-- Admin Layout -->
-<div class="d-flex" style="min-height: 100vh;">
+<div class="d-flex" style="min-height: 100vh">
   <!-- Sidebar -->
-  <aside class="bg-dark text-white p-3" style="width: 250px;">
+  <aside class="bg-dark text-white p-3" style="width: 250px">
     <h5 class="mb-4">🛠 Admin Panel</h5>
     <nav class="nav flex-column">
-      <a routerLink="add-product" class="nav-link text-white">➕ Add Product</a>
-      <a routerLink="update-product" class="nav-link text-white">✏️ Update Product</a>
-      <a routerLink="delete-product" class="nav-link text-white">🗑️ Delete Product</a>
+      <a
+        routerLink="/admin/users"
+        class="nav-link text-white"
+        routerLinkActive="active"
+        >👥 Users</a
+      >
+      <a
+        routerLink="/admin/products"
+        class="nav-link text-white"
+        routerLinkActive="active"
+        >👥 All Products</a
+      >
     </nav>
   </aside>
 
   <!-- Main Content -->
-  <main class="flex-fill p-4 ">
+  <main class="flex-fill p-4">
     <div class="d-flex justify-content-between align-items-center mb-4">
       <h4 class="mb-0">Welcome Admin</h4>
-      <button class="btn btn-outline-danger btn-sm" (click)="logout()">Logout</button>
+      <button class="btn btn-outline-danger btn-sm" (click)="logout()">
+        Logout
+      </button>
     </div>
 
     <router-outlet></router-outlet>
+    <!-- ⬅️ this renders UsersComponent only -->
   </main>
 </div>

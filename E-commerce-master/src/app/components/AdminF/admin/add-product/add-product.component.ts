@@ -1,11 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-add-product',
   templateUrl: './add-product.component.html',
-  styleUrls: ['./add-product.component.css']
+  styleUrls: ['./add-product.component.css'],
 })
 export class AddProductComponent implements OnInit {
   productForm!: FormGroup;
@@ -16,16 +16,20 @@ export class AddProductComponent implements OnInit {
   coverImage: File | null = null;
   extraImages: File[] = [];
 
-  constructor(private fb: FormBuilder, private http: HttpClient) {}
+  constructor(
+    private fb: FormBuilder,
+    private http: HttpClient,
+    private cdr: ChangeDetectorRef
+  ) {}
 
   ngOnInit(): void {
     this.productForm = this.fb.group({
       name: ['', Validators.required],
-      description: [''],
-      price: [0, Validators.required],
-      quantity: [0, Validators.required],
+      description: ['', [Validators.required, Validators.minLength(20)]],
+      price: [0, [Validators.required, Validators.min(0)]],
+      quantity: [0, [Validators.required, Validators.min(0)]],
       category: ['', Validators.required],
-      brand: ['', Validators.required]
+      brand: ['', Validators.required],
     });
 
     this.fetchCategories();
@@ -33,17 +37,23 @@ export class AddProductComponent implements OnInit {
   }
 
   fetchCategories() {
-    this.http.get<any>('https://car-parts-seven.vercel.app/api/v1/categories')
-      .subscribe(res => this.categories = res.data || []);
+    this.http
+      .get<any>('http://localhost:3000/api/v1/categories')
+      .subscribe((res) => (this.categories = res.data || []));
   }
 
   fetchBrands() {
-    this.http.get<any>('https://car-parts-seven.vercel.app/api/v1/brands')
-      .subscribe(res => this.brands = res.data || []);
+    this.http
+      .get<any>('http://localhost:3000/api/v1/brands')
+      .subscribe((res) => (this.brands = res.data || []));
   }
 
   onCoverImageChange(event: any) {
-    this.coverImage = event.target.files[0];
+    const file = event.target.files[0];
+    if (file) {
+      this.coverImage = file;
+      this.cdr.detectChanges(); // Refresh UI
+    }
   }
 
   onImagesChange(event: any) {
@@ -55,28 +65,33 @@ export class AddProductComponent implements OnInit {
 
     const formData = new FormData();
     Object.entries(this.productForm.value).forEach(([key, value]) => {
-  if (value !== null && value !== undefined) {
-    formData.append(key, value.toString());
-  }
-});
+      if (value !== null && value !== undefined) {
+        formData.append(key, value.toString());
+      }
+    });
 
     formData.append('imageCover', this.coverImage);
-    this.extraImages.forEach(img => formData.append('images', img));
+    this.extraImages.forEach((img) => formData.append('images', img));
 
     this.isSubmitting = true;
 
-    this.http.post('https://car-parts-seven.vercel.app/api/v1/products', formData)
+    this.http
+      .post('http://localhost:3000/api/v1/products', formData, {
+        withCredentials: true,
+      })
       .subscribe({
         next: () => {
           alert('✅ Product added!');
           this.productForm.reset();
+          this.coverImage = null;
+          this.extraImages = [];
           this.isSubmitting = false;
         },
         error: (err) => {
           console.error(err);
           alert('❌ Failed to add product');
           this.isSubmitting = false;
-        }
+        },
       });
   }
 }

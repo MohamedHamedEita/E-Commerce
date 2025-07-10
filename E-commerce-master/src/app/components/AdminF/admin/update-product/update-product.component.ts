@@ -1,66 +1,119 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-update-product',
   templateUrl: './update-product.component.html',
-  styleUrls: ['./update-product.component.css']
+  styleUrls: ['./update-product.component.css'],
 })
 export class UpdateProductComponent implements OnInit {
-  products: any[] = [];
-  selectedProduct: any = null;
   editForm!: FormGroup;
+  productId!: string;
+  originalProduct: any;
+  categories: any[] = [];
+  brands: any[] = [];
 
-  constructor(private http: HttpClient, private fb: FormBuilder) {}
+  constructor(
+    private fb: FormBuilder,
+    private http: HttpClient,
+    private route: ActivatedRoute,
+    public router: Router
+  ) {}
+
+  imageCoverFile: File | null = null;
+  imagesFiles: File[] = [];
+
+  onImageCoverSelected(event: any) {
+    const file = event.target.files[0];
+    if (file) {
+      this.imageCoverFile = file;
+    }
+  }
+
+  onImagesSelected(event: any) {
+    const files = Array.from(event.target.files) as File[];
+    this.imagesFiles = files;
+  }
 
   ngOnInit(): void {
-    this.loadProducts();
+    this.productId = this.route.snapshot.paramMap.get('id') || '';
+    this.loadProduct();
+    this.loadCategories();
+    this.loadBrands();
 
     this.editForm = this.fb.group({
-      name: ['', Validators.required],
-      description: [''],
-      price: [0, [Validators.required, Validators.min(1)]]
+      name: ['', [Validators.required, Validators.minLength(3)]],
+      description: ['', [Validators.required, Validators.minLength(20)]],
+      price: [0, [Validators.required, Validators.min(0)]],
+      quantity: [0, [Validators.required, Validators.min(0)]],
+      category: ['', Validators.required],
+      brand: ['', Validators.required],
+      imageCover: ['', Validators.required],
+      images: [[]],
     });
   }
 
-  loadProducts(): void {
-    this.http.get('https://car-parts-seven.vercel.app/api/v1/products').subscribe({
-      next: (res: any) => {
-        this.products = res.data || [];
-      },
-      error: () => alert('❌ Failed to load products')
-    });
+  loadProduct() {
+    this.http
+      .get(`http://localhost:3000/api/v1/products/${this.productId}`)
+      .subscribe({
+        next: (res: any) => {
+          this.originalProduct = res.data;
+          this.editForm.patchValue({
+            ...res.data,
+          });
+        },
+        error: () => alert('❌ Failed to load product'),
+      });
   }
 
-  editProduct(product: any): void {
-    this.selectedProduct = product;
-    this.editForm.patchValue({
-      name: product.name,
-      description: product.description,
-      price: product.price
-    });
+  loadCategories() {
+    this.http
+      .get('http://localhost:3000/api/v1/categories')
+      .subscribe((res: any) => {
+        this.categories = res.data;
+      });
   }
 
-  submitUpdate(): void {
-    if (!this.selectedProduct || this.editForm.invalid) return;
-
-    this.http.put(
-      `https://car-parts-seven.vercel.app/api/v1/products/${this.selectedProduct._id}`,
-      this.editForm.value
-    ).subscribe({
-      next: () => {
-        alert('✅ Product updated successfully!');
-        this.selectedProduct = null;
-        this.editForm.reset();
-        this.loadProducts();
-      },
-      error: () => alert('❌ Failed to update product')
-    });
+  loadBrands() {
+    this.http
+      .get('http://localhost:3000/api/v1/brands')
+      .subscribe((res: any) => {
+        this.brands = res.data;
+      });
   }
 
-  cancelEdit(): void {
-    this.selectedProduct = null;
-    this.editForm.reset();
+  submitUpdate() {
+    if (!this.editForm.valid) return;
+
+    const changedFields: any = {};
+    const values = this.editForm.value;
+
+    for (const key in values) {
+      if (values[key] !== this.originalProduct[key]) {
+        changedFields[key] = values[key];
+      }
+    }
+
+    if (Object.keys(changedFields).length === 0) {
+      alert('⚠️ Nothing changed!');
+      return;
+    }
+
+    this.http
+      .patch(
+        `http://localhost:3000/api/v1/products/${this.productId}`,
+        changedFields,
+        { withCredentials: true }
+      )
+      .subscribe({
+        next: () => {
+          alert('✅ Product updated!');
+          this.router.navigate(['/admin/products']);
+        },
+        error: () => alert('❌ Failed to update'),
+      });
   }
 }

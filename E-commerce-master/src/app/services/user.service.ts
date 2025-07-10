@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class UserService {
-  private baseURL = 'https://car-parts-seven.vercel.app/api/v1';
+  private baseURL = 'http://localhost:3000/api/v1';
 
   constructor(private _httpClient: HttpClient) {}
 
@@ -18,12 +18,9 @@ export class UserService {
   }
 
   getUserOrders() {
-    return this._httpClient.get(
-      `https://car-parts-seven.vercel.app/api/v1/orders`,
-      {
-        withCredentials: true,
-      }
-    );
+    return this._httpClient.get(`http://localhost:3000/api/v1/orders`, {
+      withCredentials: true,
+    });
   }
   // Add new address
   addAddress(data: any): Observable<any> {
@@ -52,7 +49,7 @@ export class UserService {
     passwordConfirm: string;
   }): Observable<any> {
     return this._httpClient.patch(
-      'https://car-parts-seven.vercel.app/api/v1/users/changeMyPassword',
+      'http://localhost:3000/api/v1/users/changeMyPassword',
       payload,
       { withCredentials: true }
     );
@@ -60,7 +57,7 @@ export class UserService {
 
   deleteMe(): Observable<any> {
     return this._httpClient.delete(
-      'https://car-parts-seven.vercel.app/api/v1/users/deleteMe',
+      'http://localhost:3000/api/v1/users/deleteMe',
       { withCredentials: true }
     );
   }

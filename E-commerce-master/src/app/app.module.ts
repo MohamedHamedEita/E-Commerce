@@ -50,9 +50,13 @@ import { AdminSidebarComponent } from './components/AdminF/admin/admin-sidebar/a
 import { ProductFiltersComponent } from './components/product-filters/product-filters.component';
 import { AddProductComponent } from './components/AdminF/admin/add-product/add-product.component';
 import { UpdateProductComponent } from './components/AdminF/admin/update-product/update-product.component';
+import { UsersComponent } from './components/AdminF/admin/users/users.component';
+import { AdminProductsComponent } from './components/AdminF/admin/products/products.component';
 
 @NgModule({
   declarations: [
+    UsersComponent,
+    AdminProductsComponent,
     AppComponent,
     HomeComponent,
     NavbarComponent,

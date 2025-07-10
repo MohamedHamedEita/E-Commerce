@@ -1,0 +1,60 @@
+<div class="table-responsive">
+  <table class="table table-striped table-hover align-middle text-center">
+    <thead class="table-dark">
+      <tr>
+        <th>#</th>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Status</th>
+        <th>Role</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let user of users; let i = index">
+        <td>{{ i + 1 }}</td>
+        <td>{{ user.name }}</td>
+        <td>{{ user.email }}</td>
+        <td>
+          <span
+            [class.text-success]="user.active"
+            [class.text-danger]="!user.active"
+          >
+            {{ user.active ? "Active" : "Inactive" }}
+          </span>
+        </td>
+        <td>{{ user.role }}</td>
+        <td>
+          <div class="d-flex justify-content-center gap-2">
+            <!-- ✅ Activate button (always visible, but disabled if active) -->
+            <button
+              class="btn btn-sm btn-success"
+              [disabled]="user.active"
+              [title]="user.active ? 'Already active' : 'Activate user'"
+              (click)="toggleActive(user._id, user.active)"
+              style="min-width: 90px"
+            >
+              Activate
+            </button>
+
+            <!-- ✅ Make Admin button (conditionally shown) -->
+            <ng-container *ngIf="user.role !== 'admin'; else emptySpace">
+              <button
+                class="btn btn-sm btn-warning"
+                (click)="toggleRole(user._id, user.role)"
+                style="min-width: 90px"
+              >
+                Make Admin
+              </button>
+            </ng-container>
+
+            <!-- Placeholder to preserve layout -->
+            <ng-template #emptySpace>
+              <div style="min-width: 90px"></div>
+            </ng-template>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
