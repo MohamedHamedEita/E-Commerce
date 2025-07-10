@@ -57,12 +57,12 @@ export class LoginComponent implements OnInit {
             // ✅ جلب بيانات المستخدم من الكوكي
             this._AuthService.getCurrentUser().subscribe({
               next: (res: any) => {
-                const user = res?.user;
+                const user = res?.data;
                 const userRole = user?.role;
                 this._AuthService.user.next(user);
 
                 if (userRole === 'admin') {
-                  this._Router.navigate(['/admin-dashboard']);
+                  this._Router.navigate(['/admin']);
                 } else {
                   this._Router.navigate(['/home']);
                 }

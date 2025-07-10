@@ -30,9 +30,12 @@ export class EmailVerificationSentComponent {
     this.isLoading = true;
 
     this.http
-      .post('http://localhost:3000/api/v1/auth/resend-verification-email', {
-        email: this.email,
-      })
+      .post(
+        'https://car-parts-seven.vercel.app/api/v1/auth/resend-verification-email',
+        {
+          email: this.email,
+        }
+      )
       .subscribe({
         next: (res: any) => {
           this.successMessage = res.message || 'Verification email resent.';

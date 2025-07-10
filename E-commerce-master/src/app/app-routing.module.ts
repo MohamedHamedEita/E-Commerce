@@ -21,6 +21,12 @@ import { CategoryProductComponent } from './components/category-product/category
 import { BrandsDetailsComponent } from './components/brands-details/brands-details.component';
 import { UserComponent } from './components/user/user.component';
 import { UserSidebarComponent } from './components/user-sidebar/user-sidebar.component';
+import { AdminComponent } from './components/AdminF/admin/admin.component';
+import { adminGuard } from './Guards/admin.guard';
+import { AdminSidebarComponent } from './components/AdminF/admin/admin-sidebar/admin-sidebar.component';
+import { AddProductComponent } from './components/AdminF/admin/add-product/add-product.component';
+import { UpdateProductComponent } from './components/AdminF/admin/update-product/update-product.component';
+import { DeleteProductComponent } from './components/AdminF/admin/delete-product/delete-product.component';
 import { AddressManagementComponent } from './components/address-management/address-management.component';
 import { ChangePasswordComponent } from './components/change-password/change-password.component';
 import { EmailVerificationSentComponent } from './components/email-verification-sent/email-verification-sent.component';
@@ -29,6 +35,18 @@ import { VerifyEmailComponent } from './components/verify-email/verify-email.com
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
 
+  {
+  path: 'admin',
+  component: AdminComponent,
+  canActivate: [authGuard, adminGuard],
+  children: [
+    { path: '', redirectTo: 'add-product', pathMatch: 'full' },
+    { path: 'add-product', component: AddProductComponent },
+    { path: 'update-product', component: UpdateProductComponent },
+    { path: 'delete-product', component: DeleteProductComponent },
+    { path: 'admin-sidebar', component: AdminSidebarComponent }
+  ]
+},
   { path: 'home', component: HomeComponent },
   { path: 'cart', component: CartComponent },
   { path: 'products', component: ProductsComponent },

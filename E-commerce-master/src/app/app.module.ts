@@ -14,6 +14,8 @@ import { RegisterComponent } from './components/register/register.component';
 import { ProductsComponent } from './components/products/products.component';
 import { BrandsComponent } from './components/brands/brands.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { AddressManagementComponent } from './components/address-management/address-management.component';
+import { ChangePasswordComponent } from './components/change-password/change-password.component';
 //^ Template-driven forms **//
 // import { FormsModule } from '@angular/forms';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
@@ -43,16 +45,11 @@ import { BrandsDetailsComponent } from './components/brands-details/brands-detai
 import { CookieService } from 'ngx-cookie-service';
 import { UserComponent } from './components/user/user.component';
 import { UserSidebarComponent } from './components/user-sidebar/user-sidebar.component';
-import { AdminComponent } from './components/admin/admin.component';
-import { AdminSidebarComponent } from './components/admin-sidebar/admin-sidebar.component';
+import { AdminComponent } from './components/AdminF/admin/admin.component';
+import { AdminSidebarComponent } from './components/AdminF/admin/admin-sidebar/admin-sidebar.component';
 import { ProductFiltersComponent } from './components/product-filters/product-filters.component';
-import { AddressManagementComponent } from './components/address-management/address-management.component';
-import { ChangePasswordComponent } from './components/change-password/change-password.component';
-import { EmailVerificationSentComponent } from './components/email-verification-sent/email-verification-sent.component';
-import { VerifyEmailComponent } from './components/verify-email/verify-email.component';
 
 @NgModule({
-
   declarations: [
     AppComponent,
     HomeComponent,
@@ -81,8 +78,14 @@ import { VerifyEmailComponent } from './components/verify-email/verify-email.com
     CategoryProductComponent,
     LoadingComponent,
     BrandsDetailsComponent,
-    UserComponent,UserSidebarComponent, AdminComponent, AdminSidebarComponent, ProductFiltersComponent, AddressManagementComponent, ChangePasswordComponent, EmailVerificationSentComponent, VerifyEmailComponent, 
-    ],
+    UserComponent,
+    UserSidebarComponent,
+    AdminComponent,
+    AdminSidebarComponent,
+    ProductFiltersComponent,
+    AddressManagementComponent,
+    ChangePasswordComponent,
+  ],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -118,7 +121,6 @@ import { VerifyEmailComponent } from './components/verify-email/verify-email.com
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,
       multi: true,
-
     },
   ],
   bootstrap: [AppComponent],

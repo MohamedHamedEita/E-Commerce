@@ -19,13 +19,13 @@ export class ProductService {
 
   getAllProducts(): Observable<any> {
     return this._HttpClient.get(
-      'http://localhost:3000/api/v1/products?limit=20&sort=-ratingsAverage'
+      'https://car-parts-seven.vercel.app/api/v1/products?limit=20&sort=-ratingsAverage'
     );
   }
 
   getBrandsByCategory(categoryId: any): Observable<any> {
     return this._HttpClient.get(
-      `http://localhost:3000/api/v1/brands/byCategory/${categoryId}`
+      `https://car-parts-seven.vercel.app/api/v1/brands/byCategory/${categoryId}`
     );
   }
 
@@ -51,40 +51,48 @@ export class ProductService {
     if (minRating > 0) params['ratingsAverage[gte]'] = minRating;
     if (maxPrice < 10000) params['price[lte]'] = maxPrice;
 
-    return this._HttpClient.get('http://localhost:3000/api/v1/products', {
+<<<<<<< HEAD
+    return this._HttpClient.get('https://car-parts-seven.vercel.app/api/v1/products', {
+=======
+    return this._HttpClient.get('https://car-parts-seven.vercel.app/api/v1/products', {
+>>>>>>> ed8ca93e30f4f24fef9cc3b543ac2acda85f20cc
       params,
     });
   }
 
   getProductById(_id: string): Observable<any> {
-    return this._HttpClient.get(`http://localhost:3000/api/v1/products/${_id}`);
+<<<<<<< HEAD
+    return this._HttpClient.get(`https://car-parts-seven.vercel.app/api/v1/products/${_id}`);
+=======
+    return this._HttpClient.get(`https://car-parts-seven.vercel.app/api/v1/products/${_id}`);
+>>>>>>> ed8ca93e30f4f24fef9cc3b543ac2acda85f20cc
   }
 
   getAllCategories(): Observable<any> {
     return this._HttpClient.get(
-      'http://localhost:3000/api/v1/categories?limit=10'
+      'https://car-parts-seven.vercel.app/api/v1/categories?limit=10'
     );
   }
 
   getProductByCategory(id: string): Observable<any> {
     return this._HttpClient.get(
-      `http://localhost:3000/api/v1/products?limit=100&category=${id}`
+      `https://car-parts-seven.vercel.app/api/v1/products?limit=100&category=${id}`
     );
   }
 
   getAllBrands(): Observable<any> {
-    return this._HttpClient.get('http://localhost:3000/api/v1/brands?limit=30');
+    return this._HttpClient.get('https://car-parts-seven.vercel.app/api/v1/brands?limit=30');
   }
 
   getBrandsPyId(id: string): Observable<any> {
     return this._HttpClient.get(
-      `http://localhost:3000/api/v1/products?limit=50&brand=${id}`
+      `https://car-parts-seven.vercel.app/api/v1/products?limit=50&brand=${id}`
     );
   }
 
   getReviewsByProductId(productId: string): Observable<any> {
     return this._HttpClient.get(
-      `http://localhost:3000/api/v1/products/${productId}/reviews`
+      `https://car-parts-seven.vercel.app/api/v1/products/${productId}/reviews`
     );
   }
 }

@@ -31,7 +31,7 @@ export class CartService {
 
   addCartItem(id: string): Observable<any> {
     return this._HttpClient.post(
-      `http://localhost:3000/api/v1/cart`,
+      `https://car-parts-seven.vercel.app/api/v1/cart`,
       {
         productId: id,
       },
@@ -42,14 +42,18 @@ export class CartService {
   }
 
   getUserCart(): Observable<any> {
-    return this._HttpClient.get(`http://localhost:3000/api/v1/cart`, {
+<<<<<<< HEAD
+    return this._HttpClient.get(`https://car-parts-seven.vercel.app/api/v1/cart`, {
+=======
+    return this._HttpClient.get(`https://car-parts-seven.vercel.app/api/v1/cart`, {
+>>>>>>> ed8ca93e30f4f24fef9cc3b543ac2acda85f20cc
       withCredentials: true,
     });
   }
 
   removeCartItem(id: string): Observable<any> {
     return this._HttpClient.delete(
-      `http://localhost:3000/api/v1/cart/${id}`,
+      `https://car-parts-seven.vercel.app/api/v1/cart/${id}`,
 
       {
         withCredentials: true,
@@ -59,7 +63,7 @@ export class CartService {
 
   updateCartItem(id: string, count: number): Observable<any> {
     return this._HttpClient.patch(
-      `http://localhost:3000/api/v1/cart/${id}`,
+      `https://car-parts-seven.vercel.app/api/v1/cart/${id}`,
       { quantity: count },
       {
         withCredentials: true,
@@ -69,7 +73,7 @@ export class CartService {
 
   onLinePayMent(cartId: string, shippingAddress: any): Observable<any> {
     return this._HttpClient.post(
-      `http://localhost:3000/api/v1/orders/checkout-session/${cartId}`,
+      `https://car-parts-seven.vercel.app/api/v1/orders/checkout-session/${cartId}`,
       { shippingAddress: shippingAddress },
       {
         withCredentials: true,
@@ -78,7 +82,7 @@ export class CartService {
   }
 
   ClearUserCart(): Observable<any> {
-    return this._HttpClient.delete(`http://localhost:3000/api/v1/cart`, {
+    return this._HttpClient.delete(`https://car-parts-seven.vercel.app//api/v1/cart`, {
       withCredentials: true,
     });
   }
