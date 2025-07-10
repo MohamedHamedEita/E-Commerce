@@ -51,21 +51,18 @@ export class ProductService {
     if (minRating > 0) params['ratingsAverage[gte]'] = minRating;
     if (maxPrice < 10000) params['price[lte]'] = maxPrice;
 
-<<<<<<< HEAD
-    return this._HttpClient.get('https://car-parts-seven.vercel.app/api/v1/products', {
-=======
-    return this._HttpClient.get('https://car-parts-seven.vercel.app/api/v1/products', {
->>>>>>> ed8ca93e30f4f24fef9cc3b543ac2acda85f20cc
-      params,
-    });
+    return this._HttpClient.get(
+      'https://car-parts-seven.vercel.app/api/v1/products',
+      {
+        params,
+      }
+    );
   }
 
   getProductById(_id: string): Observable<any> {
-<<<<<<< HEAD
-    return this._HttpClient.get(`https://car-parts-seven.vercel.app/api/v1/products/${_id}`);
-=======
-    return this._HttpClient.get(`https://car-parts-seven.vercel.app/api/v1/products/${_id}`);
->>>>>>> ed8ca93e30f4f24fef9cc3b543ac2acda85f20cc
+    return this._HttpClient.get(
+      `https://car-parts-seven.vercel.app/api/v1/products/${_id}`
+    );
   }
 
   getAllCategories(): Observable<any> {
@@ -81,7 +78,9 @@ export class ProductService {
   }
 
   getAllBrands(): Observable<any> {
-    return this._HttpClient.get('https://car-parts-seven.vercel.app/api/v1/brands?limit=30');
+    return this._HttpClient.get(
+      'https://car-parts-seven.vercel.app/api/v1/brands?limit=30'
+    );
   }
 
   getBrandsPyId(id: string): Observable<any> {

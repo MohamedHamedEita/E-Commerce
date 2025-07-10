@@ -48,6 +48,8 @@ import { UserSidebarComponent } from './components/user-sidebar/user-sidebar.com
 import { AdminComponent } from './components/AdminF/admin/admin.component';
 import { AdminSidebarComponent } from './components/AdminF/admin/admin-sidebar/admin-sidebar.component';
 import { ProductFiltersComponent } from './components/product-filters/product-filters.component';
+import { AddProductComponent } from './components/AdminF/admin/add-product/add-product.component';
+import { UpdateProductComponent } from './components/AdminF/admin/update-product/update-product.component';
 
 @NgModule({
   declarations: [
@@ -85,6 +87,8 @@ import { ProductFiltersComponent } from './components/product-filters/product-fi
     ProductFiltersComponent,
     AddressManagementComponent,
     ChangePasswordComponent,
+    AddProductComponent,
+    UpdateProductComponent,
   ],
   imports: [
     BrowserModule,

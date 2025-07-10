@@ -42,13 +42,12 @@ export class CartService {
   }
 
   getUserCart(): Observable<any> {
-<<<<<<< HEAD
-    return this._HttpClient.get(`https://car-parts-seven.vercel.app/api/v1/cart`, {
-=======
-    return this._HttpClient.get(`https://car-parts-seven.vercel.app/api/v1/cart`, {
->>>>>>> ed8ca93e30f4f24fef9cc3b543ac2acda85f20cc
-      withCredentials: true,
-    });
+    return this._HttpClient.get(
+      `https://car-parts-seven.vercel.app/api/v1/cart`,
+      {
+        withCredentials: true,
+      }
+    );
   }
 
   removeCartItem(id: string): Observable<any> {
@@ -82,8 +81,11 @@ export class CartService {
   }
 
   ClearUserCart(): Observable<any> {
-    return this._HttpClient.delete(`https://car-parts-seven.vercel.app//api/v1/cart`, {
-      withCredentials: true,
-    });
+    return this._HttpClient.delete(
+      `https://car-parts-seven.vercel.app//api/v1/cart`,
+      {
+        withCredentials: true,
+      }
+    );
   }
 }
