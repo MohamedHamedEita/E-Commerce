@@ -171,7 +171,10 @@ export class ProductDetailsComponent implements OnInit {
         },
         error: (err: any) => {
           console.error('Review submission failed', err);
-          this._toaster.error('Failed to submit review', 'Error');
+          this._toaster.error(
+            err.error?.message || 'Failed to submit review',
+            'Error'
+          );
         },
       });
     }

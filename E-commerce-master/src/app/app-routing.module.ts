@@ -37,6 +37,9 @@ import { AdminOrdersComponent } from './components/AdminF/admin/orders/orders.co
 import { AddCategoryComponent } from './components/AdminF/admin/add-category/add-category.component';
 import { UpdateCategoryComponent } from './components/AdminF/admin/update-category/update-category.component';
 import { AdminCategoriesComponent } from './components/AdminF/admin/categories/categories.component';
+import { AdminBrandsComponent } from './components/AdminF/admin/brands/brands.component';
+import { AddBrandComponent } from './components/AdminF/admin/add-brand/add-brand.component';
+import { UpdateBrandComponent } from './components/AdminF/admin/update-brand/update-brand.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -46,6 +49,18 @@ const routes: Routes = [
     canActivate: [authGuard, adminGuard],
     component: AdminComponent,
     children: [
+      {
+        path: 'brands',
+        component: AdminBrandsComponent,
+      },
+      {
+        path: 'add-brand',
+        component: AddBrandComponent,
+      },
+      {
+        path: 'update-brand/:id',
+        component: UpdateBrandComponent,
+      },
       {
         path: 'categories',
         component: AdminCategoriesComponent,

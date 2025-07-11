@@ -1,0 +1,32 @@
+<!-- brands.component.html -->
+<div class="d-flex justify-content-between mb-3">
+  <h4 class="fas fa-tags"> Brands</h4>
+  <button class="btn btn-success" routerLink="/admin/add-brand">Add Brand</button>
+</div>
+
+<table class="table table-hover text-center">
+    <thead class="table-dark">
+    <tr>
+      <th>#</th>
+      <th>Name</th>
+      <th>Image</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let brand of brands; let i = index">
+      <td>{{ i + 1 }}</td>
+      <td>{{ brand.name }}</td>
+      <td><img [src]="brand.image" width="50" height="50" class="rounded-circle" /></td>
+      <td>
+<a
+  class="btn btn-sm btn-warning me-2"
+  [routerLink]="['/admin/update-brand', brand._id]"
+>
+  Edit
+</a>
+        <button class="btn btn-sm btn-danger" (click)="deleteBrand(brand._id)">Delete</button>
+      </td>
+    </tr>
+  </tbody>
+</table>

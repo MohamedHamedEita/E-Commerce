@@ -33,9 +33,13 @@ export class AuthService {
   }
 
   login(formData: any): Observable<any> {
-    return this.http.post('https://car-parts-seven.vercel.app/api/v1/auth/login', formData, {
-      withCredentials: true,
-    });
+    return this.http.post(
+      'https://car-parts-seven.vercel.app/api/v1/auth/login',
+      formData,
+      {
+        withCredentials: true,
+      }
+    );
   }
   logout(): void {
     this.http
@@ -57,9 +61,12 @@ export class AuthService {
   }
 
   getCurrentUser(): Observable<any> {
-    return this.http.get('https://car-parts-seven.vercel.app/api/v1/users/getMe', {
-      withCredentials: true,
-    });
+    return this.http.get(
+      'https://car-parts-seven.vercel.app/api/v1/users/getMe',
+      {
+        withCredentials: true,
+      }
+    );
   }
 
   register(regForm: any): Observable<any> {

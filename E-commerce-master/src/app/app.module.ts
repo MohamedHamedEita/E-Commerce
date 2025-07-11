@@ -56,9 +56,15 @@ import { AdminOrdersComponent } from './components/AdminF/admin/orders/orders.co
 import { AddCategoryComponent } from './components/AdminF/admin/add-category/add-category.component';
 import { UpdateCategoryComponent } from './components/AdminF/admin/update-category/update-category.component';
 import { AdminCategoriesComponent } from './components/AdminF/admin/categories/categories.component';
+import { AddBrandComponent } from './components/AdminF/admin/add-brand/add-brand.component';
+import { UpdateBrandComponent } from './components/AdminF/admin/update-brand/update-brand.component';
+import { AdminBrandsComponent } from './components/AdminF/admin/brands/brands.component';
 
 @NgModule({
   declarations: [
+    AddBrandComponent,
+    UpdateBrandComponent,
+    AdminBrandsComponent,
     AdminCategoriesComponent,
     AdminOrdersComponent,
     UsersComponent,
@@ -101,6 +107,9 @@ import { AdminCategoriesComponent } from './components/AdminF/admin/categories/c
     UpdateProductComponent,
     AddCategoryComponent,
     UpdateCategoryComponent,
+    AddBrandComponent,
+    UpdateBrandComponent,
+    AdminBrandsComponent,
   ],
   imports: [
     BrowserModule,

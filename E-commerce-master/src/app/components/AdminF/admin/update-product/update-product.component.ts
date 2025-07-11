@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-update-product',
@@ -19,7 +20,8 @@ export class UpdateProductComponent implements OnInit {
     private fb: FormBuilder,
     private http: HttpClient,
     private route: ActivatedRoute,
-    public router: Router
+    public router: Router,
+    private _toaster: ToastrService
   ) {}
 
   imageCoverFile: File | null = null;
@@ -115,7 +117,8 @@ export class UpdateProductComponent implements OnInit {
           alert('✅ Product updated!');
           this.router.navigate(['/admin/products']);
         },
-        error: (err) => alert(err.error?.message || '❌ Failed to update'),
+        error: (err) =>
+          this._toaster.error(err.error?.message || '❌ Failed to update'),
       });
   }
 }

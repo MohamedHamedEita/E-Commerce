@@ -1,32 +1,43 @@
 <div class="d-flex" style="min-height: 100vh">
   <!-- Sidebar -->
   <aside class="bg-dark text-white p-3" style="width: 250px">
-    <h5 class="mb-4">🛠 Admin Panel</h5>
+    <h5 class="mb-4"><i class="fas fa-tools me-2"></i>Admin Panel</h5>
     <nav class="nav flex-column">
       <a
         routerLink="/admin/users"
         class="nav-link text-white"
         routerLinkActive="active"
-        >👥 Users</a
       >
+        <i class="fas fa-users me-2"></i>Users
+      </a>
       <a
         routerLink="/admin/products"
         class="nav-link text-white"
         routerLinkActive="active"
-        >👥 All Products</a
       >
+        <i class="fas fa-box-open me-2"></i>All Products
+      </a>
       <a
         routerLink="/admin/orders"
         class="nav-link text-white"
         routerLinkActive="active"
-        >🧾 All Orders</a
       >
+        <i class="fas fa-receipt me-2"></i>All Orders
+      </a>
       <a
         routerLink="/admin/categories"
         class="nav-link text-white"
         routerLinkActive="active"
-        >🧾 All categories</a
       >
+        <i class="fas fa-th-large me-2"></i>All Categories
+      </a>
+      <a
+        routerLink="/admin/brands"
+        class="nav-link text-white"
+        routerLinkActive="active"
+      >
+        <i class="fas fa-tags me-2"></i>All Brands
+      </a>
     </nav>
   </aside>
 
@@ -35,11 +46,10 @@
     <div class="d-flex justify-content-between align-items-center mb-4">
       <h4 class="mb-0">Welcome Admin</h4>
       <button class="btn btn-outline-danger btn-sm" (click)="logout()">
-        Logout
+        <i class="fas fa-sign-out-alt me-1"></i>Logout
       </button>
     </div>
 
     <router-outlet></router-outlet>
-    <!-- ⬅️ this renders UsersComponent only -->
   </main>
 </div>

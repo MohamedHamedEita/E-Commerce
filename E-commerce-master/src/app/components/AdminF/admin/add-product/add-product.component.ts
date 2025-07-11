@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ProductService } from 'src/app/services/product-service.service';
 import { CategoryService } from 'src/app/services/categories';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-add-product',
@@ -20,7 +21,8 @@ export class AddProductComponent implements OnInit {
     private fb: FormBuilder,
     private productService: ProductService,
     private categoryService: CategoryService,
-    private router: Router
+    private router: Router,
+    private _toaster: ToastrService
   ) {}
 
   ngOnInit(): void {
@@ -81,7 +83,7 @@ export class AddProductComponent implements OnInit {
 
     this.productService.createProduct(formData).subscribe({
       next: () => {
-        alert('✅ Product added successfully!');
+        this._toaster.error('✅ Product added successfully!');
         this.router.navigate(['/admin/products']);
       },
       error: (err) => {
