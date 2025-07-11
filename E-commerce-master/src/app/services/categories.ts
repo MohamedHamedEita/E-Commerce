@@ -9,15 +9,19 @@ export class CategoryService {
   constructor(private _HttpClient: HttpClient) {}
 
   getAllCategories(): Observable<any> {
-    return this._HttpClient.get(this.baseUrl,{withCredentials:true});
+    return this._HttpClient.get(this.baseUrl, { withCredentials: true });
   }
 
   addCategory(formData: FormData): Observable<any> {
-    return this._HttpClient.post(this.baseUrl, formData,{withCredentials:true});
+    return this._HttpClient.post(this.baseUrl, formData, {
+      withCredentials: true,
+    });
   }
 
   deleteCategory(id: string): Observable<any> {
-    return this._HttpClient.delete(`${this.baseUrl}/${id}`,{withCredentials:true});
+    return this._HttpClient.delete(`${this.baseUrl}/${id}`, {
+      withCredentials: true,
+    });
   }
 
   getCategory(id: string): Observable<any> {
@@ -25,6 +29,8 @@ export class CategoryService {
   }
 
   updateCategory(id: string, formData: FormData): Observable<any> {
-    return this._HttpClient.patch(`${this.baseUrl}/${id}`, formData,{withCredentials:true});
+    return this._HttpClient.patch(`${this.baseUrl}/${id}`, formData, {
+      withCredentials: true,
+    });
   }
 }

@@ -239,7 +239,8 @@ export class UserComponent implements OnInit {
       })
       .subscribe({
         next: () => this.getAddresses(),
-        error: (err) => alert(err.error?.message || '❌ Failed to delete address'),
+        error: (err) =>
+          alert(err.error?.message || '❌ Failed to delete address'),
       });
   }
 

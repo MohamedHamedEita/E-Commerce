@@ -12,16 +12,24 @@ export class OrderService {
 
   // ✅ Fetch all orders (paginated for admin)
   getAllOrders(page: number = 1, limit: number = 10): Observable<any> {
-    return this._HttpClient.get(`${this.baseUrl}?page=${page}&limit=${limit}`,{withCredentials:true});
+    return this._HttpClient.get(`${this.baseUrl}?page=${page}&limit=${limit}`, {
+      withCredentials: true,
+    });
   }
 
   // ✅ Optionally: Get single order details
   getOrderById(orderId: string): Observable<any> {
-    return this._HttpClient.get(`${this.baseUrl}/${orderId}`,{withCredentials:true});
+    return this._HttpClient.get(`${this.baseUrl}/${orderId}`, {
+      withCredentials: true,
+    });
   }
 
   // ✅ Optional: Update order status (approve/cancel/etc.)
   updateOrderStatus(orderId: string, status: string): Observable<any> {
-    return this._HttpClient.patch(`${this.baseUrl}/${orderId}`, { status },{withCredentials:true});
+    return this._HttpClient.patch(
+      `${this.baseUrl}/${orderId}`,
+      { status },
+      { withCredentials: true }
+    );
   }
 }
