@@ -20,6 +20,7 @@ export class NavbarComponent implements OnInit {
     private _CartService: CartService,
     private _WishlistService: WishlistService
   ) {}
+  isAdmin: boolean = false;
 
   ngOnInit(): void {
     // ✅ راقب حالة الدخول
@@ -27,13 +28,11 @@ export class NavbarComponent implements OnInit {
       this.isUserLogin = isLogged;
 
       if (isLogged) {
-        // ✅ جلب بيانات المستخدم بعد تسجيل الدخول
         this._AuthService.getCurrentUser().subscribe({
           next: (res) => {
-
             this.userInfo = res.data;
             this.userName = res.data?.name || '';
-
+            this.isAdmin = res.data?.role === 'admin'; // ✅ check for admin
           },
           error: (err) => {
             console.error('❌ Error fetching user data from getMe:', err);
@@ -42,6 +41,7 @@ export class NavbarComponent implements OnInit {
       } else {
         this.userInfo = null;
         this.userName = '';
+        this.isAdmin = false;
       }
     });
 

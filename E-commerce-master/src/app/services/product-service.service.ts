@@ -109,4 +109,12 @@ export class ProductService {
       { withCredentials: true }
     );
   }
+
+  createProduct(productData: FormData): Observable<any> {
+    return this._HttpClient.post(
+      'https://car-parts-seven.vercel.app/api/v1/products',
+      productData,
+      { withCredentials: true }
+    );
+  }
 }

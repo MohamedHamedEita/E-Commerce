@@ -3,26 +3,33 @@
 <div class="row py-4 align-items-center">
   <div class="col-md-4">
     <div class="p-5 border rounded-3 border-dark-subtle">
-      <owl-carousel-o [options]="customOptions">
+      <!-- 🔁 Show carousel if images exist, otherwise show cover image -->
+<owl-carousel-o *ngIf="showImages; else coverImageOnly" [options]="customOptions">
         <ng-container *ngFor="let productImg of productDetail?.images">
           <ng-template carouselSlide>
-            <img
-              class="w-100"
-              [src]="productImg"
-              [alt]="productDetail?.title"
-            />
+            <img class="w-100" [src]="productImg" [alt]="productDetail?.name" />
           </ng-template>
         </ng-container>
       </owl-carousel-o>
+
+      <!-- ❗Fallback to cover image -->
+      <ng-template #coverImageOnly>
+        <img
+          class="w-100 rounded-3 border"
+          [src]="productDetail?.imageCover"
+          [alt]="productDetail?.name"
+        />
+      </ng-template>
     </div>
   </div>
+
   <div class="col-md-8">
     <div class="p-5">
       <h3 class="fw-bold">{{ productDetail?.name }}</h3>
       <p class="my-3">{{ productDetail?.description }}</p>
       <span class="text-main fw-bold font-sm">
-        Category: {{ productDetail?.category?.name }}</span
-      >
+        Category: {{ productDetail?.category?.name }}
+      </span>
       <div class="my-3">
         <p class="my-0 text-secondary fw-bold font-sm">
           Available Quantity {{ productDetail?.quantity }}
@@ -30,20 +37,18 @@
         <p class="my-0 text-secondary fw-bold font-sm">
           Brand: {{ productDetail?.brand?.name }}
         </p>
-        <!-- <p>Rating : {{productDetail?.ratingsAverage}} </p>
-        <p>Price : {{productDetail?.price | currency:'USD':true}} </p> -->
       </div>
       <div class="d-flex justify-content-between">
-        <!-- <span class="fw-bold font-sm">{{productDetail?.price}} EGP</span> -->
         <span class="fw-bold font-sm">{{ productDetail?.price | addEGP }}</span>
 
-        <div class="">
+        <div>
           <i class="fa-solid fa-star rating-color mx-2"></i>
           <span class="fw-bold font-sm">{{
-            productDetail?.ratingsAverage | number : "1.1-1"
+            productDetail?.ratingsAverage | number: '1.1-1'
           }}</span>
         </div>
       </div>
+
       <div class="d-flex justify-content-center align-items-center">
         <button
           (click)="addToCart(productDetail!._id)"
@@ -63,6 +68,8 @@
     </div>
   </div>
 </div>
+
+<!-- 🔽 Reviews Section -->
 <div class="mt-5">
   <h4 class="fw-bold mb-4">Customer Reviews</h4>
 
@@ -90,16 +97,16 @@
     <p class="text-muted">No reviews yet.</p>
   </ng-template>
 </div>
-<!-- Create Review Button (Only for non-admin users) -->
+
+<!-- ✍️ Write Review Form (only if not admin) -->
 <div *ngIf="!isAdmin" class="mt-4">
   <button
     class="btn btn-outline-primary"
     (click)="showReviewForm = !showReviewForm"
   >
-    {{ showReviewForm ? "Cancel" : "Write a Review" }}
+    {{ showReviewForm ? 'Cancel' : 'Write a Review' }}
   </button>
 
-  <!-- Review Form -->
   <form
     *ngIf="showReviewForm"
     (ngSubmit)="submitReview()"

@@ -1,7 +1,7 @@
-<div class="card p-4 shadow-sm">
-  <h4 class="mb-3">➕ Add New Product</h4>
+<div class="container mt-4">
+  <h4>➕ Add New Product</h4>
 
-  <form [formGroup]="productForm" (ngSubmit)="onSubmit()">
+  <form [formGroup]="productForm" (ngSubmit)="submit()" enctype="multipart/form-data">
     <!-- Name -->
     <div class="mb-3">
       <label>Name</label>
@@ -11,11 +11,7 @@
     <!-- Description -->
     <div class="mb-3">
       <label>Description</label>
-      <textarea
-        formControlName="description"
-        class="form-control"
-        rows="3"
-      ></textarea>
+      <textarea formControlName="description" class="form-control"></textarea>
     </div>
 
     <!-- Price -->
@@ -30,56 +26,37 @@
       <input type="number" formControlName="quantity" class="form-control" />
     </div>
 
-    <!-- Category -->
-    <div class="mb-3">
-      <label>Category</label>
-      <select formControlName="category" class="form-select">
-        <option *ngFor="let cat of categories" [value]="cat._id">
-          {{ cat.name }}
-        </option>
-      </select>
-    </div>
-
     <!-- Brand -->
     <div class="mb-3">
       <label>Brand</label>
       <select formControlName="brand" class="form-select">
-        <option *ngFor="let brand of brands" [value]="brand._id">
-          {{ brand.name }}
-        </option>
+        <option value="">Select a brand</option>
+        <option *ngFor="let brand of brands" [value]="brand._id">{{ brand.name }}</option>
       </select>
     </div>
 
-    <!-- ✅ Required Cover Image -->
+    <!-- Category -->
     <div class="mb-3">
-      <label>Cover Image <span class="text-danger">*</span></label>
-      <input
-        type="file"
-        (change)="onCoverImageChange($event)"
-        class="form-control"
-        accept="image/*"
-      />
+      <label>Category</label>
+      <select formControlName="category" class="form-select">
+        <option value="">Select a category</option>
+        <option *ngFor="let cat of categories" [value]="cat._id">{{ cat.name }}</option>
+      </select>
     </div>
 
-    <!-- ✅ Optional Extra Images -->
+    <!-- Cover Image -->
     <div class="mb-3">
-      <label>Extra Images (optional)</label>
-      <input
-        type="file"
-        (change)="onImagesChange($event)"
-        multiple
-        class="form-control"
-        accept="image/*"
-      />
+      <label>Cover Image</label>
+      <input type="file" (change)="onCoverImageChange($event)" class="form-control" />
     </div>
 
-    <!-- Submit -->
-    <button
-      class="btn btn-success"
-      type="submit"
-      [disabled]="productForm.invalid || !coverImage || isSubmitting"
-    >
-      {{ isSubmitting ? "Submitting..." : "Add Product" }}
-    </button>
+    <!-- Additional Images (Optional) -->
+    <div class="mb-3">
+      <label>Additional Images (optional)</label>
+      <input type="file" multiple (change)="onImagesChange($event)" class="form-control" />
+    </div>
+
+    <!-- Submit Button -->
+    <button type="submit" class="btn btn-success">Add Product</button>
   </form>
 </div>

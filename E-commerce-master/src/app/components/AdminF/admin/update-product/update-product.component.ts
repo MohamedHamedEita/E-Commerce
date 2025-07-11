@@ -115,7 +115,7 @@ export class UpdateProductComponent implements OnInit {
           alert('✅ Product updated!');
           this.router.navigate(['/admin/products']);
         },
-        error: () => alert('❌ Failed to update'),
+        error: (err) => alert(err.error?.message || '❌ Failed to update'),
       });
   }
 }

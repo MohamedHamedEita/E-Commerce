@@ -33,16 +33,33 @@ import { EmailVerificationSentComponent } from './components/email-verification-
 import { VerifyEmailComponent } from './components/verify-email/verify-email.component';
 import { UsersComponent } from './components/AdminF/admin/users/users.component';
 import { AdminProductsComponent } from './components/AdminF/admin/products/products.component';
+import { AdminOrdersComponent } from './components/AdminF/admin/orders/orders.component';
+import { AddCategoryComponent } from './components/AdminF/admin/add-category/add-category.component';
+import { UpdateCategoryComponent } from './components/AdminF/admin/update-category/update-category.component';
+import { AdminCategoriesComponent } from './components/AdminF/admin/categories/categories.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
 
   {
     path: 'admin',
-    component: AdminComponent,
     canActivate: [authGuard, adminGuard],
+    component: AdminComponent,
     children: [
-      { path: '', redirectTo: 'add-product', pathMatch: 'full' },
+      {
+        path: 'categories',
+        component: AdminCategoriesComponent,
+      },
+      {
+        path: 'categories/add',
+        component: AddCategoryComponent,
+      },
+      {
+        path: 'categories/edit/:id',
+        component: UpdateCategoryComponent,
+      },
+      { path: 'orders', component: AdminOrdersComponent },
+      { path: '', redirectTo: 'users', pathMatch: 'full' },
       { path: 'add-product', component: AddProductComponent },
       { path: 'update-product/:id', component: UpdateProductComponent },
       { path: 'delete-product', component: DeleteProductComponent },

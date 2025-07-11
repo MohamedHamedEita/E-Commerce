@@ -66,6 +66,10 @@ export class ProductComponent implements OnInit {
       },
       error: (err) => {
         console.log(err);
+        this._toaster.error(
+          err.error?.message || 'Failed to add to Cart',
+          'Error'
+        );
         this.isLoading = false;
         // this.toastr.showError();
       },
@@ -84,6 +88,10 @@ export class ProductComponent implements OnInit {
       },
       error: (err) => {
         console.log(err);
+        this._toaster.error(
+          err.error?.message || 'Failed to add to Wishlist',
+          'Error'
+        );
         this.isLoading = false;
       },
     });

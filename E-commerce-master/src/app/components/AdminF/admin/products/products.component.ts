@@ -8,22 +8,28 @@ import { ProductService } from 'src/app/services/product-service.service';
 })
 export class AdminProductsComponent implements OnInit {
   products: any[] = [];
+  currentPage: number = 1;
+  totalPages: number = 1;
+  limit: number = 20;
 
   constructor(private productService: ProductService) {}
 
   ngOnInit(): void {
-    this.getAllProducts();
+    this.fetchProducts();
   }
 
-  getAllProducts(): void {
-    this.productService.getAllProducts().subscribe({
-      next: (res: any) => {
-        this.products = res.products || res.data || res;
-      },
-      error: () => {
-        console.error('❌ Failed to load products');
-      },
-    });
+  fetchProducts(): void {
+    this.productService
+      .getProductsPaginated(this.currentPage, this.limit)
+      .subscribe({
+        next: (res: any) => {
+          this.products = res.data;
+          this.totalPages = res.paginationResult?.numberOfPages || 1;
+        },
+        error: () => {
+          console.error('❌ Failed to load paginated products');
+        },
+      });
   }
 
   deleteProduct(productId: string): void {
@@ -32,11 +38,18 @@ export class AdminProductsComponent implements OnInit {
     this.productService.deleteProduct(productId).subscribe({
       next: () => {
         alert('✅ Product deleted successfully');
-        this.getAllProducts(); // Refresh the list
+        this.fetchProducts(); // Refresh the list
       },
-      error: () => {
-        alert('❌ Failed to delete product');
+      error: (err) => {
+        alert(err.error?.message || '❌ Failed to delete product');
       },
     });
   }
+
+  goToPage(page: number): void {
+    if (page < 1 || page > this.totalPages) return;
+    this.currentPage = page;
+    this.fetchProducts();
+  }
 }
+

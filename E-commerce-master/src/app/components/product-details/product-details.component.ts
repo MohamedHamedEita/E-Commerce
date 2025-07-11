@@ -25,6 +25,7 @@ export class ProductDetailsComponent implements OnInit {
   isAdmin: boolean = false;
   showReviewForm: boolean = false;
   reviewForm!: FormGroup;
+  showImages: boolean = false;
 
   constructor(
     private _ActivatedRoute: ActivatedRoute,
@@ -40,7 +41,7 @@ export class ProductDetailsComponent implements OnInit {
   ngOnInit(): void {
     this.isLoading = true;
 
-    // Setup form
+    // ✅ Setup form
     this.reviewForm = this.fb.group({
       title: ['', Validators.required],
       ratings: [
@@ -49,7 +50,7 @@ export class ProductDetailsComponent implements OnInit {
       ],
     });
 
-    // Check role
+    // ✅ Check if current user is admin
     this._authService.getCurrentUser().subscribe({
       next: (user) => {
         this.isAdmin = user?.role === 'admin';
@@ -59,6 +60,7 @@ export class ProductDetailsComponent implements OnInit {
       },
     });
 
+    // ✅ Fetch product and reviews
     this._ActivatedRoute.paramMap.subscribe((params) => {
       this.productId = params.get('id');
 
@@ -70,6 +72,12 @@ export class ProductDetailsComponent implements OnInit {
           next: ({ product, reviews }) => {
             this.productDetail = product.data;
             this.reviews = reviews.data;
+
+            // ✅ Set showImages flag
+            this.showImages = !!(
+              this.productDetail?.images && this.productDetail.images.length > 0
+            );
+
             this.isLoading = false;
           },
           error: (error) => {
@@ -117,6 +125,10 @@ export class ProductDetailsComponent implements OnInit {
       },
       error: (err) => {
         console.log(err);
+        this._toaster.error(
+          err.error?.message || 'Failed to add to Cart',
+          'Error'
+        );
         this.isLoading = false;
       },
     });
@@ -137,7 +149,10 @@ export class ProductDetailsComponent implements OnInit {
       },
       error: (err) => {
         console.error('Error adding to wishlist:', err);
-        this._toaster.error('Failed to add to wishlist', 'Error');
+        this._toaster.error(
+          err.error?.message || 'Failed to add to wishlist',
+          'Error'
+        );
         this.isLoading = false;
       },
     });

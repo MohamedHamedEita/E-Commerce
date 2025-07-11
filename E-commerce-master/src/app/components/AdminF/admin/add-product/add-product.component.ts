@@ -1,6 +1,8 @@
-import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { HttpClient } from '@angular/common/http';
+import { ProductService } from 'src/app/services/product-service.service';
+import { CategoryService } from 'src/app/services/categories';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-add-product',
@@ -9,89 +11,82 @@ import { HttpClient } from '@angular/common/http';
 })
 export class AddProductComponent implements OnInit {
   productForm!: FormGroup;
-  isSubmitting = false;
   categories: any[] = [];
   brands: any[] = [];
-
-  coverImage: File | null = null;
-  extraImages: File[] = [];
+  coverImg: File | null = null;
+  images: File[] = [];
 
   constructor(
     private fb: FormBuilder,
-    private http: HttpClient,
-    private cdr: ChangeDetectorRef
+    private productService: ProductService,
+    private categoryService: CategoryService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
+    this.initForm();
+    this.loadCategories();
+    this.loadBrands();
+  }
+
+  initForm() {
     this.productForm = this.fb.group({
       name: ['', Validators.required],
-      description: ['', [Validators.required, Validators.minLength(20)]],
-      price: [0, [Validators.required, Validators.min(0)]],
-      quantity: [0, [Validators.required, Validators.min(0)]],
-      category: ['', Validators.required],
+      description: ['', Validators.required],
+      price: [null, [Validators.required, Validators.min(1)]],
+      quantity: [null, [Validators.required, Validators.min(1)]],
       brand: ['', Validators.required],
+      category: ['', Validators.required],
     });
-
-    this.fetchCategories();
-    this.fetchBrands();
   }
 
-  fetchCategories() {
-    this.http
-      .get<any>('https://car-parts-seven.vercel.app/api/v1/categories')
-      .subscribe((res) => (this.categories = res.data || []));
+  loadCategories() {
+    this.categoryService.getAllCategories().subscribe((res) => {
+      this.categories = res.data;
+    });
   }
 
-  fetchBrands() {
-    this.http
-      .get<any>('https://car-parts-seven.vercel.app/api/v1/brands')
-      .subscribe((res) => (this.brands = res.data || []));
+  loadBrands() {
+    this.productService.getAllBrands().subscribe((res) => {
+      this.brands = res.data;
+    });
   }
 
   onCoverImageChange(event: any) {
-    const file = event.target.files[0];
-    if (file) {
-      this.coverImage = file;
-      this.cdr.detectChanges(); // Refresh UI
-    }
+    this.coverImg = event.target.files[0];
   }
 
   onImagesChange(event: any) {
-    this.extraImages = Array.from(event.target.files);
+    this.images = Array.from(event.target.files);
   }
 
-  onSubmit() {
-    if (this.productForm.invalid || !this.coverImage) return;
+  submit() {
+    if (this.productForm.invalid || !this.coverImg) {
+      alert('Please fill all required fields and choose a cover image');
+      return;
+    }
 
     const formData = new FormData();
-    Object.entries(this.productForm.value).forEach(([key, value]) => {
-      if (value !== null && value !== undefined) {
-        formData.append(key, value.toString());
-      }
+    const formValue = this.productForm.value;
+
+    for (const key in formValue) {
+      formData.append(key, formValue[key]);
+    }
+
+    formData.append('imageCover', this.coverImg);
+
+    this.images.forEach((img, index) => {
+      formData.append('images', img);
     });
 
-    formData.append('imageCover', this.coverImage);
-    this.extraImages.forEach((img) => formData.append('images', img));
-
-    this.isSubmitting = true;
-
-    this.http
-      .post('https://car-parts-seven.vercel.app/api/v1/products', formData, {
-        withCredentials: true,
-      })
-      .subscribe({
-        next: () => {
-          alert('✅ Product added!');
-          this.productForm.reset();
-          this.coverImage = null;
-          this.extraImages = [];
-          this.isSubmitting = false;
-        },
-        error: (err) => {
-          console.error(err);
-          alert('❌ Failed to add product');
-          this.isSubmitting = false;
-        },
-      });
+    this.productService.createProduct(formData).subscribe({
+      next: () => {
+        alert('✅ Product added successfully!');
+        this.router.navigate(['/admin/products']);
+      },
+      error: (err) => {
+        alert(err.error?.message || '❌ Failed to add product');
+      },
+    });
   }
 }

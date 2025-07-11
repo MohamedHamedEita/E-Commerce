@@ -1,0 +1,17 @@
+<div class="container mt-4">
+  <h4>➕ Add New Category</h4>
+
+  <form (ngSubmit)="submit()">
+    <div class="mb-3">
+      <label>Name</label>
+      <input [(ngModel)]="name" name="name" class="form-control" required />
+    </div>
+
+    <div class="mb-3">
+      <label>Image</label>
+      <input type="file" (change)="onImageChange($event)" class="form-control" required />
+    </div>
+
+    <button type="submit" class="btn btn-primary">Submit</button>
+  </form>
+</div>

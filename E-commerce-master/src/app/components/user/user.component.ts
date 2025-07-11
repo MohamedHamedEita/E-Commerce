@@ -154,7 +154,7 @@ export class UserComponent implements OnInit {
         },
         error: (err) => {
           console.error(err);
-          alert('❌ Failed to update profile');
+          alert(err.error?.message || '❌ Failed to update profile');
           this.isLoading = false;
         },
       });
@@ -186,7 +186,7 @@ export class UserComponent implements OnInit {
         },
         error: (err) => {
           console.error(err);
-          alert('❌ Failed to update password');
+          alert(err.error?.message || '❌ Failed to update password');
         },
       });
   }
@@ -201,7 +201,7 @@ export class UserComponent implements OnInit {
       )
       .subscribe({
         next: (res) => (this.addresses = res.data),
-        error: () => alert('❌ Failed to load addresses'),
+        error: () => console.log('❌ Failed to load addresses'),
       });
   }
 
@@ -223,7 +223,7 @@ export class UserComponent implements OnInit {
         this.addressForm.reset();
         this.editingAddressId = null;
       },
-      error: () => alert('❌ Failed to save address'),
+      error: (err) => alert(err.error?.message || '❌ Failed to save address'),
     });
   }
 
@@ -239,7 +239,7 @@ export class UserComponent implements OnInit {
       })
       .subscribe({
         next: () => this.getAddresses(),
-        error: () => alert('❌ Failed to delete address'),
+        error: (err) => alert(err.error?.message || '❌ Failed to delete address'),
       });
   }
 
@@ -258,7 +258,7 @@ export class UserComponent implements OnInit {
         },
         error: (err) => {
           console.error(err);
-          alert('Failed to delete account.');
+          alert(err.error?.message || 'Failed to delete account.');
         },
       });
     }

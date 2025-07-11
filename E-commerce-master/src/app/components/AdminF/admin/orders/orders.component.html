@@ -1,0 +1,53 @@
+<div class="container mt-4">
+  <h4>🧾 All Orders</h4>
+
+  <table class="table table-bordered table-hover mt-3">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>User</th>
+        <th>Total</th>
+        <th>Created At</th>
+        <th>Method</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let order of orders; index as i">
+        <td>{{ i + 1 + (currentPage - 1) * 10 }}</td>
+        <td>{{ order.user?.email }}</td>
+        <td>{{ order.totalOrderPrice  }}</td>
+        <td>{{ order.createdAt  }}</td>
+        <td> {{ order.paymentMethodType}}</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <nav *ngIf="totalPages > 1" class="mt-3">
+    <ul class="pagination justify-content-center">
+      <li
+        class="page-item"
+        [class.disabled]="currentPage === 1"
+        (click)="changePage(currentPage - 1)"
+      >
+        <span class="page-link">Previous</span>
+      </li>
+
+      <li
+        class="page-item"
+        *ngFor="let page of [].constructor(totalPages); let i = index"
+        [class.active]="i + 1 === currentPage"
+        (click)="changePage(i + 1)"
+      >
+        <span class="page-link">{{ i + 1 }}</span>
+      </li>
+
+      <li
+        class="page-item"
+        [class.disabled]="currentPage === totalPages"
+        (click)="changePage(currentPage + 1)"
+      >
+        <span class="page-link">Next</span>
+      </li>
+    </ul>
+  </nav>
+</div>
