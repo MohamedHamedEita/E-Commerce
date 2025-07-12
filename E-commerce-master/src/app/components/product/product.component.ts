@@ -55,7 +55,7 @@ export class ProductComponent implements OnInit {
       next: (res) => {
         // console.log(res);
         this.isLoading = false;
-        this._CartService.cartItemsNum.next(res.numOfCartItems);
+    this._CartService.updateCartItemCount();
         this._toaster.success(res.message, 'Added', {
           closeButton: true,
           timeOut: 3000,
@@ -76,59 +76,41 @@ export class ProductComponent implements OnInit {
     });
   }
 
-  addToWishlist(productId: string) {
-    this.isLoading = true;
-    this._WishlistService.addToWishlist(productId).subscribe({
-      next: (res) => {
-        // console.log(res);
-        this._toaster.success(res.message, 'product Add!');
-        this.isLoading = false;
-        this._WishlistService.wishListProductIds.next(res.data);
-        this._WishlistService.wishListItemsCount.next(res.data.length);
-      },
-      error: (err) => {
-        console.log(err);
-        this._toaster.error(
-          err.error?.message || 'Failed to add to Wishlist',
-          'Error'
-        );
-        this.isLoading = false;
-      },
-    });
+addToWishlist(productId: string): void {
+  this.isLoading = true;
 
-    // addToWishlist(product: IProduct) {
-    //   this._ProductService.addToWishlist(product).subscribe({
-    //     next: (res) => {
-    //       this.product.isInWishlist = true;
+  this._WishlistService.addToWishlist(productId).subscribe({
+    next: (res) => {
+      this._toaster.success(res.message || 'Added to Wishlist!', 'Success', {
+        closeButton: true,
+        timeOut: 3000,
+        easing: 'ease-in-out',
+        progressBar: true,
+        progressAnimation: 'increasing',
+      });
 
-    //       console.log(res);
-    //       this.isAddedToWishlist = true;
-    //        this._ProductService.wishListItemsNum.next(res.count);
-    //       this._ProductService.wishListProductId.next(res.data)
+      this.isLoading = false;
 
-    //       this._toaster.success('Successfully added to Wishlist! ', 'Added',{
-    //         closeButton: true,
-    //         timeOut: 3000,
-    //         easing:'ease-in-out',
-    //         progressBar: true,
-    //         progressAnimation: 'increasing',
-    //        });
-    //     },
-    //     error: (err) => {
-    //       console.error('Error adding product to wishlist:', err);
-    //       this._toaster.error('Remove to Wishlist! ', 'Remove',{
-    //         closeButton: true,
-    //         timeOut: 3000,
-    //         easing:'ease-in-out',
-    //         progressBar: true,
-    //         progressAnimation: 'increasing',
-    //        });
-    //        this.isAddedToWishlist = false;
+      // ✅ Use centralized method for consistency
+      this._WishlistService.updateLoggedUserWishListAndCount();
+    },
+    error: (err) => {
+      this._toaster.error(
+        err.error?.message || 'Failed to add to Wishlist',
+        'Error',
+        {
+          closeButton: true,
+          timeOut: 3000,
+          easing: 'ease-in-out',
+          progressBar: true,
+          progressAnimation: 'increasing',
+        }
+      );
+      this.isLoading = false;
+    },
+  });
+}
 
-    //     },
-    //   });
-    // }
-  }
 
   isWishListProduct(id: string) {
     return this.wishListProductIdsList.includes(id);

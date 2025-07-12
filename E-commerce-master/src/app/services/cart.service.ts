@@ -82,7 +82,7 @@ export class CartService {
 
   ClearUserCart(): Observable<any> {
     return this._HttpClient.delete(
-      `https://car-parts-seven.vercel.app//api/v1/cart`,
+      `https://car-parts-seven.vercel.app/api/v1/cart`,
       {
         withCredentials: true,
       }

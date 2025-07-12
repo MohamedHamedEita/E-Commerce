@@ -9,7 +9,9 @@ export class BrandService {
   constructor(private _HttpClient: HttpClient) {}
 
   getAllBrands(): Observable<any> {
-    return this._HttpClient.get(`${this.baseUrl}?limit=300`, { withCredentials: true });
+    return this._HttpClient.get(`${this.baseUrl}?limit=300`, {
+      withCredentials: true,
+    });
   }
 
   addBrand(formData: FormData): Observable<any> {

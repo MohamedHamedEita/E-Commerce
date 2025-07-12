@@ -33,9 +33,9 @@
               </p>
               <p>
                 <strong>Status:</strong>
-                <span class="badge bg-success">{{
-                  order.status || "Placed"
-                }}</span>
+               <span class="badge" [ngClass]="order.isPaid ? 'bg-success' : 'bg-danger'">
+  {{ order.isPaid ? 'Paid' : 'Not Paid' }}
+</span>
               </p>
               <hr />
               <div
@@ -51,7 +51,7 @@
                 <div>
                   <strong>{{ item.product.title }}</strong
                   ><br />
-                  Quantity: {{ item.count }}<br />
+                  Quantity: {{ item.quantity }}<br />
                   Price: {{ item.price }} EGP
                 </div>
               </div>

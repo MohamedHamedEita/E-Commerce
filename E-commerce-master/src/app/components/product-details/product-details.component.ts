@@ -113,14 +113,14 @@ export class ProductDetailsComponent implements OnInit {
     this.isLoading = true;
     this._CartService.addCartItem(id).subscribe({
       next: (res) => {
-        this._CartService.cartItemsNum.next(res.numOfCartItems);
-        this._toaster.success('Successfully added to cart!', 'Added', {
-          closeButton: true,
-          timeOut: 3000,
-          easing: 'ease-in-out',
-          progressBar: true,
-          progressAnimation: 'increasing',
-        });
+this._CartService.updateCartItemCount();
+this._toaster.success('Successfully added to cart!', 'Added', {
+  closeButton: true,
+  timeOut: 3000,
+  easing: 'ease-in-out',
+  progressBar: true,
+  progressAnimation: 'increasing',
+});
         this.isLoading = false;
       },
       error: (err) => {
@@ -146,6 +146,7 @@ export class ProductDetailsComponent implements OnInit {
           progressAnimation: 'increasing',
         });
         this.isLoading = false;
+        this._wishlistService.updateLoggedUserWishListAndCount();
       },
       error: (err) => {
         console.error('Error adding to wishlist:', err);

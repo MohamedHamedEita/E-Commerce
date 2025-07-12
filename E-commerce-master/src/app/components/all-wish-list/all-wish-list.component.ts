@@ -41,7 +41,7 @@ export class AllWishListComponent implements OnInit {
       next: (res) => {
         // console.log(res);
         this.isLoading = false;
-        this._CartService.cartItemsNum.next(res.numOfCartItems);
+    this._CartService.updateCartItemCount();
         this._toaster.success(res.message, 'Added', {
           closeButton: true,
           timeOut: 3000,

@@ -1,13 +1,12 @@
-<nav
+﻿<nav
   class="navbar navbar-expand-lg navbar-light border-bottom shadow-sm sticky-top bg-white"
 >
   <div class="container">
-    <a class="navbar-brand " routerLink="home">
+    <a class="navbar-brand" routerLink="home">
       <img
         src="assets/images/Logo.jpeg"
-        class="logo "
+        class="logo"
         alt="FreshCartLogo"
-        routerLink="/home"
       />
     </a>
 
@@ -27,24 +26,16 @@
       <!-- 🌐 Public Navigation -->
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item">
-          <a class="nav-link" routerLinkActive="active" routerLink="home"
-            >Home</a
-          >
+          <a class="nav-link" routerLinkActive="active" routerLink="home">Home</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" routerLinkActive="active" routerLink="products"
-            >Products</a
-          >
+          <a class="nav-link" routerLinkActive="active" routerLink="products">Products</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" routerLinkActive="active" routerLink="categories"
-            >Categories</a
-          >
+          <a class="nav-link" routerLinkActive="active" routerLink="categories">Categories</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" routerLinkActive="active" routerLink="brands"
-            >Brands</a
-          >
+          <a class="nav-link" routerLinkActive="active" routerLink="brands">Brands</a>
         </li>
       </ul>
 
@@ -55,8 +46,8 @@
           *ngIf="!isUserLogin"
           class="nav-item d-flex justify-content-center align-items-center font-sm fw-bold"
         >
-          Already have an account?
-          <a class="nav-link" routerLink="login">Sign in</a>
+          <span class="me-2">Already have an account?</span>
+          <a class="nav-link p-0" routerLink="login">Sign in</a>
         </li>
 
         <!-- Cart -->
@@ -64,12 +55,13 @@
           <a
             routerLink="/cart"
             class="nav-link cursor-pointer position-relative"
+            aria-label="Cart"
           >
-            <i class="fa-solid fa-cart-shopping fs-3"></i>
+            <i class="fa-solid fa-cart-shopping fs-3" aria-hidden="true"></i>
             <span
               class="position-absolute top-25 start-75 translate-middle badge rounded bg-main"
             >
-              {{ numOfCartItems }} +
+              {{ numOfCartItems > 99 ? '99+' : numOfCartItems || 0}}
             </span>
           </a>
         </li>
@@ -79,12 +71,13 @@
           <a
             routerLink="/allWishList"
             class="nav-link cursor-pointer position-relative"
+            aria-label="Wishlist"
           >
-            <i class="fas fa-heart fs-3 text-danger"></i>
+            <i class="fas fa-heart fs-3 text-danger" aria-hidden="true"></i>
             <span
               class="position-absolute top-25 start-75 translate-middle badge rounded bg-main"
             >
-              {{ wishListCount }}
+              {{ wishListCount > 99 ? '99+' : wishListCount }}
             </span>
           </a>
         </li>
@@ -96,23 +89,28 @@
             href="#"
             role="button"
             data-bs-toggle="dropdown"
+            aria-expanded="false"
+            aria-haspopup="true"
           >
-            <i class="fa-solid fa-user fs-4"></i>
+            <i class="fa-solid fa-user fs-4" aria-hidden="true"></i>
             <span class="fw-semibold">{{ userName }}</span>
           </a>
           <ul class="dropdown-menu">
             <li><a class="dropdown-item" routerLink="/user">Profile</a></li>
+
             <!-- Admin Panel -->
-<li class="nav-item" *ngIf="isUserLogin && isAdmin">
-  <a class="nav-link fw-bold text-success" routerLink="/admin">
-    <i class="fas fa-tools me-1"></i> Admin Panel
-  </a>
-</li>
-            <li>
-              <a class="dropdown-item text-danger" (click)="handelLogout()"
-                >Logout</a
-              >
+            <li *ngIf="isUserLogin && isAdmin">
+              <a class="dropdown-item" routerLink="/admin">Admin Panel</a>
             </li>
+
+            <li>
+<a
+  class="dropdown-item text-danger cursor-pointer"
+  role="button"
+  (click)="handelLogout()"
+>
+  Logout
+</a>            </li>
           </ul>
         </li>
       </ul>

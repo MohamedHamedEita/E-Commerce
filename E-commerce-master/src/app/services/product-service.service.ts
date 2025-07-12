@@ -85,7 +85,7 @@ export class ProductService {
 
   getBrandsPyId(id: string): Observable<any> {
     return this._HttpClient.get(
-      `https://car-parts-seven.vercel.app/api/v1/products?limit=50&brand=${id}`
+      `https://car-parts-seven.vercel.app/api/v1/products?limit=300&brand=${id}`
     );
   }
 
